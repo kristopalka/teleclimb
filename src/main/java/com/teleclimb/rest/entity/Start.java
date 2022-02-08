@@ -12,8 +12,8 @@ public class Start {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "competition_id")
-    private Competition competition;
+    @JoinColumn(name = "round_id")
+    private Round round;
 
     @ManyToOne
     @JoinColumn(name = "route_id")
