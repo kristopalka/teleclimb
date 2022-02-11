@@ -13,15 +13,15 @@ public class Start {
 
     @ManyToOne
     @JoinColumn(name = "round_id")
-    private Round round;
+    private Round roundId;
 
     @ManyToOne
     @JoinColumn(name = "route_id")
-    private Route route;
+    private Route routeId;
 
     @ManyToOne
     @JoinColumn(name = "contestant_id")
-    private Contestant contestant;
+    private Contestant contestantId;
 
     private String result; // if null, start have not done yet
 }

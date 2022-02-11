@@ -16,6 +16,8 @@ public class Category {
 
     private String name;
 
+    private String shortName;
+
     private Integer fromAge;
 
     private Integer toAge;

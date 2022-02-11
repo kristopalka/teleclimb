@@ -5,7 +5,6 @@ import com.teleclimb.enums.Gender;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Data
@@ -18,7 +17,7 @@ public class Competition {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private Category categoryId;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
