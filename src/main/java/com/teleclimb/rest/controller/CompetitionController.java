@@ -3,7 +3,6 @@ package com.teleclimb.rest.controller;
 import com.teleclimb.rest.entity.Competition;
 import com.teleclimb.rest.repository.CompetitionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

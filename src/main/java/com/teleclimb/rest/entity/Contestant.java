@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Entity
 @Data
 public class Contestant {
@@ -14,7 +13,7 @@ public class Contestant {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "competition_id")
     private Competition competition;
 
     private String name;
