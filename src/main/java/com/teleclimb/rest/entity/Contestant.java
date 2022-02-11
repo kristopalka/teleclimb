@@ -1,6 +1,5 @@
 package com.teleclimb.rest.entity;
 
-import com.teleclimb.enums.Gender;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,6 +13,10 @@ public class Contestant {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Competition competition;
+
     private String name;
 
     private String lastName;
@@ -21,9 +24,6 @@ public class Contestant {
     private String startNumber;
 
     private String clubName;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
     private LocalDate birthDate;
 }

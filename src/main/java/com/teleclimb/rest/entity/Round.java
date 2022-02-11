@@ -12,9 +12,11 @@ public class Round {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "competition_id")
-    private Round round;
+    @JoinColumn(name = "id")
+    private Competition competition;
 
     private String name;
+
+    private Integer maxContestants;
 
 }

@@ -5,6 +5,7 @@ import com.teleclimb.enums.Gender;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -24,4 +25,5 @@ public class Competition {
 
     @Enumerated(EnumType.STRING)
     private CompetitionType competitionType;
+
 }
