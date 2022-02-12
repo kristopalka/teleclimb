@@ -1,8 +1,10 @@
 package com.teleclimb.rest.controller;
 
+import com.teleclimb.responses.success.ResponseController;
 import com.teleclimb.rest.entity.Competition;
-import com.teleclimb.rest.repository.CompetitionRepository;
+import com.teleclimb.rest.services.CompetitionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,30 +13,31 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/competitions")
 public class CompetitionController {
-    private final CompetitionRepository repo;
+    private final CompetitionService service;
 
     @GetMapping("")
     public List<Competition> getAll() {
-        return repo.findAll();
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Competition getById(@PathVariable Long id) {
-        return repo.findById(id)
-                .orElseThrow(RuntimeException::new);
+    public Competition get(@PathVariable Long id) {
+        return service.get(id);
     }
 
     @PostMapping("")
-    public Competition add(@RequestBody Competition competition) {
-        return repo.save(competition);
+    public ResponseEntity add(@RequestBody Competition competition) {
+        service.add(competition);
+        return ResponseController.created("Added new competition");
     }
 
     @PutMapping("/{id}")
-    public Competition update(@RequestBody Competition newCompetition, @PathVariable Long id) {
-        return repo.findById(id)
-                .map(competition -> {
-                    competition.setName(newCompetition.getName());
-                    return repo.save(competition);
-                }).orElseThrow(RuntimeException::new);
+    public void update(@RequestBody Competition competition, @PathVariable Long id) {
+        service.update(id, competition);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
     }
 }
