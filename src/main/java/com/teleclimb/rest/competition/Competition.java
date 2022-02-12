@@ -1,8 +1,8 @@
-package com.teleclimb.rest.entity;
+package com.teleclimb.rest.competition;
 
-import com.sun.istack.NotNull;
 import com.teleclimb.enums.CompetitionType;
 import com.teleclimb.enums.Gender;
+import com.teleclimb.rest.category.Category;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,21 +14,16 @@ public class Competition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private String name;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category categoryId;
 
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     private Gender gender;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private CompetitionType competitionType;
-
 }

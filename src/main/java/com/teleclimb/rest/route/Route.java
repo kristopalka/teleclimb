@@ -1,12 +1,9 @@
-package com.teleclimb.rest.entity;
+package com.teleclimb.rest.route;
 
 import com.teleclimb.enums.CompetitionType;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,7 +15,10 @@ public class Route {
 
     private String name;
 
+    private String description;
+
+    @Enumerated(EnumType.STRING)
     private CompetitionType competitionType;
 
-    private LocalDateTime timeLimit;
+    private Integer timeLimitSeconds;
 }

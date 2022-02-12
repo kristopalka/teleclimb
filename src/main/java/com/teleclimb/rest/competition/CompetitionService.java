@@ -1,8 +1,6 @@
-package com.teleclimb.rest.services;
+package com.teleclimb.rest.competition;
 
-import com.teleclimb.rest.exceptions.NotFoundException;
-import com.teleclimb.rest.entity.Competition;
-import com.teleclimb.rest.repository.CompetitionRepository;
+import com.teleclimb.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

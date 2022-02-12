@@ -1,8 +1,6 @@
-package com.teleclimb.rest.services;
+package com.teleclimb.rest.category;
 
-import com.teleclimb.rest.entity.Category;
-import com.teleclimb.rest.exceptions.NotFoundException;
-import com.teleclimb.rest.repository.CategoryRepository;
+import com.teleclimb.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

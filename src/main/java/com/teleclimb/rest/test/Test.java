@@ -1,4 +1,4 @@
-package com.teleclimb.rest.controller;
+package com.teleclimb.rest.test;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

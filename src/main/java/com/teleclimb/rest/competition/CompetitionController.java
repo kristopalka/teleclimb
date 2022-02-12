@@ -1,7 +1,5 @@
-package com.teleclimb.rest.controller;
+package com.teleclimb.rest.competition;
 
-import com.teleclimb.rest.entity.Competition;
-import com.teleclimb.rest.services.CompetitionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

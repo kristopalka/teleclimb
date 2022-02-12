@@ -1,5 +1,6 @@
-package com.teleclimb.rest.entity;
+package com.teleclimb.rest.contestant;
 
+import com.teleclimb.rest.competition.Competition;
 import lombok.Data;
 
 import javax.persistence.*;

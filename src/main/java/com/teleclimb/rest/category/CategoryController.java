@@ -1,9 +1,5 @@
-package com.teleclimb.rest.controller;
+package com.teleclimb.rest.category;
 
-import com.teleclimb.rest.entity.Category;
-import com.teleclimb.rest.entity.Competition;
-import com.teleclimb.rest.repository.CategoryRepository;
-import com.teleclimb.rest.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

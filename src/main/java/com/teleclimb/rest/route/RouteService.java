@@ -1,8 +1,6 @@
-package com.teleclimb.rest.services;
+package com.teleclimb.rest.route;
 
-import com.teleclimb.rest.entity.Route;
-import com.teleclimb.rest.exceptions.NotFoundException;
-import com.teleclimb.rest.repository.RouteRepository;
+import com.teleclimb.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +28,7 @@ public class RouteService {
         repo.findById(id)
                 .map(r -> {
                     r.setName(route.getName());
-                    r.setTimeLimit(route.getTimeLimit());
-                    r.setTimeLimit(route.getTimeLimit());
+                    r.setDescription(route.getDescription());
                     return repo.save(r);
                 })
                 .orElseThrow(NotFoundException::new);

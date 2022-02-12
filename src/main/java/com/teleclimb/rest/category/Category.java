@@ -1,4 +1,4 @@
-package com.teleclimb.rest.entity;
+package com.teleclimb.rest.category;
 
 import lombok.Data;
 
