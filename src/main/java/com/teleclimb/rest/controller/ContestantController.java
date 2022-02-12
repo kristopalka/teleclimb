@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/contestant")
 public class ContestantController {
     private final ContestantService service;
 
