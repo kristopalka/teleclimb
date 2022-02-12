@@ -1,6 +1,6 @@
 package com.teleclimb;
 
-import com.teleclimb.rest.category.Category;
+import com.teleclimb.rest.category.CategoryEntity;
 import com.teleclimb.rest.category.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,12 +19,12 @@ class RepositoryIntegrationTest {
 
     @Test
     public void whenCalledSave_thenCorrectNumberOfUsers() {
-        Category category = new Category();
+        CategoryEntity category = new CategoryEntity();
         category.setName("best");
         category.setFromAge(10);
         category.setToAge(20);
         repo.save(category);
-        List<Category> users = repo.findAll();
+        List<CategoryEntity> users = repo.findAll();
 
         Assertions.assertEquals(users.get(0), category);
     }

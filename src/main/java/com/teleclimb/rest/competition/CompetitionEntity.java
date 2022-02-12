@@ -2,14 +2,15 @@ package com.teleclimb.rest.competition;
 
 import com.teleclimb.enums.CompetitionType;
 import com.teleclimb.enums.Gender;
-import com.teleclimb.rest.category.Category;
+import com.teleclimb.rest.category.CategoryEntity;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-public class Competition {
+@Table(name = "competition")
+public class CompetitionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +19,7 @@ public class Competition {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category categoryId;
+    private CategoryEntity categoryId;
 
 
     @Enumerated(EnumType.STRING)

@@ -11,20 +11,20 @@ import java.util.List;
 public class ContestantService {
     private final ContestantRepository repo;
 
-    public List<Contestant> getAll() {
+    public List<ContestantEntity> getAll() {
         return repo.findAll();
     }
 
-    public Contestant get(Long id) {
+    public ContestantEntity get(Long id) {
         return repo.findById(id)
                 .orElseThrow(NotFoundException::new);
     }
 
-    public void add(Contestant contestant) {
+    public void add(ContestantEntity contestant) {
         repo.save(contestant);
     }
 
-    public void update(Long id, Contestant contestant) {
+    public void update(Long id, ContestantEntity contestant) {
         repo.findById(id)
                 .map(c -> {
                     c.setName(contestant.getName());

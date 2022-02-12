@@ -11,20 +11,20 @@ import java.util.List;
 public class CompetitionService {
     private final CompetitionRepository repo;
 
-    public List<Competition> getAll() {
+    public List<CompetitionEntity> getAll() {
         return repo.findAll();
     }
 
-    public Competition get(Long id) {
+    public CompetitionEntity get(Long id) {
         return repo.findById(id)
                 .orElseThrow(NotFoundException::new);
     }
 
-    public void add(Competition competition) {
+    public void add(CompetitionEntity competition) {
         repo.save(competition);
     }
 
-    public void update(Long id, Competition competition) {
+    public void update(Long id, CompetitionEntity competition) {
         repo.findById(id)
                 .map(c -> {
                     c.setName(competition.getName());

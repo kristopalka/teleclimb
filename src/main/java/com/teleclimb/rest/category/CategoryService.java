@@ -11,11 +11,11 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository repo;
 
-    public List<Category> getAll() {
+    public List<CategoryEntity> getAll() {
         return repo.findAll();
     }
 
-    public Category get(Long id) {
+    public CategoryEntity get(Long id) {
         return repo.findById(id)
                 .orElseThrow(NotFoundException::new);
     }

@@ -15,12 +15,12 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping("")
-    public List<Category> getAll() {
+    public List<CategoryEntity> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Category get(@PathVariable Long id) {
+    public CategoryEntity get(@PathVariable Long id) {
         return service.get(id);
     }
 }

@@ -4,11 +4,11 @@ import com.teleclimb.enums.CompetitionType;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Route {
+@Table(name = "route")
+public class RouteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

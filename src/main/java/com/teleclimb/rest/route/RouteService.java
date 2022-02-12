@@ -11,20 +11,20 @@ import java.util.List;
 public class RouteService {
     private final RouteRepository repo;
 
-    public List<Route> getAll() {
+    public List<RouteEntity> getAll() {
         return repo.findAll();
     }
 
-    public Route get(Long id) {
+    public RouteEntity get(Long id) {
         return repo.findById(id)
                 .orElseThrow(NotFoundException::new);
     }
 
-    public void add(Route route) {
+    public void add(RouteEntity route) {
         repo.save(route);
     }
 
-    public void update(Long id, Route route) {
+    public void update(Long id, RouteEntity route) {
         repo.findById(id)
                 .map(r -> {
                     r.setName(route.getName());

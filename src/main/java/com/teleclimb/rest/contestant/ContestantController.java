@@ -12,22 +12,22 @@ public class ContestantController {
     private final ContestantService service;
 
     @GetMapping("")
-    public List<Contestant> getAll() {
+    public List<ContestantEntity> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Contestant get(@PathVariable Long id) {
+    public ContestantEntity get(@PathVariable Long id) {
         return service.get(id);
     }
 
     @PostMapping("")
-    public void add(@RequestBody Contestant contestant) {
+    public void add(@RequestBody ContestantEntity contestant) {
         service.add(contestant);
     }
 
     @PutMapping("/{id}")
-    public void update(@RequestBody Contestant contestant, @PathVariable Long id) {
+    public void update(@RequestBody ContestantEntity contestant, @PathVariable Long id) {
         service.update(id, contestant);
     }
 
