@@ -1,9 +1,7 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.responses.error.exceptions.NotFoundException;
-import com.teleclimb.rest.entity.Competition;
+import com.teleclimb.rest.exceptions.NotFoundException;
 import com.teleclimb.rest.entity.Contestant;
-import com.teleclimb.rest.repository.CompetitionRepository;
 import com.teleclimb.rest.repository.ContestantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +19,7 @@ public class ContestantService {
 
     public Contestant get(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found contestant with id: " + id));
+                .orElseThrow(NotFoundException::new);
     }
 
     public void add(Contestant contestant) {
@@ -38,7 +36,7 @@ public class ContestantService {
                     c.setStartNumber(contestant.getStartNumber());
                     return repo.save(c);
                 })
-                .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id));
+                .orElseThrow(NotFoundException::new);
     }
 
     public void delete(Long id) {

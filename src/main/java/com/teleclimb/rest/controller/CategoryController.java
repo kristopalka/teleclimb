@@ -14,7 +14,7 @@ public class CategoryController {
     private final CategoryRepository repo;
 
     @GetMapping("/category/all")
-    List<Category> all() {
+    public List<Category> all() {
         return repo.findAll();
     }
 }

@@ -1,10 +1,8 @@
 package com.teleclimb.rest.controller;
 
-import com.teleclimb.responses.success.ResponseController;
 import com.teleclimb.rest.entity.Competition;
 import com.teleclimb.rest.services.CompetitionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,9 +24,8 @@ public class CompetitionController {
     }
 
     @PostMapping("")
-    public ResponseEntity add(@RequestBody Competition competition) {
+    public void add(@RequestBody Competition competition) {
         service.add(competition);
-        return ResponseController.created("Added new competition");
     }
 
     @PutMapping("/{id}")

@@ -1,6 +1,6 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.responses.error.exceptions.NotFoundException;
+import com.teleclimb.rest.exceptions.NotFoundException;
 import com.teleclimb.rest.entity.Competition;
 import com.teleclimb.rest.repository.CompetitionRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class CompetitionService {
 
     public Competition get(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id));
+                .orElseThrow(NotFoundException::new);
     }
 
     public void add(Competition competition) {
@@ -35,7 +35,7 @@ public class CompetitionService {
                     c.setGender(competition.getGender());
                     return repo.save(c);
                 })
-                .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id));
+                .orElseThrow(NotFoundException::new);
     }
 
     public void delete(Long id) {
