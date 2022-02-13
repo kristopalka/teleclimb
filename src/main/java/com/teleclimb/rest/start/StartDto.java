@@ -1,12 +1,9 @@
 package com.teleclimb.rest.start;
 
-import com.teleclimb.enums.CompetitionType;
 import com.teleclimb.rest.contestant.Contestant;
 import com.teleclimb.rest.round.Round;
 import com.teleclimb.rest.route.Route;
 import lombok.Data;
-
-import javax.persistence.*;
 
 @Data
 public class StartDto {
@@ -18,5 +15,17 @@ public class StartDto {
 
     private Contestant contestant;
 
-    private String result; // if null, start have not done yet
+    private String result;
+
+    public Start toEntity() {
+        Start start = new Start();
+
+        start.setId(this.getId());
+        start.setRound(this.getRound());
+        start.setRoute(this.getRoute());
+        start.setContestant(this.getContestant());
+        start.setResult(this.getResult());
+
+        return start;
+    }
 }

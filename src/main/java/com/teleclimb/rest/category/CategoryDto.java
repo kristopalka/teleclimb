@@ -13,4 +13,16 @@ public class CategoryDto {
     private Integer fromAge;
 
     private Integer toAge;
+
+    public Category toEntity() {
+        Category category = new Category();
+
+        category.setId(this.getId());
+        category.setShortName(this.getShortName());
+        category.setName(this.getName());
+        category.setFromAge(this.getFromAge());
+        category.setToAge(this.getToAge());
+
+        return category;
+    }
 }

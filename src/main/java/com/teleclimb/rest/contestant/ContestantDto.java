@@ -20,4 +20,18 @@ public class ContestantDto {
     private String clubName;
 
     private LocalDate birthDate;
+
+    public Contestant toEntity() {
+        Contestant competition = new Contestant();
+
+        competition.setId(this.getId());
+        competition.setCompetition(this.getCompetition());
+        competition.setName(this.getName());
+        competition.setLastName(this.getLastName());
+        competition.setStartNumber(this.getStartNumber());
+        competition.setClubName(this.getClubName());
+        competition.setBirthDate(this.getBirthDate());
+
+        return competition;
+    }
 }

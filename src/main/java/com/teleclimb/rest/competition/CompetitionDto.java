@@ -16,4 +16,16 @@ public class CompetitionDto {
     private Gender gender;
 
     private CompetitionType competitionType;
+
+    public Competition toEntity() {
+        Competition competition = new Competition();
+
+        competition.setId(this.getId());
+        competition.setName(this.getName());
+        competition.setGender(this.getGender());
+        competition.setCategory(this.getCategory());
+        competition.setCompetitionType(this.getCompetitionType());
+
+        return competition;
+    }
 }

@@ -14,19 +14,19 @@ public class RouteService {
     private final RouteRepository routeRepo;
 
     public List<RouteDto> getAll() {
-        return routeRepo.findAll().stream().map(this::entityToDto).collect(Collectors.toList());
+        return routeRepo.findAll().stream().map(Route::toDto).collect(Collectors.toList());
     }
 
     public RouteDto get(Long id) {
-        return entityToDto(routeRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found route with id: " + id)));
+        return routeRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not found route with id: " + id)).toDto();
     }
 
     public void add(RouteDto dto) {
         dto.setId(null);
         newDtoValidation(dto);
 
-        routeRepo.save(dtoToEntity(dto));
+        routeRepo.save(dto.toEntity());
     }
 
     public void update(Long id, RouteDto newDto) {
@@ -36,7 +36,7 @@ public class RouteService {
         if(newDto.getDescription() != null) dto.setDescription(newDto.getDescription());
         if(newDto.getTimeLimitSeconds() != null) dto.setName(newDto.getName());
 
-        routeRepo.save(dtoToEntity(dto));
+        routeRepo.save(dto.toEntity());
     }
 
     public void delete(Long id) {
@@ -45,32 +45,7 @@ public class RouteService {
     }
 
 
-
     private void newDtoValidation(RouteDto dto) {
         if (dto.getCompetitionType() == null) throw new BadRequestException("CompetitionType cannot be null");
-    }
-
-    private RouteDto entityToDto(Route route) {
-        RouteDto dto = new RouteDto();
-
-        dto.setId(route.getId());
-        dto.setCompetitionType(route.getCompetitionType());
-        dto.setName(route.getName());
-        dto.setDescription(route.getDescription());
-        dto.setTimeLimitSeconds(route.getTimeLimitSeconds());
-
-        return dto;
-    }
-
-    private Route dtoToEntity(RouteDto dto) {
-        Route route = new Route();
-
-        route.setId(dto.getId());
-        route.setCompetitionType(dto.getCompetitionType());
-        route.setName(dto.getName());
-        route.setDescription(dto.getDescription());
-        route.setTimeLimitSeconds(dto.getTimeLimitSeconds());
-
-        return route;
     }
 }

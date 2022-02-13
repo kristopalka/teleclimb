@@ -26,4 +26,18 @@ public class Contestant {
     private String clubName;
 
     private LocalDate birthDate;
+
+    public ContestantDto toDto() {
+        ContestantDto dto = new ContestantDto();
+
+        dto.setId(this.getId());
+        dto.setCompetition(this.getCompetition());
+        dto.setName(this.getName());
+        dto.setLastName(this.getLastName());
+        dto.setStartNumber(this.getStartNumber());
+        dto.setClubName(this.getClubName());
+        dto.setBirthDate(this.getBirthDate());
+
+        return dto;
+    }
 }

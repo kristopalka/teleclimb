@@ -14,4 +14,16 @@ public class RouteDto {
     private String description;
 
     private Integer timeLimitSeconds;
+
+    public Route toEntity() {
+        Route route = new Route();
+
+        route.setId(this.getId());
+        route.setCompetitionType(this.getCompetitionType());
+        route.setName(this.getName());
+        route.setDescription(this.getDescription());
+        route.setTimeLimitSeconds(this.getTimeLimitSeconds());
+
+        return route;
+    }
 }

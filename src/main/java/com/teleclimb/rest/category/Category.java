@@ -18,4 +18,16 @@ public class Category {
     private Integer fromAge;
 
     private Integer toAge;
+
+    public CategoryDto toDto() {
+        CategoryDto dto = new CategoryDto();
+
+        dto.setId(this.getId());
+        dto.setShortName(this.getShortName());
+        dto.setName(this.getName());
+        dto.setFromAge(this.getFromAge());
+        dto.setToAge(this.getToAge());
+
+        return dto;
+    }
 }

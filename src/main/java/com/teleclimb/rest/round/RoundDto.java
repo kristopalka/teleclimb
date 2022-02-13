@@ -15,4 +15,15 @@ public class RoundDto {
     private String name;
 
     private Integer maxContestants;
+
+    public Round toEntity() {
+        Round round = new Round();
+
+        round.setId(this.getId());
+        round.setCompetition(this.getCompetition());
+        round.setName(this.getName());
+        round.setMaxContestants(this.getMaxContestants());
+
+        return round;
+    }
 }

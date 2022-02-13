@@ -20,4 +20,14 @@ public class Round {
 
     private Integer maxContestants;
 
+    public RoundDto toDto() {
+        RoundDto dto = new RoundDto();
+
+        dto.setId(this.getId());
+        dto.setCompetition(this.getCompetition());
+        dto.setName(this.getName());
+        dto.setMaxContestants(this.getMaxContestants());
+
+        return dto;
+    }
 }

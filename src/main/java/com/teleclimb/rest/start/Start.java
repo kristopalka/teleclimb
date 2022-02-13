@@ -26,5 +26,18 @@ public class Start {
     @JoinColumn(name = "contestant_id")
     private Contestant contestant;
 
-    private String result; // if null, start have not done yet
+    private String result;
+
+
+    public StartDto toDto() {
+        StartDto dto = new StartDto();
+
+        dto.setId(this.getId());
+        dto.setRound(this.getRound());
+        dto.setRoute(this.getRoute());
+        dto.setContestant(this.getContestant());
+        dto.setResult(this.getResult());
+
+        return dto;
+    }
 }

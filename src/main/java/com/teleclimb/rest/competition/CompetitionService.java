@@ -17,18 +17,18 @@ public class CompetitionService {
 
 
     public List<CompetitionDto> getAll() {
-        return competitionRepo.findAll().stream().map(this::entityToDto).collect(Collectors.toList());
+        return competitionRepo.findAll().stream().map(Competition::toDto).collect(Collectors.toList());
     }
 
     public CompetitionDto get(Long id) {
-        return entityToDto(competitionRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id)));
+        return competitionRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id)).toDto();
     }
 
     public void add(CompetitionDto dto) {
         dto.setId(null);
         newDtoValidation(dto);
-        competitionRepo.save(dtoToEntity(dto));
+        competitionRepo.save(dto.toEntity());
     }
 
     public void update(Long id, CompetitionDto newDto) {
@@ -36,7 +36,7 @@ public class CompetitionService {
 
         if(newDto.getName() != null) dto.setName(newDto.getName());
 
-        competitionRepo.save(dtoToEntity(dto));
+        competitionRepo.save(dto.toEntity());
     }
 
     public void delete(Long id) {
@@ -52,29 +52,5 @@ public class CompetitionService {
         if(dto.getCategory() == null) throw new BadRequestException("Category cannot be null");
 
         if(!categoryRepo.existsById(dto.getCategory().getId())) throw new BadRequestException("Category with specific id does not exist");
-    }
-
-    private CompetitionDto entityToDto(Competition competition) {
-        CompetitionDto dto = new CompetitionDto();
-
-        dto.setId(competition.getId());
-        dto.setName(competition.getName());
-        dto.setGender(competition.getGender());
-        dto.setCategory(competition.getCategory());
-        dto.setCompetitionType(competition.getCompetitionType());
-
-        return dto;
-    }
-
-    private Competition dtoToEntity(CompetitionDto dto) {
-        Competition competition = new Competition();
-
-        competition.setId(dto.getId());
-        competition.setName(dto.getName());
-        competition.setGender(dto.getGender());
-        competition.setCategory(dto.getCategory());
-        competition.setCompetitionType(dto.getCompetitionType());
-
-        return competition;
     }
 }

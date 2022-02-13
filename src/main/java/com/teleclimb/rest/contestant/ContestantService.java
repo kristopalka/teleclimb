@@ -17,19 +17,19 @@ public class ContestantService {
 
 
     public List<ContestantDto> getAll() {
-        return contestantRepo.findAll().stream().map(this::entityToDto).collect(Collectors.toList());
+        return contestantRepo.findAll().stream().map(Contestant::toDto).collect(Collectors.toList());
     }
 
     public ContestantDto get(Long id) {
-        return entityToDto(contestantRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found contestant with id: " + id)));
+        return contestantRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not found contestant with id: " + id)).toDto();
     }
 
     public void add(ContestantDto dto) {
         dto.setId(null);
         newDtoValidation(dto);
 
-        contestantRepo.save(dtoToEntity(dto));
+        contestantRepo.save(dto.toEntity());
     }
 
     public void update(Long id, ContestantDto newDto) {
@@ -41,7 +41,7 @@ public class ContestantService {
         if(newDto.getClubName() != null) dto.setClubName(newDto.getClubName());
         if(newDto.getBirthDate() != null) dto.setBirthDate(newDto.getBirthDate());
 
-        contestantRepo.save(dtoToEntity(dto));
+        contestantRepo.save(dto.toEntity());
     }
 
     public void delete(Long id) {
@@ -50,7 +50,7 @@ public class ContestantService {
     }
 
     public List<ContestantDto> getAllContestantForCompetition(Long competitionId) {
-        return contestantRepo.findByCompetitionId(competitionId).stream().map(this::entityToDto).collect(Collectors.toList());
+        return contestantRepo.findByCompetitionId(competitionId).stream().map(Contestant::toDto).collect(Collectors.toList());
     }
 
 
@@ -60,33 +60,5 @@ public class ContestantService {
 
         if (!competitionRepo.existsById(dto.getCompetition().getId()))
             throw new BadRequestException("Competition with specific id does not exist");
-    }
-
-    private ContestantDto entityToDto(Contestant contestant) {
-        ContestantDto dto = new ContestantDto();
-
-        dto.setId(contestant.getId());
-        dto.setCompetition(contestant.getCompetition());
-        dto.setName(contestant.getName());
-        dto.setLastName(contestant.getLastName());
-        dto.setStartNumber(contestant.getStartNumber());
-        dto.setClubName(contestant.getClubName());
-        dto.setBirthDate(contestant.getBirthDate());
-
-        return dto;
-    }
-
-    private Contestant dtoToEntity(ContestantDto dto) {
-        Contestant competition = new Contestant();
-
-        competition.setId(dto.getId());
-        competition.setCompetition(dto.getCompetition());
-        competition.setName(dto.getName());
-        competition.setLastName(dto.getLastName());
-        competition.setStartNumber(dto.getStartNumber());
-        competition.setClubName(dto.getClubName());
-        competition.setBirthDate(dto.getBirthDate());
-
-        return competition;
     }
 }
