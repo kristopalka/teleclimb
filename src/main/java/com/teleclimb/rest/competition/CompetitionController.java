@@ -31,7 +31,7 @@ public class CompetitionController {
         service.add(competition);
     }
 
-    @ApiOperation(value = "Update competition", notes = "Only name can by updated after creation.")
+    @ApiOperation(value = "Update competition", notes = "Only field name can by updated after creation.")
     @PutMapping("/{id}")
     public void update(@RequestBody CompetitionDto competition, @PathVariable Long id) {
         service.update(id, competition);
@@ -41,12 +41,5 @@ public class CompetitionController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.delete(id);
-    }
-
-
-    @ApiOperation(value = "Get all contestants, belonging to this competition")
-    @GetMapping("/{id}/contestants")
-    public List<Contestant> getAllContestantsForCompetition(@PathVariable Long id) {
-        return service.getAllContestantForCompetition(id);
     }
 }

@@ -2,8 +2,7 @@ package com.teleclimb.rest.competition;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.contestant.ContestantEntity;
-import com.teleclimb.rest.contestant.ContestantRepository;
+import com.teleclimb.rest.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CompetitionService {
     private final CompetitionRepository competitionRepo;
-    private final ContestantRepository contestantRepo;
+    private final CategoryRepository categoryRepo;
+
 
     public List<CompetitionDto> getAll() {
         return competitionRepo.findAll().stream().map(this::entityToDto).collect(Collectors.toList());
@@ -26,6 +26,7 @@ public class CompetitionService {
     }
 
     public void add(CompetitionDto dto) {
+        dto.setId(null);
         newDtoValidation(dto);
         competitionRepo.save(dtoToEntity(dto));
     }
@@ -43,13 +44,6 @@ public class CompetitionService {
         competitionRepo.deleteById(id);
     }
 
-    public List<ContestantEntity> getAllContestantForCompetition(Long competitionId) {
-        Competition competition = new Competition();
-        competition.setId(competitionId);
-        return contestantRepo.findByCompetitionId(competition);
-    }
-
-
 
     private void newDtoValidation(CompetitionDto dto) {
         if(dto.getName() == null) throw new BadRequestException("Name cannot be null");
@@ -57,7 +51,7 @@ public class CompetitionService {
         if(dto.getGender() == null) throw new BadRequestException("Gender cannot be null");
         if(dto.getCategory() == null) throw new BadRequestException("Category cannot be null");
 
-        if(!competitionRepo.existsById(dto.getCategory().getId())) throw new BadRequestException("Category with specific id does not exist");
+        if(!categoryRepo.existsById(dto.getCategory().getId())) throw new BadRequestException("Category with specific id does not exist");
     }
 
     private CompetitionDto entityToDto(Competition competition) {
@@ -75,7 +69,7 @@ public class CompetitionService {
     private Competition dtoToEntity(CompetitionDto dto) {
         Competition competition = new Competition();
 
-        // this way, id should not be rewritten
+        competition.setId(dto.getId());
         competition.setName(dto.getName());
         competition.setGender(dto.getGender());
         competition.setCategory(dto.getCategory());
