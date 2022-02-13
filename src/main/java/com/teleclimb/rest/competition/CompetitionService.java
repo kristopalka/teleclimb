@@ -1,6 +1,8 @@
 package com.teleclimb.rest.competition;
 
 import com.teleclimb.exceptions.NotFoundException;
+import com.teleclimb.rest.contestant.ContestantEntity;
+import com.teleclimb.rest.contestant.ContestantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompetitionService {
     private final CompetitionRepository repo;
+    private final ContestantRepository contestantRepo;
 
     public List<CompetitionEntity> getAll() {
         return repo.findAll();
@@ -28,7 +31,7 @@ public class CompetitionService {
         repo.findById(id)
                 .map(c -> {
                     c.setName(competition.getName());
-                    c.setCategoryId(competition.getCategoryId());
+                    c.setCategory(competition.getCategory());
                     c.setCompetitionType(competition.getCompetitionType());
                     c.setGender(competition.getGender());
                     return repo.save(c);
@@ -38,5 +41,14 @@ public class CompetitionService {
 
     public void delete(Long id) {
         repo.deleteById(id);
+    }
+
+
+
+    public List<ContestantEntity> getAllContestantForCompetition(Long competitionId) {
+        CompetitionEntity competition = new CompetitionEntity();
+        competition.setId(competitionId);
+
+        return contestantRepo.findByCompetitionId(competition);
     }
 }

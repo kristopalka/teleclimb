@@ -16,7 +16,7 @@ public class ContestantEntity {
 
     @ManyToOne
     @JoinColumn(name = "competition_id")
-    private CompetitionEntity competitionId;
+    private CompetitionEntity competition;
 
     private String name;
 

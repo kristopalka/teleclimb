@@ -17,16 +17,15 @@ public class StartEntity {
 
     @ManyToOne
     @JoinColumn(name = "round_id")
-    private RoundEntity roundId;
+    private RoundEntity round;
 
     @ManyToOne
     @JoinColumn(name = "route_id")
-    private RouteEntity routeId;
+    private RouteEntity route;
 
     @ManyToOne
     @JoinColumn(name = "contestant_id")
-    private ContestantEntity contestantId;
+    private ContestantEntity contestant;
 
     private String result; // if null, start have not done yet
 }
-//TODO bardzo ważna jest walidacja przy tworzeniu: czy competition i route mają ten sam typ

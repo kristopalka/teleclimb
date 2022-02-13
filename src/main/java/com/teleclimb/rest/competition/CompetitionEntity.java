@@ -19,8 +19,7 @@ public class CompetitionEntity {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private CategoryEntity categoryId;
-
+    private CategoryEntity category;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

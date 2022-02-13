@@ -1,5 +1,6 @@
 package com.teleclimb.rest.category;
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService service;
 
+    @ExternalDocumentation
     @GetMapping("")
     public List<CategoryEntity> getAll() {
         return service.getAll();

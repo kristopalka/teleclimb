@@ -1,5 +1,6 @@
 package com.teleclimb.rest.competition;
 
+import com.teleclimb.rest.contestant.ContestantEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +35,12 @@ public class CompetitionController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.delete(id);
+    }
+
+
+
+    @GetMapping("/{id}/contestants")
+    public List<ContestantEntity> getAllContestantsForCompetition(@PathVariable Long id) {
+        return service.getAllContestantForCompetition(id);
     }
 }
