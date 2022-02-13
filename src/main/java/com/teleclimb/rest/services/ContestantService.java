@@ -47,10 +47,6 @@ public record ContestantService(ContestantRepository contestantRepo, Competition
         contestantRepo.deleteById(id);
     }
 
-    public List<ContestantDto> getAllContestantForCompetition(Long competitionId) {
-        return contestantRepo.findByCompetitionId(competitionId).stream().map(Contestant::toDto).collect(Collectors.toList());
-    }
-
 
     private void newDtoValidation(ContestantDto dto) {
         if (dto.getCompetition() == null) throw new BadRequestException("Competition cannot be null");

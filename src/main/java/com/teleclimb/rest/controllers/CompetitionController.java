@@ -1,6 +1,9 @@
 package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.CompetitionDto;
+import com.teleclimb.rest.dto.ContestantDto;
+import com.teleclimb.rest.dto.RoundDto;
+import com.teleclimb.rest.services.CompetitionExtendedService;
 import com.teleclimb.rest.services.CompetitionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +18,7 @@ import java.util.List;
 @Api(tags = "competition")
 public class CompetitionController {
     private final CompetitionService service;
+    private final CompetitionExtendedService additionalService;
 
     @ApiOperation(value = "Get all competitions")
     @GetMapping("/all")
@@ -45,4 +49,22 @@ public class CompetitionController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
+
+    // Extended
+
+    @ApiOperation(value = "Get all contestants, belonging to competition")
+    @GetMapping("/{id}/contestants")
+    public List<ContestantDto> getAllContestants(@PathVariable Long id) {
+        return additionalService.getAllContestants(id);
+    }
+
+    @ApiOperation(value = "Get all rounds, belonging to competition")
+    @GetMapping("/{id}/rounds")
+    public List<RoundDto> getAllRounds(@PathVariable Long id) {
+        return additionalService.getAllRounds(id);
+    }
+
+    //todo add endpoint - generate rounds (potrzebuję dodatkowego pola - schemat rund? - przeczytać przepisy)
+    //todo add endpoint - remove rounds
 }

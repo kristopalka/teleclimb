@@ -30,6 +30,4 @@ public class RoundController {
 
 
     //todo add endpoint - get all starts in this round
-    //todo add endpoint - generate rounds   }
-    //todo add endpoint - remove rounds     } czy na pewno tutaj? może w dodatkowym service i controller?
 }

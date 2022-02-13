@@ -46,9 +46,4 @@ public class ContestantController {
         service.delete(id);
     }
 
-    @ApiOperation(value = "Get all contestants, belonging to competition")
-    @GetMapping("/all/by/competition/{competitionId}")
-    public List<ContestantDto> getAllContestantsForCompetition(@PathVariable Long competitionId) {
-        return service.getAllContestantForCompetition(competitionId);
-    }
 }
