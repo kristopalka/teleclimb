@@ -17,7 +17,7 @@ public class CategoryController {
     private final CategoryService service;
 
     @ApiOperation(value = "Get all categories", notes = "categories are constant")
-    @GetMapping("")
+    @GetMapping("/all")
     public List<CategoryDto> getAll() {
         return service.getAll();
     }

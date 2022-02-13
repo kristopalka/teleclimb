@@ -1,6 +1,6 @@
 package com.teleclimb.rest.competition;
 
-import com.teleclimb.rest.contestant.ContestantEntity;
+import com.teleclimb.rest.contestant.Contestant;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/competitions")
+@RequestMapping("/competition")
 public class CompetitionController {
     private final CompetitionService service;
 
     @ApiOperation(value = "Get all competitions")
-    @GetMapping("")
+    @GetMapping("/all")
     public List<CompetitionDto> getAll() {
         return service.getAll();
     }
@@ -31,7 +31,7 @@ public class CompetitionController {
         service.add(competition);
     }
 
-    @ApiOperation(value = "Update competition", notes = "Only can by updated after creation.")
+    @ApiOperation(value = "Update competition", notes = "Only name can by updated after creation.")
     @PutMapping("/{id}")
     public void update(@RequestBody CompetitionDto competition, @PathVariable Long id) {
         service.update(id, competition);
@@ -46,7 +46,7 @@ public class CompetitionController {
 
     @ApiOperation(value = "Get all contestants, belonging to this competition")
     @GetMapping("/{id}/contestants")
-    public List<ContestantEntity> getAllContestantsForCompetition(@PathVariable Long id) {
+    public List<Contestant> getAllContestantsForCompetition(@PathVariable Long id) {
         return service.getAllContestantForCompetition(id);
     }
 }
