@@ -1,5 +1,6 @@
 package com.teleclimb.rest.category;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/category")
+@Api(tags = "category")
 public class CategoryController {
     private final CategoryService service;
 

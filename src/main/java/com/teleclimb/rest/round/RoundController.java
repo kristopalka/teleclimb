@@ -1,5 +1,6 @@
 package com.teleclimb.rest.round;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/round")
+@Api(tags = "round")
 public class RoundController {
     private final RoundService service;
 
