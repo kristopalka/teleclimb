@@ -39,13 +39,13 @@ public class CompetitionService {
     }
 
     public void delete(Long id) {
+        //todo remove all belonging fields (contestants and rounds)
         competitionRepo.deleteById(id);
     }
 
     public List<ContestantEntity> getAllContestantForCompetition(Long competitionId) {
         Competition competition = new Competition();
         competition.setId(competitionId);
-
         return contestantRepo.findByCompetitionId(competition);
     }
 
@@ -56,6 +56,8 @@ public class CompetitionService {
         if(dto.getCompetitionType() == null) throw new BadRequestException("CompetitionType cannot be null");
         if(dto.getGender() == null) throw new BadRequestException("Gender cannot be null");
         if(dto.getCategory() == null) throw new BadRequestException("Category cannot be null");
+
+        if(!competitionRepo.existsById(dto.getCategory().getId())) throw new BadRequestException("Category with specific id does not exist");
     }
 
     private CompetitionDto entityToDto(Competition competition) {
@@ -73,7 +75,7 @@ public class CompetitionService {
     private Competition dtoToEntity(CompetitionDto dto) {
         Competition competition = new Competition();
 
-        competition.setId(dto.getId());
+        // this way, id should not be rewritten
         competition.setName(dto.getName());
         competition.setGender(dto.getGender());
         competition.setCategory(dto.getCategory());
