@@ -40,6 +40,7 @@ public class RouteService {
     }
 
     public void delete(Long id) {
+        //todo remove all starts on this route
         routeRepo.deleteById(id);
     }
 
