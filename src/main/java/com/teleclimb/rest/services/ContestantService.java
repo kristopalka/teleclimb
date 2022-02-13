@@ -3,21 +3,16 @@ package com.teleclimb.rest.services;
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.ContestantDto;
-import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.entities.Contestant;
+import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.repositories.ContestantRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-public class ContestantService {
-    private final ContestantRepository contestantRepo;
-    private final CompetitionRepository competitionRepo;
-
+public record ContestantService(ContestantRepository contestantRepo, CompetitionRepository competitionRepo) {
 
     public List<ContestantDto> getAll() {
         return contestantRepo.findAll().stream().map(Contestant::toDto).collect(Collectors.toList());
@@ -38,11 +33,11 @@ public class ContestantService {
     public void update(Long id, ContestantDto newDto) {
         ContestantDto dto = get(id);
 
-        if(newDto.getName() != null) dto.setName(newDto.getName());
-        if(newDto.getLastName() != null) dto.setLastName(newDto.getLastName());
-        if(newDto.getStartNumber() != null) dto.setStartNumber(newDto.getStartNumber());
-        if(newDto.getClubName() != null) dto.setClubName(newDto.getClubName());
-        if(newDto.getBirthDate() != null) dto.setBirthDate(newDto.getBirthDate());
+        if (newDto.getName() != null) dto.setName(newDto.getName());
+        if (newDto.getLastName() != null) dto.setLastName(newDto.getLastName());
+        if (newDto.getStartNumber() != null) dto.setStartNumber(newDto.getStartNumber());
+        if (newDto.getClubName() != null) dto.setClubName(newDto.getClubName());
+        if (newDto.getBirthDate() != null) dto.setBirthDate(newDto.getBirthDate());
 
         contestantRepo.save(dto.toEntity());
     }
@@ -57,7 +52,6 @@ public class ContestantService {
     }
 
 
-    
     private void newDtoValidation(ContestantDto dto) {
         if (dto.getCompetition() == null) throw new BadRequestException("Competition cannot be null");
 

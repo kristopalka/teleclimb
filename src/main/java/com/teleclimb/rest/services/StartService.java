@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-public class StartService {
-    private final StartRepository startRepo;
+public record StartService(StartRepository startRepo) {
 
     public List<StartDto> getAll() {
         return startRepo.findAll().stream().map(Start::toDto).collect(Collectors.toList());

@@ -2,19 +2,16 @@ package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.entities.Route;
 import com.teleclimb.rest.dto.RouteDto;
+import com.teleclimb.rest.entities.Route;
 import com.teleclimb.rest.repositories.RouteRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-public class RouteService {
-    private final RouteRepository routeRepo;
+public record RouteService(RouteRepository routeRepo) {
 
     public List<RouteDto> getAll() {
         return routeRepo.findAll().stream().map(Route::toDto).collect(Collectors.toList());
@@ -35,9 +32,9 @@ public class RouteService {
     public void update(Long id, RouteDto newDto) {
         RouteDto dto = get(id);
 
-        if(newDto.getName() != null) dto.setName(newDto.getName());
-        if(newDto.getDescription() != null) dto.setDescription(newDto.getDescription());
-        if(newDto.getTimeLimitSeconds() != null) dto.setName(newDto.getName());
+        if (newDto.getName() != null) dto.setName(newDto.getName());
+        if (newDto.getDescription() != null) dto.setDescription(newDto.getDescription());
+        if (newDto.getTimeLimitSeconds() != null) dto.setName(newDto.getName());
 
         routeRepo.save(dto.toEntity());
     }
