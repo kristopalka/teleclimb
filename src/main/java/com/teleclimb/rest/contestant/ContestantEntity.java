@@ -1,6 +1,6 @@
 package com.teleclimb.rest.contestant;
 
-import com.teleclimb.rest.competition.CompetitionEntity;
+import com.teleclimb.rest.competition.Competition;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ public class ContestantEntity {
 
     @ManyToOne
     @JoinColumn(name = "competition_id")
-    private CompetitionEntity competition;
+    private Competition competition;
 
     private String name;
 

@@ -13,22 +13,22 @@ public class CompetitionController {
     private final CompetitionService service;
 
     @GetMapping("")
-    public List<CompetitionEntity> getAll() {
+    public List<CompetitionDto> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public CompetitionEntity get(@PathVariable Long id) {
+    public CompetitionDto get(@PathVariable Long id) {
         return service.get(id);
     }
 
     @PostMapping("")
-    public void add(@RequestBody CompetitionEntity competition) {
+    public void add(@RequestBody CompetitionDto competition) {
         service.add(competition);
     }
 
     @PutMapping("/{id}")
-    public void update(@RequestBody CompetitionEntity competition, @PathVariable Long id) {
+    public void update(@RequestBody CompetitionDto competition, @PathVariable Long id) {
         service.update(id, competition);
     }
 

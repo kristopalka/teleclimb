@@ -17,12 +17,12 @@ public class CategoryController {
 
     @ExternalDocumentation
     @GetMapping("")
-    public List<Category> getAll() {
+    public List<CategoryDto> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Category get(@PathVariable Long id) {
+    public CategoryDto get(@PathVariable Long id) {
         return service.get(id);
     }
 }
