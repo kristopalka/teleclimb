@@ -1,6 +1,6 @@
 package com.teleclimb.rest.category;
 
-import com.teleclimb.exceptions.NotFoundException;
+import com.teleclimb.responses.error.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +11,12 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository repo;
 
-    public List<CategoryEntity> getAll() {
+    public List<Category> getAll() {
         return repo.findAll();
     }
 
-    public CategoryEntity get(Long id) {
+    public Category get(Long id) {
         return repo.findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("Not found category by with: " + id));
     }
 }

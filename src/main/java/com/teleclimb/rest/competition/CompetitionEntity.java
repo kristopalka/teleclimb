@@ -2,7 +2,7 @@ package com.teleclimb.rest.competition;
 
 import com.teleclimb.enums.CompetitionType;
 import com.teleclimb.enums.Gender;
-import com.teleclimb.rest.category.CategoryEntity;
+import com.teleclimb.rest.category.Category;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,7 +19,7 @@ public class CompetitionEntity {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private CategoryEntity category;
+    private Category category;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

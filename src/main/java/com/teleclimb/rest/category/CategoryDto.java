@@ -2,14 +2,8 @@ package com.teleclimb.rest.category;
 
 import lombok.Data;
 
-import javax.persistence.*;
-
-@Entity
 @Data
-@Table(name = "category")
-public class CategoryEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CategoryDto {
     private Long id;
 
     private String name;

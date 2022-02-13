@@ -1,6 +1,6 @@
 package com.teleclimb.rest.route;
 
-import com.teleclimb.exceptions.NotFoundException;
+import com.teleclimb.responses.error.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class RouteService {
 
     public RouteEntity get(Long id) {
         return repo.findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("Not found route with id: " + id));
     }
 
     public void add(RouteEntity route) {
@@ -31,7 +31,7 @@ public class RouteService {
                     r.setDescription(route.getDescription());
                     return repo.save(r);
                 })
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("Not found route with id: " + id));
     }
 
     public void delete(Long id) {
