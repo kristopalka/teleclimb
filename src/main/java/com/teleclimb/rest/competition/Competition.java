@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "competition")
 public class Competition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

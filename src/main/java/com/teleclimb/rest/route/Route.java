@@ -7,8 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "route")
-public class RouteEntity {
+public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,15 +1,13 @@
-package com.teleclimb.rest.contestant;
+package com.teleclimb.rest.round;
 
 import com.teleclimb.rest.competition.Competition;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Data
-@Table(name = "contestant")
-public class ContestantEntity {
+public class Round {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,11 +18,6 @@ public class ContestantEntity {
 
     private String name;
 
-    private String lastName;
+    private Integer maxContestants;
 
-    private String startNumber;
-
-    private String clubName;
-
-    private LocalDate birthDate;
 }
