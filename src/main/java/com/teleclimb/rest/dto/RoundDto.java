@@ -8,17 +8,18 @@ import lombok.Data;
 public class RoundDto {
     private Long id;
 
-    private Competition competition;
+    private CompetitionDto competition;
 
     private String name;
 
     private Integer maxContestants;
 
+
     public Round toEntity() {
         Round round = new Round();
 
         round.setId(this.getId());
-        round.setCompetition(this.getCompetition());
+        round.setCompetition(this.getCompetition().toEntity());
         round.setName(this.getName());
         round.setMaxContestants(this.getMaxContestants());
 

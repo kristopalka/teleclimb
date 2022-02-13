@@ -32,7 +32,7 @@ public class Competition {
         dto.setId(this.getId());
         dto.setName(this.getName());
         dto.setGender(this.getGender());
-        dto.setCategory(this.getCategory());
+        dto.setCategory(this.getCategory().toDto());
         dto.setCompetitionType(this.getCompetitionType());
 
         return dto;

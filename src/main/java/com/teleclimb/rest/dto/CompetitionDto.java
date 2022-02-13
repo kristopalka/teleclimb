@@ -12,11 +12,12 @@ public class CompetitionDto {
 
     private String name;
 
-    private Category category;
+    private CategoryDto category;
 
     private Gender gender;
 
     private CompetitionType competitionType;
+
 
     public Competition toEntity() {
         Competition competition = new Competition();
@@ -24,7 +25,7 @@ public class CompetitionDto {
         competition.setId(this.getId());
         competition.setName(this.getName());
         competition.setGender(this.getGender());
-        competition.setCategory(this.getCategory());
+        competition.setCategory(this.getCategory().toEntity());
         competition.setCompetitionType(this.getCompetitionType());
 
         return competition;

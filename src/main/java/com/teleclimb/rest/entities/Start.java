@@ -31,9 +31,9 @@ public class Start {
         StartDto dto = new StartDto();
 
         dto.setId(this.getId());
-        dto.setRound(this.getRound());
-        dto.setRoute(this.getRoute());
-        dto.setContestant(this.getContestant());
+        dto.setRound(this.getRound().toDto());
+        dto.setRoute(this.getRoute().toDto());
+        dto.setContestant(this.getContestant().toDto());
         dto.setResult(this.getResult());
 
         return dto;

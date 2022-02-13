@@ -24,7 +24,7 @@ public class Round {
         RoundDto dto = new RoundDto();
 
         dto.setId(this.getId());
-        dto.setCompetition(this.getCompetition());
+        dto.setCompetition(this.getCompetition().toDto());
         dto.setName(this.getName());
         dto.setMaxContestants(this.getMaxContestants());
 

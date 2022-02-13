@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class ContestantDto {
     private Long id;
 
-    private Competition competition;
+    private CompetitionDto competition;
 
     private String name;
 
@@ -22,11 +22,12 @@ public class ContestantDto {
 
     private LocalDate birthDate;
 
+
     public Contestant toEntity() {
         Contestant competition = new Contestant();
 
         competition.setId(this.getId());
-        competition.setCompetition(this.getCompetition());
+        competition.setCompetition(this.getCompetition().toEntity());
         competition.setName(this.getName());
         competition.setLastName(this.getLastName());
         competition.setStartNumber(this.getStartNumber());

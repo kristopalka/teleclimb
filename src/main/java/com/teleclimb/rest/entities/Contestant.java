@@ -31,7 +31,7 @@ public class Contestant {
         ContestantDto dto = new ContestantDto();
 
         dto.setId(this.getId());
-        dto.setCompetition(this.getCompetition());
+        dto.setCompetition(this.getCompetition().toDto());
         dto.setName(this.getName());
         dto.setLastName(this.getLastName());
         dto.setStartNumber(this.getStartNumber());
