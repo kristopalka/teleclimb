@@ -1,5 +1,6 @@
 package com.teleclimb.rest.category;
 
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +16,13 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService service;
 
-    @ExternalDocumentation
+    @ApiOperation(value = "Get all categories", notes = "categories are constant")
     @GetMapping("")
     public List<CategoryDto> getAll() {
         return service.getAll();
     }
 
+    @ApiOperation(value = "Get category by id")
     @GetMapping("/{id}")
     public CategoryDto get(@PathVariable Long id) {
         return service.get(id);
