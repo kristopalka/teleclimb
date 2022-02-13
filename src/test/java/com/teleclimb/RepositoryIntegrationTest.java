@@ -1,7 +1,7 @@
 package com.teleclimb;
 
-import com.teleclimb.rest.category.Category;
-import com.teleclimb.rest.category.CategoryRepository;
+import com.teleclimb.rest.entities.Category;
+import com.teleclimb.rest.repositories.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
