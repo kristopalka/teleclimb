@@ -5,28 +5,34 @@ import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.RouteDto;
 import com.teleclimb.rest.entities.Route;
 import com.teleclimb.rest.repositories.RouteRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public record RouteService(RouteRepository routeRepo) {
+public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
 
     public List<RouteDto> getAll() {
-        return routeRepo.findAll().stream().map(Route::toDto).collect(Collectors.toList());
+        return routeRepo.findAll()
+                .stream()
+                .map(r -> mapper.map(r, RouteDto.class))
+                .collect(Collectors.toList());
     }
 
     public RouteDto get(Long id) {
-        return routeRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found route with id: " + id)).toDto();
+        Route route = routeRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not found route with id: " + id));
+
+        return mapper.map(route, RouteDto.class);
     }
 
     public void add(RouteDto dto) {
         dto.setId(null);
         newDtoValidation(dto);
 
-        routeRepo.save(dto.toEntity());
+        routeRepo.save(mapper.map(dto, Route.class));
     }
 
     public void update(Long id, RouteDto newDto) {
@@ -36,7 +42,7 @@ public record RouteService(RouteRepository routeRepo) {
         if (newDto.getDescription() != null) dto.setDescription(newDto.getDescription());
         if (newDto.getTimeLimitSeconds() != null) dto.setName(newDto.getName());
 
-        routeRepo.save(dto.toEntity());
+        routeRepo.save(mapper.map(dto, Route.class));
     }
 
     public void delete(Long id) {

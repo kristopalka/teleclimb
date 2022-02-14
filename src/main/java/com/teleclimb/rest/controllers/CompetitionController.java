@@ -1,7 +1,7 @@
 package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.CompetitionDto;
-import com.teleclimb.rest.dto.ContestantDto;
+import com.teleclimb.rest.dto.custom.CompetitionWithParticipantsList;
 import com.teleclimb.rest.dto.RoundDto;
 import com.teleclimb.rest.services.CompetitionExtendedService;
 import com.teleclimb.rest.services.CompetitionService;
@@ -44,7 +44,7 @@ public class CompetitionController {
         service.update(id, competition);
     }
 
-    @ApiOperation(value = "Remove competition", notes = "This operation will also remove all rounds and contestants belonging to competition.")
+    @ApiOperation(value = "Remove competition", notes = "This operation will also remove all rounds and participants belonging to competition.")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.delete(id);
@@ -53,10 +53,10 @@ public class CompetitionController {
 
     // Extended
 
-    @ApiOperation(value = "Get all contestants, belonging to competition")
-    @GetMapping("/{id}/contestants")
-    public List<ContestantDto> getAllContestants(@PathVariable Long id) {
-        return additionalService.getAllContestants(id);
+    @ApiOperation(value = "Get all participants, belonging to competition")
+    @GetMapping("/{id}/participants")
+    public CompetitionWithParticipantsList getAllParticipants(@PathVariable Long id) {
+        return additionalService.getAllParticipants(id);
     }
 
     @ApiOperation(value = "Get all rounds, belonging to competition")

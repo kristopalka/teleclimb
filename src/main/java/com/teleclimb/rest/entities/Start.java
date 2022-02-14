@@ -2,6 +2,8 @@ package com.teleclimb.rest.entities;
 
 import com.teleclimb.rest.dto.StartDto;
 import lombok.Data;
+import springfox.documentation.swagger2.mappers.ModelMapper;
+import springfox.documentation.swagger2.mappers.ModelMapperImpl;
 
 import javax.persistence.*;
 
@@ -21,21 +23,9 @@ public class Start {
     private Route route;
 
     @ManyToOne
-    @JoinColumn(name = "contestant_id")
-    private Contestant contestant;
+    @JoinColumn(name = "participant_id")
+    private Participant participant;
 
     private String result;
 
-
-    public StartDto toDto() {
-        StartDto dto = new StartDto();
-
-        dto.setId(this.getId());
-        dto.setRound(this.getRound().toDto());
-        dto.setRoute(this.getRoute().toDto());
-        dto.setContestant(this.getContestant().toDto());
-        dto.setResult(this.getResult());
-
-        return dto;
-    }
 }

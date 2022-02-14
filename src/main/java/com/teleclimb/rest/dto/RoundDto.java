@@ -1,6 +1,5 @@
 package com.teleclimb.rest.dto;
 
-import com.teleclimb.rest.entities.Competition;
 import com.teleclimb.rest.entities.Round;
 import lombok.Data;
 
@@ -12,17 +11,6 @@ public class RoundDto {
 
     private String name;
 
-    private Integer maxContestants;
+    private Integer maxParticipants;
 
-
-    public Round toEntity() {
-        Round round = new Round();
-
-        round.setId(this.getId());
-        round.setCompetition(this.getCompetition().toEntity());
-        round.setName(this.getName());
-        round.setMaxContestants(this.getMaxContestants());
-
-        return round;
-    }
 }

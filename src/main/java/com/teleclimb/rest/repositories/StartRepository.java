@@ -10,5 +10,5 @@ public interface StartRepository extends JpaRepository<Start, Long> {
 
     List<Start> findByRouteId(Long routeId);
 
-    List<Start> findByContestantId(Long contestantId);
+    List<Start> findByParticipantId(Long participantId);
 }

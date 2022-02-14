@@ -4,29 +4,36 @@ import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.CompetitionDto;
 import com.teleclimb.rest.entities.Competition;
+import com.teleclimb.rest.entities.CompetitionSchema;
 import com.teleclimb.rest.repositories.CategoryRepository;
 import com.teleclimb.rest.repositories.CompetitionRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public record CompetitionService(CompetitionRepository competitionRepo, CategoryRepository categoryRepo) {
+public record CompetitionService(ModelMapper mapper, CompetitionRepository competitionRepo, CategoryRepository categoryRepo) {
 
     public List<CompetitionDto> getAll() {
-        return competitionRepo.findAll().stream().map(Competition::toDto).collect(Collectors.toList());
+        return competitionRepo.findAll()
+                .stream()
+                .map(c -> mapper.map(c, CompetitionDto.class))
+                .collect(Collectors.toList());
     }
 
     public CompetitionDto get(Long id) {
-        return competitionRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id)).toDto();
+        Competition competition = competitionRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id));
+
+        return mapper.map(competition, CompetitionDto.class);
     }
 
     public void add(CompetitionDto dto) {
         dto.setId(null);
         newDtoValidation(dto);
-        competitionRepo.save(dto.toEntity());
+        competitionRepo.save(mapper.map(dto, Competition.class));
     }
 
     public void update(Long id, CompetitionDto newDto) {
@@ -34,7 +41,7 @@ public record CompetitionService(CompetitionRepository competitionRepo, Category
 
         if (newDto.getName() != null) dto.setName(newDto.getName());
 
-        competitionRepo.save(dto.toEntity());
+        competitionRepo.save(mapper.map(dto, Competition.class));
     }
 
     public void delete(Long id) {

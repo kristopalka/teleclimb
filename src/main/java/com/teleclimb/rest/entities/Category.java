@@ -2,6 +2,8 @@ package com.teleclimb.rest.entities;
 
 import com.teleclimb.rest.dto.CategoryDto;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
+import springfox.documentation.swagger2.mappers.ModelMapperImpl;
 
 import javax.persistence.*;
 
@@ -20,15 +22,4 @@ public class Category {
 
     private Integer toAge;
 
-    public CategoryDto toDto() {
-        CategoryDto dto = new CategoryDto();
-
-        dto.setId(this.getId());
-        dto.setShortName(this.getShortName());
-        dto.setName(this.getName());
-        dto.setFromAge(this.getFromAge());
-        dto.setToAge(this.getToAge());
-
-        return dto;
-    }
 }
