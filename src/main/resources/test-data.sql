@@ -1,4 +1,4 @@
-INSERT INTO COMPETITION (ID, NAME, COMPETITION_TYPE, GENDER, CATEGORY_ID)
+INSERT INTO COMPETITION (ID, NAME, DISCIPLINE, GENDER, CATEGORY_ID)
 VALUES
     (1, 'Puchar Polski', 'LEAD', 'MALE', '4'),
     (2, 'Puchar Polski', 'LEAD', 'FEMALE', '4');
@@ -13,7 +13,7 @@ VALUES
     (5, 'Aleksandra', 'Kotwas', 2355, 'AZS AWF', '2010-08-26', 2),
     (6, 'Kinga', 'Pałka', 5442, 'Pałac młodzieży Tarnów', '2015-08-26', 2);
 
-INSERT INTO ROUTE (ID, NAME, DESCRIPTION, COMPETITION_TYPE)
+INSERT INTO ROUTE (ID, NAME, DESCRIPTION, DISCIPLINE)
 VALUES
     (1, 'R1', 'Droga męska 8a czerwona', 'LEAD'),
     (2, 'R2', 'Droga żeńska 7b niebieska', 'LEAD');
