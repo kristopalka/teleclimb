@@ -1,8 +1,7 @@
 package com.teleclimb.rest.entities;
 
-import com.teleclimb.enums.CompetitionType;
+import com.teleclimb.enums.Discipline;
 import com.teleclimb.enums.Gender;
-import com.teleclimb.rest.dto.CompetitionDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,6 +23,6 @@ public class Competition {
     private Gender gender;
 
     @Enumerated(EnumType.STRING)
-    private CompetitionType competitionType;
+    private Discipline discipline;
 
 }

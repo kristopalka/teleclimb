@@ -52,6 +52,6 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
 
 
     private void newDtoValidation(RouteDto dto) {
-        if (dto.getCompetitionType() == null) throw new BadRequestException("CompetitionType cannot be null");
+        if (dto.getDiscipline() == null) throw new BadRequestException("CompetitionType cannot be null");
     }
 }

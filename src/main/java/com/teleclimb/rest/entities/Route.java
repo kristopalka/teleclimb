@@ -1,7 +1,6 @@
 package com.teleclimb.rest.entities;
 
-import com.teleclimb.enums.CompetitionType;
-import com.teleclimb.rest.dto.RouteDto;
+import com.teleclimb.enums.Discipline;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public class Route {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private CompetitionType competitionType;
+    private Discipline discipline;
 
     private Integer timeLimitSeconds;
 

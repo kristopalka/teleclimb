@@ -3,7 +3,6 @@ package com.teleclimb.rest.services;
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.ParticipantDto;
-import com.teleclimb.rest.dto.custom.ParticipantRawDto;
 import com.teleclimb.rest.entities.Participant;
 import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.repositories.ParticipantRepository;

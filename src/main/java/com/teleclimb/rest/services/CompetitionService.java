@@ -4,7 +4,6 @@ import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.CompetitionDto;
 import com.teleclimb.rest.entities.Competition;
-import com.teleclimb.rest.entities.CompetitionSchema;
 import com.teleclimb.rest.repositories.CategoryRepository;
 import com.teleclimb.rest.repositories.CompetitionRepository;
 import org.modelmapper.ModelMapper;
@@ -52,7 +51,7 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
 
     private void newDtoValidation(CompetitionDto dto) {
         if (dto.getName() == null) throw new BadRequestException("Name cannot be null");
-        if (dto.getCompetitionType() == null) throw new BadRequestException("CompetitionType cannot be null");
+        if (dto.getDiscipline() == null) throw new BadRequestException("CompetitionType cannot be null");
         if (dto.getGender() == null) throw new BadRequestException("Gender cannot be null");
         if (dto.getCategory() == null) throw new BadRequestException("Category cannot be null");
 

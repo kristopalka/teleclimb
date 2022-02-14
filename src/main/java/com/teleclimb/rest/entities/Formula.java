@@ -1,21 +1,20 @@
 package com.teleclimb.rest.entities;
 
-import com.teleclimb.enums.CompetitionType;
-import com.teleclimb.rest.dto.CompetitionSchemaDto;
+import com.teleclimb.enums.Discipline;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-public class CompetitionSchema {
+public class Formula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String identifier;
 
-    private CompetitionType competitionType;
+    private Discipline discipline;
 
     private String name;
 

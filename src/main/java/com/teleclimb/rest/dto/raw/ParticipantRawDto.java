@@ -1,4 +1,4 @@
-package com.teleclimb.rest.dto.custom;
+package com.teleclimb.rest.dto.raw;
 
 import lombok.Data;
 

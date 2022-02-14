@@ -1,7 +1,6 @@
 package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.ParticipantDto;
-import com.teleclimb.rest.dto.custom.ParticipantRawDto;
 import com.teleclimb.rest.services.ParticipantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

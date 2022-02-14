@@ -1,5 +1,5 @@
 package com.teleclimb.enums;
 
-public enum CompetitionType {
+public enum Discipline {
     BOULDERING, LEAD, SPEED
 }

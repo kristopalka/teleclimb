@@ -14,18 +14,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/competition_schemas")
-@Api(tags = "competition schemas")
-public class CompetitionSchemaController {
+@RequestMapping("/formula")
+@Api(tags = "competition formula")
+public class FormulaController {
     private final CategoryService service;
 
-    @ApiOperation(value = "Get all schemas", notes = "Competition schemas are hardcoded")
+    @ApiOperation(value = "Get all schemas", notes = "Competition formulas are hardcoded")
     @GetMapping("/all")
     public List<CategoryDto> getAll() {
         return service.getAll();
     }
 
-    @ApiOperation(value = "Get schema by id")
+    @ApiOperation(value = "Get formula by id")
     @GetMapping("/{id}")
     public CategoryDto get(@PathVariable Long id) {
         return service.get(id);

@@ -4,15 +4,15 @@ import com.teleclimb.enums.Discipline;
 import lombok.Data;
 
 @Data
-public class RouteDto {
+public class FormulaDto {
     private Long id;
+
+    private String identifier;
 
     private Discipline discipline;
 
     private String name;
 
     private String description;
-
-    private Integer timeLimitSeconds;
 
 }

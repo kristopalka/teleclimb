@@ -3,6 +3,7 @@ package com.teleclimb.rest.controllers;
 import com.teleclimb.rest.dto.CompetitionDto;
 import com.teleclimb.rest.dto.custom.CompetitionWithParticipantsList;
 import com.teleclimb.rest.dto.RoundDto;
+import com.teleclimb.rest.dto.custom.CompetitionWithRoundsList;
 import com.teleclimb.rest.services.CompetitionExtendedService;
 import com.teleclimb.rest.services.CompetitionService;
 import io.swagger.annotations.Api;
@@ -53,15 +54,15 @@ public class CompetitionController {
 
     // Extended
 
-    @ApiOperation(value = "Get all participants, belonging to competition")
+    @ApiOperation(value = "Return CUSTOM OBJECT: competition and participants list")
     @GetMapping("/{id}/participants")
     public CompetitionWithParticipantsList getAllParticipants(@PathVariable Long id) {
         return additionalService.getAllParticipants(id);
     }
 
-    @ApiOperation(value = "Get all rounds, belonging to competition")
+    @ApiOperation(value = "Return CUSTOM OBJECT: competition and rounds list")
     @GetMapping("/{id}/rounds")
-    public List<RoundDto> getAllRounds(@PathVariable Long id) {
+    public CompetitionWithRoundsList getAllRounds(@PathVariable Long id) {
         return additionalService.getAllRounds(id);
     }
 
