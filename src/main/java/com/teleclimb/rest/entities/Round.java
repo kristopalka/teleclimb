@@ -1,6 +1,5 @@
 package com.teleclimb.rest.entities;
 
-import com.teleclimb.rest.dto.RoundDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +10,8 @@ public class Round {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long sequenceNumber;
 
     @ManyToOne
     @JoinColumn(name = "competition_id")

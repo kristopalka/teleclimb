@@ -7,6 +7,8 @@ import lombok.Data;
 public class RoundDto {
     private Long id;
 
+    private Long sequenceNumber;
+
     private CompetitionDto competition;
 
     private String name;
