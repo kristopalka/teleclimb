@@ -1,6 +1,5 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.InternalServerError;
 import com.teleclimb.rest.dto.CompetitionDto;
 import com.teleclimb.rest.dto.custom.CompetitionWithParticipantsList;
@@ -47,21 +46,29 @@ public record CompetitionAdditionalService(ModelMapper mapper, ParticipantReposi
         return dto;
     }
 
+
     public CompetitionWithRoundsList generateRounds(Long competitionId) {
         try {
-            Competition competition = competitionRepo.getById(competitionId);
+            if (getAllRounds(competitionId).getRounds().size() != 0)
+                throw new RuntimeException("there are already rounds for this competition");
 
-            RoundsGenerator generator = new RoundsGenerator(mapper.map(competition, CompetitionDto.class));
-            List<Round> rounds = generator.generate()
-                    .stream()
-                    .map(r -> mapper.map(r, Round.class))
-                    .toList();
-
-            roundRepo.saveAll(rounds);
-
-            return getAllRounds(competitionId);
+            return tryToGenerateRounds(competitionId);
         } catch (Exception e) {
-            throw new InternalServerError("Something went wrong while generating rounds: " + e.getMessage());
+            throw new InternalServerError("Something went wrong while generating rounds: '" + e.getMessage() + "'");
         }
+    }
+
+    private CompetitionWithRoundsList tryToGenerateRounds(Long competitionId) {
+        Competition competition = competitionRepo.getById(competitionId);
+
+        RoundsGenerator generator = new RoundsGenerator(mapper.map(competition, CompetitionDto.class));
+        List<Round> rounds = generator.generate()
+                .stream()
+                .map(r -> mapper.map(r, Round.class))
+                .toList();
+
+        roundRepo.saveAll(rounds);
+
+        return getAllRounds(competitionId);
     }
 }

@@ -1,6 +1,5 @@
 package com.teleclimb.rest.entities;
 
-import com.teleclimb.enums.Discipline;
 import com.teleclimb.enums.Gender;
 import lombok.Data;
 

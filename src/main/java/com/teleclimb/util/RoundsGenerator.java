@@ -1,6 +1,5 @@
 package com.teleclimb.util;
 
-import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.rest.dto.CompetitionDto;
 import com.teleclimb.rest.dto.RoundDto;
 
@@ -17,6 +16,20 @@ public class RoundsGenerator {
     }
 
     public List<RoundDto> generate() {
-        throw new BadRequestException("not implemented yet");
+        String identifier = competition.getFormula().getIdentifier();
+
+        switch (identifier) {
+            case "LEAD_DEFAULT":
+                generateLeadDefault();
+                break;
+            default:
+                throw new RuntimeException("wrong formula identifier");
+        }
+
+        return rounds;
+    }
+
+    private void generateLeadDefault() {
+
     }
 }

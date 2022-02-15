@@ -1,7 +1,7 @@
 package com.teleclimb.rest.dto;
 
-import com.teleclimb.enums.Discipline;
 import com.teleclimb.enums.Gender;
+import com.teleclimb.rest.entities.Formula;
 import lombok.Data;
 
 @Data
@@ -14,6 +14,5 @@ public class CompetitionDto {
 
     private Gender gender;
 
-    private Discipline discipline;
-
+    private Formula formula;
 }
