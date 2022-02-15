@@ -1,19 +1,26 @@
 package com.teleclimb.rest.services;
 
+import com.teleclimb.responses.error.exception.BadRequestException;
+import com.teleclimb.responses.error.exception.InternalServerError;
 import com.teleclimb.rest.dto.CompetitionDto;
 import com.teleclimb.rest.dto.custom.CompetitionWithParticipantsList;
-import com.teleclimb.rest.dto.RoundDto;
 import com.teleclimb.rest.dto.custom.CompetitionWithRoundsList;
 import com.teleclimb.rest.dto.raw.ParticipantRawDto;
 import com.teleclimb.rest.dto.raw.RoundRawDto;
+import com.teleclimb.rest.entities.Competition;
+import com.teleclimb.rest.entities.Round;
 import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.repositories.ParticipantRepository;
 import com.teleclimb.rest.repositories.RoundRepository;
+import com.teleclimb.util.RoundsGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public record CompetitionExtendedService(ModelMapper mapper, ParticipantRepository contestantRepo, RoundRepository roundRepo, CompetitionRepository competitionRepo){
+public record CompetitionAdditionalService(ModelMapper mapper, ParticipantRepository contestantRepo,
+                                           RoundRepository roundRepo, CompetitionRepository competitionRepo) {
     public CompetitionWithParticipantsList getAllParticipants(Long competitionId) {
         CompetitionWithParticipantsList dto = new CompetitionWithParticipantsList();
 
@@ -38,5 +45,23 @@ public record CompetitionExtendedService(ModelMapper mapper, ParticipantReposito
         dto.setCompetition(mapper.map(competitionRepo.getById(competitionId), CompetitionDto.class));
 
         return dto;
+    }
+
+    public CompetitionWithRoundsList generateRounds(Long competitionId) {
+        try {
+            Competition competition = competitionRepo.getById(competitionId);
+
+            RoundsGenerator generator = new RoundsGenerator(mapper.map(competition, CompetitionDto.class));
+            List<Round> rounds = generator.generate()
+                    .stream()
+                    .map(r -> mapper.map(r, Round.class))
+                    .toList();
+
+            roundRepo.saveAll(rounds);
+
+            return getAllRounds(competitionId);
+        } catch (Exception e) {
+            throw new InternalServerError("Something went wrong while generating rounds: " + e.getMessage());
+        }
     }
 }

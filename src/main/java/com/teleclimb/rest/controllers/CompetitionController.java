@@ -2,9 +2,8 @@ package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.CompetitionDto;
 import com.teleclimb.rest.dto.custom.CompetitionWithParticipantsList;
-import com.teleclimb.rest.dto.RoundDto;
 import com.teleclimb.rest.dto.custom.CompetitionWithRoundsList;
-import com.teleclimb.rest.services.CompetitionExtendedService;
+import com.teleclimb.rest.services.CompetitionAdditionalService;
 import com.teleclimb.rest.services.CompetitionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +18,7 @@ import java.util.List;
 @Api(tags = "competition")
 public class CompetitionController {
     private final CompetitionService service;
-    private final CompetitionExtendedService additionalService;
+    private final CompetitionAdditionalService additionalService;
 
     @ApiOperation(value = "Get all competitions")
     @GetMapping("/all")
@@ -64,6 +63,13 @@ public class CompetitionController {
     @GetMapping("/{id}/rounds")
     public CompetitionWithRoundsList getAllRounds(@PathVariable Long id) {
         return additionalService.getAllRounds(id);
+    }
+
+
+    @ApiOperation(value = "Generate rounds for competition based on rounds schema. It generate, save to database and return the same as endpoint /competition/{id}/rounds")
+    @GetMapping("/{id}/rounds/generate")
+    public CompetitionWithRoundsList generateRounds(@PathVariable Long id) {
+        return additionalService.generateRounds(id);
     }
 
     //todo add endpoint - generate rounds (potrzebuję dodatkowego pola - schemat rund? - przeczytać przepisy)
