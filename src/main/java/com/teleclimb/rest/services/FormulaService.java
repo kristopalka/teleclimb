@@ -22,7 +22,7 @@ public record FormulaService(ModelMapper mapper, FormulaRepository repo) {
 
     public FormulaDto get(Long id) {
         Formula schema = repo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found schema by with: " + id));
+                .orElseThrow(() -> new NotFoundException("Not found formula by with: " + id));
 
         return mapper.map(schema, FormulaDto.class);
     }
