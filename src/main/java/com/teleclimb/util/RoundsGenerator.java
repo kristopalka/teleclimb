@@ -1,21 +1,21 @@
 package com.teleclimb.util;
 
-import com.teleclimb.rest.dto.CompetitionDto;
-import com.teleclimb.rest.dto.RoundDto;
+import com.teleclimb.rest.entities.Competition;
+import com.teleclimb.rest.entities.Round;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoundsGenerator {
-    private final CompetitionDto competition;
-    private final List<RoundDto> rounds;
+    private final Competition competition;
+    private final List<Round> rounds;
 
-    public RoundsGenerator(CompetitionDto competition) {
+    public RoundsGenerator(Competition competition) {
         this.competition = competition;
         rounds = new ArrayList<>();
     }
 
-    public List<RoundDto> generate() {
+    public List<Round> generate() {
         String identifier = competition.getFormula().getIdentifier();
 
         switch (identifier) {
@@ -30,6 +30,25 @@ public class RoundsGenerator {
     }
 
     private void generateLeadDefault() {
+        Round eliminationRound = Round.builder()
+                .competition(competition)
+                .name("Eliminacyje")
+                .sequenceNumber(1)
+                .resultCalculatingFunction("?") //todo
+                .numberOfRoutes(2)
+                .maxParticipants(Integer.MAX_VALUE)
+                .build();
 
+        Round finalRound = Round.builder()
+                .competition(competition)
+                .name("Finał")
+                .sequenceNumber(2)
+                .resultCalculatingFunction("?") //todo
+                .numberOfRoutes(1)
+                .maxParticipants(8)
+                .build();
+
+        rounds.add(eliminationRound);
+        rounds.add(finalRound);
     }
 }

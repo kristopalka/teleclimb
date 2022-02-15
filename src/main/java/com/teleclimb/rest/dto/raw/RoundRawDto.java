@@ -1,6 +1,5 @@
 package com.teleclimb.rest.dto.raw;
 
-import com.teleclimb.rest.dto.CompetitionDto;
 import lombok.Data;
 
 @Data

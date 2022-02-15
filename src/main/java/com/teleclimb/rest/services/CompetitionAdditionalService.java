@@ -36,7 +36,7 @@ public record CompetitionAdditionalService(ModelMapper mapper, ParticipantReposi
     public CompetitionWithRoundsList getAllRounds(Long competitionId) {
         CompetitionWithRoundsList dto = new CompetitionWithRoundsList();
 
-        dto.setRounds(contestantRepo.findByCompetitionId(competitionId)
+        dto.setRounds(roundRepo.findByCompetitionId(competitionId)
                 .stream()
                 .map(r -> mapper.map(r, RoundRawDto.class))
                 .toList());
@@ -61,11 +61,8 @@ public record CompetitionAdditionalService(ModelMapper mapper, ParticipantReposi
     private CompetitionWithRoundsList tryToGenerateRounds(Long competitionId) {
         Competition competition = competitionRepo.getById(competitionId);
 
-        RoundsGenerator generator = new RoundsGenerator(mapper.map(competition, CompetitionDto.class));
-        List<Round> rounds = generator.generate()
-                .stream()
-                .map(r -> mapper.map(r, Round.class))
-                .toList();
+        RoundsGenerator generator = new RoundsGenerator(competition);
+        List<Round> rounds = generator.generate();
 
         roundRepo.saveAll(rounds);
 

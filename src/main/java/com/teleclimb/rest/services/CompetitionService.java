@@ -51,7 +51,7 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
 
     private void newDtoValidation(CompetitionDto dto) {
         if (dto.getName() == null) throw new BadRequestException("Name cannot be null");
-        if (dto.getDiscipline() == null) throw new BadRequestException("CompetitionType cannot be null");
+        if (dto.getFormula() == null) throw new BadRequestException("Formula cannot be null");
         if (dto.getGender() == null) throw new BadRequestException("Gender cannot be null");
         if (dto.getCategory() == null) throw new BadRequestException("Category cannot be null");
 
