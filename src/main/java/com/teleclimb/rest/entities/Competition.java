@@ -22,7 +22,8 @@ public class Competition {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Enumerated(EnumType.STRING)
-    private Discipline discipline;
+    @ManyToOne
+    @JoinColumn(name = "formula_id")
+    private Formula formula;
 
 }
