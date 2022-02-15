@@ -15,5 +15,6 @@ VALUES
 
 INSERT INTO ROUTE (ID, NAME, DESCRIPTION, DISCIPLINE)
 VALUES
-    (1, 'R1', 'Droga męska 8a czerwona', 'LEAD'),
-    (2, 'R2', 'Droga żeńska 7b niebieska', 'LEAD');
+    (1, 'MA', 'Męska eliminacyjna A', 'LEAD'),
+    (2, 'MB', 'Męska eliminacyjna B', 'LEAD'),
+    (3, 'MF', 'Męska finałowa', 'LEAD');

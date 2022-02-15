@@ -14,6 +14,7 @@ public class Formula {
 
     private String identifier;
 
+    @Enumerated(EnumType.STRING)
     private Discipline discipline;
 
     private String name;

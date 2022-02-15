@@ -7,3 +7,7 @@ VALUES
     ('Junior', 'J', 16, 17),
     ('Młodzieżowiec', 'M', 18, 19),
     ('Senior', 'S', 20, 1000);
+
+INSERT INTO FORMULA (NAME, IDENTIFIER, DISCIPLINE, DESCRIPTION)
+VALUES
+    ( 'Prowadzenie', 'DEFAULT', 'BOULDERING', 'Dwie rundy: eliminacyjna i finałowa. Dwie drogi eliminacyjne i jedna finałowa' );
