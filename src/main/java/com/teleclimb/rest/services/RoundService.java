@@ -1,5 +1,6 @@
 package com.teleclimb.rest.services;
 
+import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.RoundDto;
 import com.teleclimb.rest.dto.RouteDto;
@@ -28,14 +29,21 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundR
         return mapper.map(round, RoundDto.class);
     }
 
-    public List<RouteDto> getRoutes(Long id) {
-        return linkService.getAllRoutesIdForRound(id);
+    public List<RouteDto> getRoutes(Long roundId) {
+        return linkService.getAllRoutesIdForRound(roundId);
     }
 
     public void linkRoute(Long id, Long routeId) {
+        RoundDto round = get(id);
+
+        if (getRoutes(id).size() >= round.getNumberOfRoutes())
+            throw new BadRequestException("There is max number of links to round " + id);
+
+        linkService.addLink(id, routeId);
     }
 
     public void unlinkRoute(Long id, Long routeId) {
+        linkService.removeLink(id, routeId);
     }
 
 }

@@ -36,13 +36,13 @@ public class RoundController {
         return service.getRoutes(id);
     }
 
-    @ApiOperation(value = "Link route to the round")
+    @ApiOperation(value = "Link route to the round", notes = "Before generating starts, number of routes must be equal Round.numberOfRoutes field")
     @PostMapping("/{id}/route/link/{routeId}")
     public void linkRoute(@PathVariable Long id, @PathVariable Long routeId) {
         service.linkRoute(id, routeId);
     }
 
-    @ApiOperation(value = "Unlink route to the round")
+    @ApiOperation(value = "Unlink route from the round")
     @PostMapping("/{id}/route/unlink/{routeId}")
     public void unlinkRoute(@PathVariable Long id, @PathVariable Long routeId) {
         service.unlinkRoute(id, routeId);

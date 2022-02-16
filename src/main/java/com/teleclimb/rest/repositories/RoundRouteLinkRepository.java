@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RoundRouteLinkRepository extends JpaRepository<RoundRouteLink, Long> {
     List<RoundRouteLink> findByRoundId(Long roundId);
+
+    List<RoundRouteLink> findByRoundIdAndRouteId(Long roundId, Long routeId);
 }
