@@ -28,16 +28,16 @@ public class CompetitionController {
         return service.get(id);
     }
 
-    @ApiOperation(value = "Add new competition", notes = "Do not insert id field, it will be generated automatically anyway. All other fields are mandatory.")
+    @ApiOperation(value = "Add new competition", notes = "Do not insert id field, it will be generated automatically anyway. All other fields are mandatory. Return added competition")
     @PostMapping("")
-    public void add(@RequestBody CompetitionDto competition) {
-        service.add(competition);
+    public CompetitionDto add(@RequestBody CompetitionDto competition) {
+        return service.add(competition);
     }
 
-    @ApiOperation(value = "Update competition", notes = "Only field name can by updated after creation.")
+    @ApiOperation(value = "Update competition", notes = "Only field name can by updated after creation. Return updated competition")
     @PutMapping("/{id}")
-    public void update(@RequestBody CompetitionDto competition, @PathVariable Long id) {
-        service.update(id, competition);
+    public CompetitionDto update(@RequestBody CompetitionDto competition, @PathVariable Long id) {
+        return service.update(id, competition);
     }
 
     @ApiOperation(value = "Remove competition", notes = "This operation will also remove all rounds and participants belonging to competition.")

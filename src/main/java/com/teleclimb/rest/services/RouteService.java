@@ -17,32 +17,33 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
     public List<RouteDto> getAll() {
         return routeRepo.findAll()
                 .stream()
-                .map(r -> mapper.map(r, RouteDto.class))
+                .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
     public RouteDto get(Long id) {
         Route route = routeRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found route with id: " + id));
-
-        return mapper.map(route, RouteDto.class);
+        return toDto(route);
     }
 
-    public void add(RouteDto dto) {
+    public RouteDto add(RouteDto dto) {
         dto.setId(null);
         newDtoValidation(dto);
 
-        routeRepo.save(mapper.map(dto, Route.class));
+        Route route = routeRepo.save(toEntity(dto));
+        return toDto(route);
     }
 
-    public void update(Long id, RouteDto newDto) {
+    public RouteDto update(Long id, RouteDto newDto) {
         RouteDto dto = get(id);
 
         if (newDto.getName() != null) dto.setName(newDto.getName());
         if (newDto.getDescription() != null) dto.setDescription(newDto.getDescription());
         if (newDto.getTimeLimitSeconds() != null) dto.setName(newDto.getName());
 
-        routeRepo.save(mapper.map(dto, Route.class));
+        Route route = routeRepo.save(toEntity(dto));
+        return toDto(route);
     }
 
     public void delete(Long id) {
@@ -53,5 +54,13 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
 
     private void newDtoValidation(RouteDto dto) {
         if (dto.getDiscipline() == null) throw new BadRequestException("CompetitionType cannot be null");
+    }
+
+    private RouteDto toDto(Route entity) {
+        return mapper.map(entity, RouteDto.class);
+    }
+
+    private Route toEntity(RouteDto dto) {
+        return mapper.map(dto, Route.class);
     }
 }

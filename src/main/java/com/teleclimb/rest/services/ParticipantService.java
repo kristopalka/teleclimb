@@ -18,7 +18,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
     public List<ParticipantDto> getAll() {
         return participantRepo.findAll()
                 .stream()
-                .map(p -> mapper.map(p, ParticipantDto.class))
+                .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -26,15 +26,29 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         Participant participant = participantRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found participant with id: " + id));
 
-        return mapper.map(participant, ParticipantDto.class);
+        return toDto(participant);
     }
 
-    public void add(ParticipantDto dto) {
+    public ParticipantDto add(ParticipantDto dto) {
         dto.setId(null);
         dto.setRoundSequenceNumber(0);
         newDtoValidation(dto);
 
-        participantRepo.save(mapper.map(dto, Participant.class));
+        Participant participant = participantRepo.save(toEntity(dto));
+        return toDto(participant);
+    }
+
+    public ParticipantDto update(Long id, ParticipantDto newDto) {
+        ParticipantDto dto = get(id);
+
+        if (newDto.getName() != null) dto.setName(newDto.getName());
+        if (newDto.getLastName() != null) dto.setLastName(newDto.getLastName());
+        if (newDto.getStartNumber() != null) dto.setStartNumber(newDto.getStartNumber());
+        if (newDto.getClubName() != null) dto.setClubName(newDto.getClubName());
+        if (newDto.getBirthDate() != null) dto.setBirthDate(newDto.getBirthDate());
+
+        Participant participant = participantRepo.save(toEntity(dto));
+        return toDto(participant);
     }
 
     public void updateRoundSequenceNumber(Long participantId, Integer newRoundSequenceNumber) {
@@ -44,19 +58,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
             throw new RuntimeException("New round sequence number is out of range possible values");
 
         dto.setRoundSequenceNumber(newRoundSequenceNumber);
-        participantRepo.save(mapper.map(dto, Participant.class));
-    }
-
-    public void update(Long id, ParticipantDto newDto) {
-        ParticipantDto dto = get(id);
-
-        if (newDto.getName() != null) dto.setName(newDto.getName());
-        if (newDto.getLastName() != null) dto.setLastName(newDto.getLastName());
-        if (newDto.getStartNumber() != null) dto.setStartNumber(newDto.getStartNumber());
-        if (newDto.getClubName() != null) dto.setClubName(newDto.getClubName());
-        if (newDto.getBirthDate() != null) dto.setBirthDate(newDto.getBirthDate());
-
-        participantRepo.save(mapper.map(dto, Participant.class));
+        participantRepo.save(toEntity(dto));
     }
 
     public void delete(Long id) {
@@ -70,5 +72,13 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
         if (!competitionRepo.existsById(dto.getCompetition().getId()))
             throw new BadRequestException("Competition with specific id does not exist");
+    }
+
+    private ParticipantDto toDto(Participant entity) {
+        return mapper.map(entity, ParticipantDto.class);
+    }
+
+    private Participant toEntity(ParticipantDto dto) {
+        return mapper.map(dto, Participant.class);
     }
 }

@@ -18,7 +18,7 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
     public List<CompetitionDto> getAll() {
         return competitionRepo.findAll()
                 .stream()
-                .map(c -> mapper.map(c, CompetitionDto.class))
+                .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -26,21 +26,24 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
         Competition competition = competitionRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id));
 
-        return mapper.map(competition, CompetitionDto.class);
+        return toDto(competition);
     }
 
-    public void add(CompetitionDto dto) {
+    public CompetitionDto add(CompetitionDto dto) {
         dto.setId(null);
         newDtoValidation(dto);
-        competitionRepo.save(mapper.map(dto, Competition.class));
+
+        Competition competition = competitionRepo.save(toEntity(dto));
+        return toDto(competition);
     }
 
-    public void update(Long id, CompetitionDto newDto) {
+    public CompetitionDto update(Long id, CompetitionDto newDto) {
         CompetitionDto dto = get(id);
 
         if (newDto.getName() != null) dto.setName(newDto.getName());
 
-        competitionRepo.save(mapper.map(dto, Competition.class));
+        Competition competition = competitionRepo.save(toEntity(dto));
+        return toDto(competition);
     }
 
     public void delete(Long id) {
@@ -57,5 +60,13 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
 
         if (!categoryRepo.existsById(dto.getCategory().getId()))
             throw new BadRequestException("Category with specific id does not exist");
+    }
+
+    private CompetitionDto toDto(Competition entity) {
+        return mapper.map(entity, CompetitionDto.class);
+    }
+
+    private Competition toEntity(CompetitionDto dto) {
+        return mapper.map(dto, Competition.class);
     }
 }

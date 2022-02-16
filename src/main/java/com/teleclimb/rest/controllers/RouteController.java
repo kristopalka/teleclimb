@@ -29,19 +29,19 @@ public class RouteController {
         return service.get(id);
     }
 
-    @ApiOperation(value = "Add new route", notes = "Do not insert id field, it will be generated automatically anyway. CompetitionType field is mandatory.")
+    @ApiOperation(value = "Add new route", notes = "Do not insert id field, it will be generated automatically anyway. CompetitionType field is mandatory. Return added route")
     @PostMapping("")
-    public void add(@RequestBody RouteDto route) {
-        service.add(route);
+    public RouteDto add(@RequestBody RouteDto route) {
+        return service.add(route);
     }
 
-    @ApiOperation(value = "Update route", notes = "All fields can be updated apart from id and competitionType.")
+    @ApiOperation(value = "Update route", notes = "All fields can be updated apart from id and competitionType. Return updated route")
     @PutMapping("/{id}")
-    public void update(@RequestBody RouteDto route, @PathVariable Long id) {
-        service.update(id, route);
+    public RouteDto update(@RequestBody RouteDto route, @PathVariable Long id) {
+        return service.update(id, route);
     }
 
-    @ApiOperation(value = "Remove competition", notes = "This operation will also remove all contestant starts on this route.")
+    @ApiOperation(value = "Remove route", notes = "This operation will also remove all contestant starts on this route.")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.delete(id);
