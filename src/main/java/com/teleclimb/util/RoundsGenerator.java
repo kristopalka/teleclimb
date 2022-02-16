@@ -1,5 +1,6 @@
 package com.teleclimb.util;
 
+import com.teleclimb.enums.StartsGenerationMethod;
 import com.teleclimb.rest.entities.Competition;
 import com.teleclimb.rest.entities.Round;
 
@@ -38,6 +39,7 @@ public class RoundsGenerator {
                 .resultCalculatingFunction("?") //todo napisać funkcję
                 .numberOfRoutes(2)
                 .maxParticipants(Integer.MAX_VALUE)
+                .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC)
                 .build();
 
         Round finalRound = Round.builder()
@@ -47,6 +49,7 @@ public class RoundsGenerator {
                 .resultCalculatingFunction("?") //todo napisać funkcję
                 .numberOfRoutes(1)
                 .maxParticipants(8)
+                .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC)
                 .build();
 
         rounds.add(eliminationRound);
