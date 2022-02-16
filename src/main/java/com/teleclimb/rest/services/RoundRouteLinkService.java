@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository linkRepo) {
+public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository linkRepo, RoundService roundService) {
     public List<Route> getAllRoutesForRoundId(Integer roundId) {
         List<RoundRouteLinkEntity> links = linkRepo.findByRoundId(roundId);
 
@@ -23,6 +23,9 @@ public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository
     }
 
     public void addLink(Integer roundId, Integer routeId) {
+        if (getAllRoutesForRoundId(roundId).size() >= roundService.get(roundId).getNumberOfRoutes())
+            throw new BadRequestException("There is max number of links to round with id: " + routeId);
+
         if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() != 0)
             throw new BadRequestException("There is existing link between route id: " + roundId + " and round id: " + roundId);
 

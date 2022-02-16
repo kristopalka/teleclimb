@@ -2,6 +2,7 @@ package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.dto.Route;
+import com.teleclimb.rest.services.RoundRouteLinkService;
 import com.teleclimb.rest.services.RoundService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import java.util.List;
 @Api(tags = "round")
 public class RoundController {
     private final RoundService roundService;
+    private final RoundRouteLinkService linkService;
 
     @ApiOperation(value = "Get all rounds")
     @GetMapping("/all")
@@ -33,21 +35,18 @@ public class RoundController {
     @ApiOperation(value = "Get routes linked to the round")
     @GetMapping("/{id}/routes")
     public List<Route> getRoutes(@PathVariable Integer id) {
-        return roundService.getRoutes(id);
+        return linkService.getAllRoutesForRoundId(id);
     }
 
-    @ApiOperation(value = "Link route to the round", notes = "Before generating starts, number of routes must be equal RoundEntity.numberOfRoutes field")
-    @PostMapping("/{id}/route/link/{routeId}")
-    public void linkRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
-        roundService.linkRoute(id, routeId);
+    @ApiOperation(value = "Add route to the round", notes = "Before generating starts, number of routes must be equal RoundEntity.numberOfRoutes field")
+    @PostMapping("/{id}/add-route/{routeId}")
+    public void addRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
+        linkService.addLink(id, routeId);
     }
 
-    @ApiOperation(value = "Unlink route from the round")
-    @PostMapping("/{id}/route/unlink/{routeId}")
-    public void unlinkRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
-        roundService.unlinkRoute(id, routeId);
+    @ApiOperation(value = "Remove route from the round")
+    @PostMapping("/{id}/remove-route/{routeId}")
+    public void removeRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
+        linkService.removeLink(id, routeId);
     }
-
-
-    //todo add endpoint - get all starts in this round
 }

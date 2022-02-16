@@ -46,4 +46,6 @@ public class RouteController {
     public void delete(@PathVariable Integer id) {
         service.delete(id);
     }
+
+    //todo dodać endpointa do wzięcia wszystkich startów na drodze
 }
