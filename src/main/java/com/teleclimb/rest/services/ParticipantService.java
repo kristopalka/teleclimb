@@ -33,6 +33,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
     public ParticipantDto add(ParticipantDto dto) {
         dto.setId(null);
         dto.setRoundSequenceNumber(0);
+        if (dto.getRankingPosition() == null) dto.setRankingPosition(Integer.MAX_VALUE);
         newDtoValidation(dto);
 
         Participant participant = participantRepo.save(toEntity(dto));
@@ -44,6 +45,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
         if (newDto.getName() != null) dto.setName(newDto.getName());
         if (newDto.getLastName() != null) dto.setLastName(newDto.getLastName());
+        if (newDto.getRankingPosition() != null) dto.setRankingPosition(newDto.getRankingPosition());
         if (newDto.getStartNumber() != null) dto.setStartNumber(newDto.getStartNumber());
         if (newDto.getClubName() != null) dto.setClubName(newDto.getClubName());
         if (newDto.getBirthDate() != null) dto.setBirthDate(newDto.getBirthDate());

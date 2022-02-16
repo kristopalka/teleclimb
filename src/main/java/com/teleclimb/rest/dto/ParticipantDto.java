@@ -16,6 +16,8 @@ public class ParticipantDto {
 
     private String lastName;
 
+    private Integer rankingPosition;
+
     private String startNumber;
 
     private String clubName;

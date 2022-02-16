@@ -16,6 +16,8 @@ public class ParticipantRawDto {
 
     private String lastName;
 
+    private Integer rankingPosition;
+
     private String startNumber;
 
     private String clubName;
