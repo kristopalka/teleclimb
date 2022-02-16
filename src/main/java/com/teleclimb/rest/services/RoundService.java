@@ -37,7 +37,7 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundR
         RoundDto round = get(id);
 
         if (getRoutes(id).size() >= round.getNumberOfRoutes())
-            throw new BadRequestException("There is max number of links to round " + id);
+            throw new BadRequestException("There is max number of links to round with id: " + id);
 
         linkService.addLink(id, routeId);
     }

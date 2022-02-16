@@ -24,7 +24,7 @@ public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository
 
     public void addLink(Long roundId, Long routeId) {
         if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() != 0)
-            throw new BadRequestException("There is existing link between route " + roundId + " and round " + roundId);
+            throw new BadRequestException("There is existing link between route id: " + roundId + " and round id: " + roundId);
 
         Round round = new Round();
         round.setId(roundId);
@@ -41,7 +41,7 @@ public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository
 
     public void removeLink(Long roundId, Long routeId) {
         if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() == 0)
-            throw new BadRequestException("There is no link to remove, between route " + roundId + " and round " + roundId);
+            throw new BadRequestException("There is no link to remove, between route id: " + roundId + " and round id: " + roundId);
 
         Round round = new Round();
         round.setId(roundId);
