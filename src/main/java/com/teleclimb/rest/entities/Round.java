@@ -1,5 +1,6 @@
 package com.teleclimb.rest.entities;
 
+import com.teleclimb.enums.StartsGenerationMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,16 +20,19 @@ public class Round {
 
     private Integer sequenceNumber;
 
-    private String resultCalculatingFunction;
-
-    private Integer numberOfRoutes;
-
     @ManyToOne
     @JoinColumn(name = "competition_id")
     private Competition competition;
 
     private String name;
 
+    private Integer numberOfRoutes;
+
     private Integer maxParticipants;
+
+    private String resultCalculatingFunction;
+
+    @Enumerated(value = EnumType.STRING)
+    private StartsGenerationMethod startsGenerationMethod;
 
 }
