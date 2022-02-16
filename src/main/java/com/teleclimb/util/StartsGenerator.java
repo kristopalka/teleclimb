@@ -26,8 +26,11 @@ public class StartsGenerator {
         StartsGenerationMethod method = round.getStartsGenerationMethod();
 
         switch (method) {
-            case LEAD_CLASSIC:
-                generateLeadClassic();
+            case LEAD_CLASSIC_ELIMINATIONS:
+                generateLeadClassicEliminations();
+                break;
+            case LEAD_CLASSIC_FINAL:
+                generateLeadClassicFinal();
                 break;
             default:
                 throw new RuntimeException("wrong formula identifier");
@@ -36,7 +39,11 @@ public class StartsGenerator {
         return starts;
     }
 
-    private void generateLeadClassic() {
+    private void generateLeadClassicEliminations() {
+        //todo generowanko :)
+    }
+
+    private void generateLeadClassicFinal() {
         //todo generowanko :)
     }
 }
