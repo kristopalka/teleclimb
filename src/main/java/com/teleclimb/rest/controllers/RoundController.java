@@ -48,6 +48,11 @@ public class RoundController {
         service.unlinkRoute(id, routeId);
     }
 
+    @ApiOperation(value = "Generate starts, based on StartsGenerationMethod")
+    @PostMapping("/{id}/starts/generate")
+    public void generateStarts(@PathVariable Long id) {
+        service.generateStarts(id);
+    }
 
     //todo generowanie startów
     //todo add endpoint - get all starts in this round

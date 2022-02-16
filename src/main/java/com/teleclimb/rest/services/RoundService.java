@@ -2,6 +2,7 @@ package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
+import com.teleclimb.responses.error.exception.NotImplementedException;
 import com.teleclimb.rest.dto.RoundDto;
 import com.teleclimb.rest.dto.RouteDto;
 import com.teleclimb.rest.entities.Round;
@@ -46,4 +47,8 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundR
         linkService.removeLink(id, routeId);
     }
 
+
+    public void generateStarts(Long id) {
+        throw new NotImplementedException("not implemented yet");
+    }
 }
