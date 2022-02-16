@@ -3,11 +3,11 @@ package com.teleclimb.rest.services;
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.InternalServerError;
 import com.teleclimb.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.dto.ParticipantDto;
-import com.teleclimb.rest.dto.RoundDto;
-import com.teleclimb.rest.dto.RouteRawDto;
-import com.teleclimb.rest.entities.Round;
-import com.teleclimb.rest.entities.Start;
+import com.teleclimb.rest.dto.Participant;
+import com.teleclimb.rest.dto.Round;
+import com.teleclimb.rest.dto.Route;
+import com.teleclimb.rest.entities.RoundEntity;
+import com.teleclimb.rest.entities.StartEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
 import com.teleclimb.rest.repositories.StartRepository;
 import com.teleclimb.util.StartsGenerator;
@@ -21,26 +21,26 @@ import java.util.stream.Collectors;
 public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartRepository startRepo,
                            RoundRouteLinkService linkService, ParticipantService participantService) {
 
-    public List<RoundDto> getAll() {
+    public List<Round> getAll() {
         return roundRepo.findAll()
                 .stream()
-                .map(r -> mapper.map(r, RoundDto.class))
+                .map(r -> mapper.map(r, Round.class))
                 .collect(Collectors.toList());
     }
 
-    public RoundDto get(Integer id) {
-        Round round = roundRepo.findById(id)
+    public Round get(Integer id) {
+        RoundEntity roundEntity = roundRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found round with id: " + id));
 
-        return mapper.map(round, RoundDto.class);
+        return mapper.map(roundEntity, Round.class);
     }
 
-    public List<RouteRawDto> getRoutes(Integer roundId) {
+    public List<Route> getRoutes(Integer roundId) {
         return linkService.getAllRoutesIdForRound(roundId);
     }
 
     public void linkRoute(Integer id, Integer routeId) {
-        RoundDto round = get(id);
+        Round round = get(id);
 
         if (getRoutes(id).size() >= round.getNumberOfRoutes())
             throw new BadRequestException("There is max number of links to round with id: " + id);
@@ -62,17 +62,17 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartR
     }
 
     private void tryToGenerateStarts(Integer roundId) {
-        RoundDto round = get(roundId);
-        List<RouteRawDto> routes = getRoutes(roundId);
-        List<ParticipantDto> participants = participantService.getParticipantsByRound(round);
+        Round round = get(roundId);
+        List<Route> routes = getRoutes(roundId);
+        List<Participant> participants = participantService.getParticipantsByRound(round);
 
         StartsGenerator generator = new StartsGenerator(round, participants, routes);
-        List<Start> starts = generator
+        List<StartEntity> startEntities = generator
                 .generate()
                 .stream()
-                .map(s -> mapper.map(s, Start.class))
+                .map(s -> mapper.map(s, StartEntity.class))
                 .toList();
 
-        startRepo.saveAll(starts);
+        startRepo.saveAll(startEntities);
     }
 }

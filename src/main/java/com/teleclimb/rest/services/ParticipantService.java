@@ -2,10 +2,11 @@ package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.dto.ParticipantDto;
-import com.teleclimb.rest.dto.RoundDto;
-import com.teleclimb.rest.entities.Participant;
-import com.teleclimb.rest.repositories.CompetitionRepository;
+import com.teleclimb.rest.dto.Competition;
+import com.teleclimb.rest.dto.Formula;
+import com.teleclimb.rest.dto.Participant;
+import com.teleclimb.rest.dto.Round;
+import com.teleclimb.rest.entities.ParticipantEntity;
 import com.teleclimb.rest.repositories.ParticipantRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,58 +15,61 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo, CompetitionRepository competitionRepo) {
+public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo,
+                                 CompetitionService competitionService, FormulaService formulaService) {
 
-    public List<ParticipantDto> getAll() {
+    public List<Participant> getAll() {
         return participantRepo.findAll()
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
-    public ParticipantDto get(Integer id) {
-        Participant participant = participantRepo.findById(id)
+    public Participant get(Integer id) {
+        ParticipantEntity participantEntity = participantRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found participant with id: " + id));
 
-        return toDto(participant);
+        return toDto(participantEntity);
     }
 
-    public ParticipantDto add(ParticipantDto dto) {
-        dto.setId(null);
-        dto.setRoundSequenceNumber(0);
-        if (dto.getRankingPosition() == null) dto.setRankingPosition(Integer.MAX_VALUE);
-        newDtoValidation(dto);
+    public Participant add(Participant participant) {
+        participant.setId(null);
+        participant.setRoundSequenceNumber(0);
+        if (participant.getRankingPosition() == null) participant.setRankingPosition(Integer.MAX_VALUE);
+        newParticipantValidation(participant);
 
-        Participant participant = participantRepo.save(toEntity(dto));
-        return toDto(participant);
+        ParticipantEntity participantEntity = participantRepo.save(toEntity(participant));
+        return toDto(participantEntity);
     }
 
-    public ParticipantDto update(Integer id, ParticipantDto newDto) {
-        ParticipantDto dto = get(id);
+    public Participant update(Integer id, Participant newParticipant) {
+        Participant dto = get(id);
 
-        if (newDto.getName() != null) dto.setName(newDto.getName());
-        if (newDto.getLastName() != null) dto.setLastName(newDto.getLastName());
-        if (newDto.getRankingPosition() != null) dto.setRankingPosition(newDto.getRankingPosition());
-        if (newDto.getStartNumber() != null) dto.setStartNumber(newDto.getStartNumber());
-        if (newDto.getClubName() != null) dto.setClubName(newDto.getClubName());
-        if (newDto.getBirthDate() != null) dto.setBirthDate(newDto.getBirthDate());
+        if (newParticipant.getName() != null) dto.setName(newParticipant.getName());
+        if (newParticipant.getLastName() != null) dto.setLastName(newParticipant.getLastName());
+        if (newParticipant.getRankingPosition() != null) dto.setRankingPosition(newParticipant.getRankingPosition());
+        if (newParticipant.getStartNumber() != null) dto.setStartNumber(newParticipant.getStartNumber());
+        if (newParticipant.getClubName() != null) dto.setClubName(newParticipant.getClubName());
+        if (newParticipant.getBirthDate() != null) dto.setBirthDate(newParticipant.getBirthDate());
 
-        Participant participant = participantRepo.save(toEntity(dto));
-        return toDto(participant);
+        ParticipantEntity participantEntity = participantRepo.save(toEntity(dto));
+        return toDto(participantEntity);
     }
 
     public void updateRoundSequenceNumber(Integer participantId, Integer newRoundSequenceNumber) {
-        ParticipantDto dto = get(participantId);
+        Participant participant = get(participantId);
+        Competition competition = competitionService.get(participant.getCompetitionId());
+        Formula formula = formulaService.get(competition.getFormulaId());
 
-        if (newRoundSequenceNumber < 0 || newRoundSequenceNumber >= dto.getCompetition().getFormula().getNumberOfRounds())
+        if (newRoundSequenceNumber < 0 || newRoundSequenceNumber >= formula.getNumberOfRounds())
             throw new RuntimeException("New round sequence number is out of range possible values");
 
-        dto.setRoundSequenceNumber(newRoundSequenceNumber);
-        participantRepo.save(toEntity(dto));
+        participant.setRoundSequenceNumber(newRoundSequenceNumber);
+        participantRepo.save(toEntity(participant));
     }
 
-    public List<ParticipantDto> getParticipantsByRound(RoundDto round) {
-        return participantRepo.findByCompetitionIdAndRoundSequenceNumber(round.getCompetition().getId(), round.getSequenceNumber())
+    public List<Participant> getParticipantsByRound(Round round) {
+        return participantRepo.findByCompetitionIdAndRoundSequenceNumber(round.getCompetitionId(), round.getSequenceNumber())
                 .stream()
                 .map(this::toDto)
                 .toList();
@@ -77,18 +81,18 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
     }
 
 
-    private void newDtoValidation(ParticipantDto dto) {
-        if (dto.getCompetition() == null) throw new BadRequestException("Competition cannot be null");
+    private void newParticipantValidation(Participant participant) {
+        if (participant.getCompetitionId() == null) throw new BadRequestException("Competition id cannot be null");
 
-        if (!competitionRepo.existsById(dto.getCompetition().getId()))
+        if (competitionService.get(participant.getCompetitionId()) == null)
             throw new BadRequestException("Competition with specific id does not exist");
     }
 
-    private ParticipantDto toDto(Participant entity) {
-        return mapper.map(entity, ParticipantDto.class);
+    private Participant toDto(ParticipantEntity entity) {
+        return mapper.map(entity, Participant.class);
     }
 
-    private Participant toEntity(ParticipantDto dto) {
-        return mapper.map(dto, Participant.class);
+    private ParticipantEntity toEntity(Participant dto) {
+        return mapper.map(dto, ParticipantEntity.class);
     }
 }

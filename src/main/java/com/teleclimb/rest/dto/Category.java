@@ -3,7 +3,7 @@ package com.teleclimb.rest.dto;
 import lombok.Data;
 
 @Data
-public class CategoryRawDto {
+public class Category {
     private Integer id;
 
     private String name;

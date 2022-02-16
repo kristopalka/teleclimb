@@ -1,6 +1,6 @@
 package com.teleclimb.rest.controllers;
 
-import com.teleclimb.rest.dto.FormulaRawDto;
+import com.teleclimb.rest.dto.Formula;
 import com.teleclimb.rest.services.FormulaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,13 +21,13 @@ public class FormulaController {
 
     @ApiOperation(value = "Get all schemas", notes = "Competition formulas are hardcoded")
     @GetMapping("/all")
-    public List<FormulaRawDto> getAll() {
+    public List<Formula> getAll() {
         return service.getAll();
     }
 
     @ApiOperation(value = "Get formula by id")
     @GetMapping("/{id}")
-    public FormulaRawDto get(@PathVariable Integer id) {
+    public Formula get(@PathVariable Integer id) {
         return service.get(id);
     }
 }

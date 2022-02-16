@@ -1,6 +1,6 @@
 package com.teleclimb.rest.controllers;
 
-import com.teleclimb.rest.dto.StartDto;
+import com.teleclimb.rest.dto.Start;
 import com.teleclimb.rest.services.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,13 +21,13 @@ public class StartController {
 
     @ApiOperation(value = "Get all starts")
     @GetMapping("/all")
-    public List<StartDto> getAll() {
+    public List<Start> getAll() {
         return service.getAll();
     }
 
     @ApiOperation(value = "Get start specific by id")
     @GetMapping("/{id}")
-    public StartDto get(@PathVariable Integer id) {
+    public Start get(@PathVariable Integer id) {
         return service.get(id);
     }
 

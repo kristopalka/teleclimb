@@ -1,10 +1,10 @@
 package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
-import com.teleclimb.rest.dto.RouteRawDto;
-import com.teleclimb.rest.entities.Round;
-import com.teleclimb.rest.entities.RoundRouteLink;
-import com.teleclimb.rest.entities.Route;
+import com.teleclimb.rest.dto.Route;
+import com.teleclimb.rest.entities.RoundEntity;
+import com.teleclimb.rest.entities.RoundRouteLinkEntity;
+import com.teleclimb.rest.entities.RouteEntity;
 import com.teleclimb.rest.repositories.RoundRouteLinkRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @Service
 public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository linkRepo) {
-    public List<RouteRawDto> getAllRoutesIdForRound(Integer roundId) {
-        List<RoundRouteLink> links = linkRepo.findByRoundId(roundId);
+    public List<Route> getAllRoutesIdForRound(Integer roundId) {
+        List<RoundRouteLinkEntity> links = linkRepo.findByRoundId(roundId);
 
         return links.stream()
-                .map(RoundRouteLink::getRoute)
-                .map(r -> mapper.map(r, RouteRawDto.class))
+                .map(RoundRouteLinkEntity::getRoute)
+                .map(r -> mapper.map(r, Route.class))
                 .toList();
     }
 
@@ -26,30 +26,30 @@ public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository
         if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() != 0)
             throw new BadRequestException("There is existing link between route id: " + roundId + " and round id: " + roundId);
 
-        Round round = new Round();
-        round.setId(roundId);
+        RoundEntity roundEntity = new RoundEntity();
+        roundEntity.setId(roundId);
 
-        Route route = new Route();
-        route.setId(routeId);
+        RouteEntity routeEntity = new RouteEntity();
+        routeEntity.setId(routeId);
 
-        RoundRouteLink link = new RoundRouteLink();
-        link.setRound(round);
-        link.setRoute(route);
+        RoundRouteLinkEntity link = new RoundRouteLinkEntity();
+        link.setRound(roundEntity);
+        link.setRoute(routeEntity);
         linkRepo.save(link);
     }
 
 
     public void removeLink(Integer roundId, Integer routeId) {
         if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() == 0)
-            throw new BadRequestException("There is no link to remove, between route id: " + roundId + " and round id: " + roundId);
+            throw new BadRequestException("There is no link to remove, between routeEntity id: " + roundId + " and roundEntity id: " + roundId);
 
-        Round round = new Round();
-        round.setId(roundId);
+        RoundEntity roundEntity = new RoundEntity();
+        roundEntity.setId(roundId);
 
-        Route route = new Route();
-        route.setId(routeId);
+        RouteEntity routeEntity = new RouteEntity();
+        routeEntity.setId(routeId);
 
-        List<RoundRouteLink> links = linkRepo.findByRoundIdAndRouteId(roundId, routeId);
+        List<RoundRouteLinkEntity> links = linkRepo.findByRoundIdAndRouteId(roundId, routeId);
 
         linkRepo.deleteAll(links);
     }

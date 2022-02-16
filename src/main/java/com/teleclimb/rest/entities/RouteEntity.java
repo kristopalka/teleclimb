@@ -1,26 +1,27 @@
 package com.teleclimb.rest.entities;
 
 import com.teleclimb.enums.Discipline;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Data
-public class Formula {
+@Getter
+@Setter
+@Table(name = "route")
+public class RouteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String identifier;
+    private String name;
+
+    private String description;
 
     @Enumerated(EnumType.STRING)
     private Discipline discipline;
 
-    private Integer numberOfRounds;
-
-    private String name;
-
-    private String description;
+    private Integer timeLimitSeconds;
 
 }

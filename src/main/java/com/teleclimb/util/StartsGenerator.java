@@ -1,27 +1,27 @@
 package com.teleclimb.util;
 
 import com.teleclimb.enums.StartsGenerationMethod;
-import com.teleclimb.rest.dto.ParticipantDto;
-import com.teleclimb.rest.dto.RoundDto;
-import com.teleclimb.rest.dto.RouteRawDto;
-import com.teleclimb.rest.dto.StartDto;
+import com.teleclimb.rest.dto.Participant;
+import com.teleclimb.rest.dto.Round;
+import com.teleclimb.rest.dto.Route;
+import com.teleclimb.rest.dto.Start;
 
 import java.util.*;
 
 public class StartsGenerator {
-    private final RoundDto round;
-    private final List<ParticipantDto> participants;
-    private final List<RouteRawDto> routes;
-    private final List<StartDto> starts;
+    private final Round round;
+    private final List<Participant> participants;
+    private final List<Route> routes;
+    private final List<Start> starts;
 
-    public StartsGenerator(RoundDto round, List<ParticipantDto> participants, List<RouteRawDto> routes) {
+    public StartsGenerator(Round round, List<Participant> participants, List<Route> routes) {
         this.round = round;
         this.participants = participants;
         this.routes = routes;
         this.starts = new ArrayList<>();
     }
 
-    public List<StartDto> generate() {
+    public List<Start> generate() {
         StartsGenerationMethod method = round.getStartsGenerationMethod();
 
         switch (method) {
@@ -42,26 +42,26 @@ public class StartsGenerator {
 
     private void generateLeadClassicEliminations() {
         if (routes.size() != 2) throw new RuntimeException("should be 2 rotes linked to round id: " + round.getId());
-        RouteRawDto routeA = routes.get(0);
-        RouteRawDto routeB = routes.get(1);
+        Route routeA = routes.get(0);
+        Route routeB = routes.get(1);
 
-        TreeSet<ParticipantDto> randomizedParticipants = randomizeSet(participants);
+        TreeSet<Participant> randomizedParticipants = randomizeSet(participants);
 
         int numberOfParticipants = participants.size();
         int routeACounter = 0;
         int routeBCounter = (int) Math.ceil(((double) numberOfParticipants) / 2);
-        for (ParticipantDto participant : randomizedParticipants) {
-            StartDto startOnA = StartDto.builder()
-                    .round(round)
-                    .route(routeA)
-                    .participant(participant)
+        for (Participant participant : randomizedParticipants) {
+            Start startOnA = Start.builder()
+                    .roundId(round.getId())
+                    .routeId(routeA.getId())
+                    .participantId(participant.getId())
                     .routeSequenceNumber(routeACounter)
                     .build();
 
-            StartDto startOnB = StartDto.builder()
-                    .round(round)
-                    .route(routeB)
-                    .participant(participant)
+            Start startOnB = Start.builder()
+                    .roundId(round.getId())
+                    .routeId(routeB.getId())
+                    .participantId(participant.getId())
                     .routeSequenceNumber(routeBCounter)
                     .build();
 

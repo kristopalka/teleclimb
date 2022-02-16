@@ -1,21 +1,24 @@
 package com.teleclimb.rest.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Data
-public class RoundRouteLink {
+@Getter
+@Setter
+@Table(name = "round_route_link")
+public class RoundRouteLinkEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "route_id")
-    private Route route;
+    private RouteEntity route;
 
     @ManyToOne
     @JoinColumn(name = "round_id")
-    private Round round;
+    private RoundEntity round;
 }

@@ -1,22 +1,22 @@
 package com.teleclimb.util;
 
 import com.teleclimb.enums.StartsGenerationMethod;
-import com.teleclimb.rest.entities.Competition;
-import com.teleclimb.rest.entities.Round;
+import com.teleclimb.rest.entities.CompetitionEntity;
+import com.teleclimb.rest.entities.RoundEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoundsGenerator {
-    private final Competition competition;
-    private final List<Round> rounds;
+    private final CompetitionEntity competition;
+    private final List<RoundEntity> roundEntities;
 
-    public RoundsGenerator(Competition competition) {
-        this.competition = competition;
-        rounds = new ArrayList<>();
+    public RoundsGenerator(CompetitionEntity competitionEntity) {
+        this.competition = competitionEntity;
+        roundEntities = new ArrayList<>();
     }
 
-    public List<Round> generate() {
+    public List<RoundEntity> generate() {
         String identifier = competition.getFormula().getIdentifier();
 
         switch (identifier) {
@@ -27,12 +27,12 @@ public class RoundsGenerator {
                 throw new RuntimeException("wrong formula identifier");
         }
 
-        return rounds;
+        return roundEntities;
     }
 
     private void generateLeadDefault() {
         //TODO można to zapisać jako obiekty w formie json, to może być w bazie w nowym polu w FORMULA
-        Round eliminationRound = Round.builder()
+        RoundEntity eliminationRoundEntity = RoundEntity.builder()
                 .competition(competition)
                 .name("Eliminacyje")
                 .sequenceNumber(1)
@@ -42,7 +42,7 @@ public class RoundsGenerator {
                 .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_ELIMINATIONS)
                 .build();
 
-        Round finalRound = Round.builder()
+        RoundEntity finalRoundEntity = RoundEntity.builder()
                 .competition(competition)
                 .name("Finał")
                 .sequenceNumber(2)
@@ -52,7 +52,7 @@ public class RoundsGenerator {
                 .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_FINAL)
                 .build();
 
-        rounds.add(eliminationRound);
-        rounds.add(finalRound);
+        roundEntities.add(eliminationRoundEntity);
+        roundEntities.add(finalRoundEntity);
     }
 }

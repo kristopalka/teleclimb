@@ -1,14 +1,14 @@
 package com.teleclimb.rest.dto.custom;
 
-import com.teleclimb.rest.dto.CompetitionDto;
-import com.teleclimb.rest.dto.ParticipantRawDto;
+import com.teleclimb.rest.dto.Competition;
+import com.teleclimb.rest.dto.Participant;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 public class CompetitionWithParticipantsList {
-    private CompetitionDto competition;
+    private Competition competition;
 
-    private List<ParticipantRawDto> participants;
+    private List<Participant> participants;
 }

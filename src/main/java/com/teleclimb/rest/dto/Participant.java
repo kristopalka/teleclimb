@@ -5,10 +5,10 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class ParticipantDto {
+public class Participant {
     private Integer id;
 
-    private CompetitionDto competition;
+    private Integer competitionId;
 
     private Integer roundSequenceNumber;
 

@@ -1,7 +1,7 @@
 package com.teleclimb.rest.controllers;
 
-import com.teleclimb.rest.dto.RoundDto;
-import com.teleclimb.rest.dto.RouteRawDto;
+import com.teleclimb.rest.dto.Round;
+import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.services.RoundService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,24 +19,24 @@ public class RoundController {
 
     @ApiOperation(value = "Get all rounds")
     @GetMapping("/all")
-    public List<RoundDto> getAll() {
+    public List<Round> getAll() {
         return service.getAll();
     }
 
     @ApiOperation(value = "Get round specific by id")
     @GetMapping("/{id}")
-    public RoundDto get(@PathVariable Integer id) {
+    public Round get(@PathVariable Integer id) {
         return service.get(id);
     }
 
 
     @ApiOperation(value = "Get routes linked to the round")
     @GetMapping("/{id}/routes")
-    public List<RouteRawDto> getRoutes(@PathVariable Integer id) {
+    public List<Route> getRoutes(@PathVariable Integer id) {
         return service.getRoutes(id);
     }
 
-    @ApiOperation(value = "Link route to the round", notes = "Before generating starts, number of routes must be equal Round.numberOfRoutes field")
+    @ApiOperation(value = "Link route to the round", notes = "Before generating starts, number of routes must be equal RoundEntity.numberOfRoutes field")
     @PostMapping("/{id}/route/link/{routeId}")
     public void linkRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
         service.linkRoute(id, routeId);

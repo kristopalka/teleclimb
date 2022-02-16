@@ -1,14 +1,14 @@
 package com.teleclimb.rest.repositories;
 
-import com.teleclimb.rest.entities.Start;
+import com.teleclimb.rest.entities.StartEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface StartRepository extends JpaRepository<Start, Integer> {
-    List<Start> findByRoundId(Integer roundId);
+public interface StartRepository extends JpaRepository<StartEntity, Integer> {
+    List<StartEntity> findByRoundId(Integer roundId);
 
-    List<Start> findByRouteId(Integer routeId);
+    List<StartEntity> findByRouteId(Integer routeId);
 
-    List<Start> findByParticipantId(Integer participantId);
+    List<StartEntity> findByParticipantId(Integer participantId);
 }

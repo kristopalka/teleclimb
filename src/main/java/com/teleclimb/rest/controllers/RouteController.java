@@ -1,7 +1,7 @@
 package com.teleclimb.rest.controllers;
 
 
-import com.teleclimb.rest.dto.RouteRawDto;
+import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.services.RouteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,25 +19,25 @@ public class RouteController {
 
     @ApiOperation(value = "Get all routes")
     @GetMapping("/all")
-    public List<RouteRawDto> getAll() {
+    public List<Route> getAll() {
         return service.getAll();
     }
 
     @ApiOperation(value = "Get route specific by id")
     @GetMapping("/{id}")
-    public RouteRawDto get(@PathVariable Integer id) {
+    public Route get(@PathVariable Integer id) {
         return service.get(id);
     }
 
     @ApiOperation(value = "Add new route", notes = "Do not insert id field, it will be generated automatically anyway. CompetitionType field is mandatory. Return added route")
     @PostMapping("")
-    public RouteRawDto add(@RequestBody RouteRawDto route) {
+    public Route add(@RequestBody Route route) {
         return service.add(route);
     }
 
     @ApiOperation(value = "Update route", notes = "All fields can be updated apart from id and competitionType. Return updated route")
     @PutMapping("/{id}")
-    public RouteRawDto update(@RequestBody RouteRawDto route, @PathVariable Integer id) {
+    public Route update(@RequestBody Route route, @PathVariable Integer id) {
         return service.update(id, route);
     }
 

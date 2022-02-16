@@ -9,17 +9,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StartDto {
+public class Start {
     private Integer id;
 
-    private RoundDto round;
+    private Integer roundId;
 
-    private RouteRawDto route;
+    private Integer routeId;
 
     private Integer routeSequenceNumber;
 
-    private ParticipantDto participant;
+    private Integer participantId;
 
     private String result;
-
 }

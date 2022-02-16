@@ -4,14 +4,14 @@ import com.teleclimb.enums.Gender;
 import lombok.Data;
 
 @Data
-public class CompetitionDto {
+public class Competition {
     private Integer id;
 
     private String name;
 
-    private CategoryRawDto category;
+    private Integer categoryId;
 
     private Gender gender;
 
-    private FormulaRawDto formula;
+    private Integer formulaId;
 }

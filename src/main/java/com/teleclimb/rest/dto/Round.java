@@ -1,16 +1,15 @@
 package com.teleclimb.rest.dto;
 
 import com.teleclimb.enums.StartsGenerationMethod;
-import com.teleclimb.rest.entities.Competition;
 import lombok.Data;
 
 @Data
-public class RoundDto {
+public class Round {
     private Integer id;
 
-    private Integer sequenceNumber;
+    private Integer competitionId;
 
-    private Competition competition;
+    private Integer sequenceNumber;
 
     private String name;
 
@@ -18,7 +17,7 @@ public class RoundDto {
 
     private Integer maxParticipants;
 
-    private String resultCalculatingFunction;
-
     private StartsGenerationMethod startsGenerationMethod;
+
+    private String resultCalculatingFunction;
 }

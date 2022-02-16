@@ -1,20 +1,23 @@
 package com.teleclimb.rest.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Data
-public class Participant {
+@Getter
+@Setter
+@Table(name = "participant")
+public class ParticipantEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "competition_id")
-    private Competition competition;
+    private CompetitionEntity competition;
 
     private Integer roundSequenceNumber;  // point the highest round, participant reach
 

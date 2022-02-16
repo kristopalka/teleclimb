@@ -1,13 +1,13 @@
 package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.InternalServerError;
-import com.teleclimb.rest.dto.CompetitionDto;
-import com.teleclimb.rest.dto.ParticipantRawDto;
-import com.teleclimb.rest.dto.RoundRawDto;
+import com.teleclimb.rest.dto.Competition;
+import com.teleclimb.rest.dto.Participant;
+import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.dto.custom.CompetitionWithParticipantsList;
 import com.teleclimb.rest.dto.custom.CompetitionWithRoundsList;
-import com.teleclimb.rest.entities.Competition;
-import com.teleclimb.rest.entities.Round;
+import com.teleclimb.rest.entities.CompetitionEntity;
+import com.teleclimb.rest.entities.RoundEntity;
 import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.repositories.ParticipantRepository;
 import com.teleclimb.rest.repositories.RoundRepository;
@@ -25,10 +25,10 @@ public record CompetitionManagementService(ModelMapper mapper, ParticipantReposi
 
         dto.setParticipants(contestantRepo.findByCompetitionId(competitionId)
                 .stream()
-                .map(p -> mapper.map(p, ParticipantRawDto.class))
+                .map(p -> mapper.map(p, Participant.class))
                 .toList());
 
-        dto.setCompetition(mapper.map(competitionRepo.getById(competitionId), CompetitionDto.class));
+        dto.setCompetition(mapper.map(competitionRepo.getById(competitionId), Competition.class));
 
         return dto;
     }
@@ -38,10 +38,10 @@ public record CompetitionManagementService(ModelMapper mapper, ParticipantReposi
 
         dto.setRounds(roundRepo.findByCompetitionId(competitionId)
                 .stream()
-                .map(r -> mapper.map(r, RoundRawDto.class))
+                .map(r -> mapper.map(r, Round.class))
                 .toList());
 
-        dto.setCompetition(mapper.map(competitionRepo.getById(competitionId), CompetitionDto.class));
+        dto.setCompetition(mapper.map(competitionRepo.getById(competitionId), Competition.class));
 
         return dto;
     }
@@ -59,12 +59,12 @@ public record CompetitionManagementService(ModelMapper mapper, ParticipantReposi
     }
 
     private CompetitionWithRoundsList tryToGenerateRounds(Integer competitionId) {
-        Competition competition = competitionRepo.getById(competitionId);
+        CompetitionEntity competitionEntity = competitionRepo.getById(competitionId);
 
-        RoundsGenerator generator = new RoundsGenerator(competition);
-        List<Round> rounds = generator.generate();
+        RoundsGenerator generator = new RoundsGenerator(competitionEntity);
+        List<RoundEntity> roundEntities = generator.generate();
 
-        roundRepo.saveAll(rounds);
+        roundRepo.saveAll(roundEntities);
 
         return getAllRounds(competitionId);
     }

@@ -1,19 +1,20 @@
 package com.teleclimb.rest.entities;
 
 import com.teleclimb.enums.StartsGenerationMethod;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
-@Data
-@Builder
+
+@Builder //todo remove
 @NoArgsConstructor
 @AllArgsConstructor
-public class Round {
+
+@Entity
+@Getter
+@Setter
+@Table(name = "round")
+public class RoundEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,7 +23,7 @@ public class Round {
 
     @ManyToOne
     @JoinColumn(name = "competition_id")
-    private Competition competition;
+    private CompetitionEntity competition;
 
     private String name;
 

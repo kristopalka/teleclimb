@@ -2,8 +2,8 @@ package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.dto.RouteRawDto;
-import com.teleclimb.rest.entities.Route;
+import com.teleclimb.rest.dto.Route;
+import com.teleclimb.rest.entities.RouteEntity;
 import com.teleclimb.rest.repositories.RouteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,36 +14,36 @@ import java.util.stream.Collectors;
 @Service
 public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
 
-    public List<RouteRawDto> getAll() {
+    public List<Route> getAll() {
         return routeRepo.findAll()
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
-    public RouteRawDto get(Integer id) {
-        Route route = routeRepo.findById(id)
+    public Route get(Integer id) {
+        RouteEntity routeEntity = routeRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found route with id: " + id));
-        return toDto(route);
+        return toDto(routeEntity);
     }
 
-    public RouteRawDto add(RouteRawDto dto) {
+    public Route add(Route dto) {
         dto.setId(null);
         newDtoValidation(dto);
 
-        Route route = routeRepo.save(toEntity(dto));
-        return toDto(route);
+        RouteEntity routeEntity = routeRepo.save(toEntity(dto));
+        return toDto(routeEntity);
     }
 
-    public RouteRawDto update(Integer id, RouteRawDto newDto) {
-        RouteRawDto dto = get(id);
+    public Route update(Integer id, Route newRoute) {
+        Route route = get(id);
 
-        if (newDto.getName() != null) dto.setName(newDto.getName());
-        if (newDto.getDescription() != null) dto.setDescription(newDto.getDescription());
-        if (newDto.getTimeLimitSeconds() != null) dto.setName(newDto.getName());
+        if (newRoute.getName() != null) route.setName(newRoute.getName());
+        if (newRoute.getDescription() != null) route.setDescription(newRoute.getDescription());
+        if (newRoute.getTimeLimitSeconds() != null) route.setName(newRoute.getName());
 
-        Route route = routeRepo.save(toEntity(dto));
-        return toDto(route);
+        RouteEntity routeEntity = routeRepo.save(toEntity(route));
+        return toDto(routeEntity);
     }
 
     public void delete(Integer id) {
@@ -52,15 +52,15 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
     }
 
 
-    private void newDtoValidation(RouteRawDto dto) {
+    private void newDtoValidation(Route dto) {
         if (dto.getDiscipline() == null) throw new BadRequestException("CompetitionType cannot be null");
     }
 
-    private RouteRawDto toDto(Route entity) {
-        return mapper.map(entity, RouteRawDto.class);
+    private Route toDto(RouteEntity entity) {
+        return mapper.map(entity, Route.class);
     }
 
-    private Route toEntity(RouteRawDto dto) {
-        return mapper.map(dto, Route.class);
+    private RouteEntity toEntity(Route dto) {
+        return mapper.map(dto, RouteEntity.class);
     }
 }

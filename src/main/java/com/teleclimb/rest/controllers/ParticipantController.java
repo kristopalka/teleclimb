@@ -1,6 +1,6 @@
 package com.teleclimb.rest.controllers;
 
-import com.teleclimb.rest.dto.ParticipantDto;
+import com.teleclimb.rest.dto.Participant;
 import com.teleclimb.rest.services.ParticipantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,25 +18,25 @@ public class ParticipantController {
 
     @ApiOperation(value = "Get all participants")
     @GetMapping("/all")
-    public List<ParticipantDto> getAll() {
+    public List<Participant> getAll() {
         return service.getAll();
     }
 
     @ApiOperation(value = "Get participant specific by id")
     @GetMapping("/{id}")
-    public ParticipantDto get(@PathVariable Integer id) {
+    public Participant get(@PathVariable Integer id) {
         return service.get(id);
     }
 
-    @ApiOperation(value = "Add new participant", notes = "Do not insert id field, it will be generated automatically anyway. Competition field is mandatory - participant is assigned to competition. Return added participant")
+    @ApiOperation(value = "Add new participant", notes = "Do not insert id field, it will be generated automatically anyway. Competition id field is mandatory - participant is assigned to competition. Return added participant")
     @PostMapping("")
-    public ParticipantDto add(@RequestBody ParticipantDto participant) {
+    public Participant add(@RequestBody Participant participant) {
         return service.add(participant);
     }
 
     @ApiOperation(value = "Update participant", notes = "All fields can be updated apart from id, competition and roundSequenceNumber. Return updated participant")
     @PutMapping("/{id}")
-    public ParticipantDto update(@RequestBody ParticipantDto participant, @PathVariable Integer id) {
+    public Participant update(@RequestBody Participant participant, @PathVariable Integer id) {
         return service.update(id, participant);
     }
 

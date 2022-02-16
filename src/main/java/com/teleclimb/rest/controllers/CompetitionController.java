@@ -1,6 +1,6 @@
 package com.teleclimb.rest.controllers;
 
-import com.teleclimb.rest.dto.CompetitionDto;
+import com.teleclimb.rest.dto.Competition;
 import com.teleclimb.rest.services.CompetitionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,25 +18,25 @@ public class CompetitionController {
 
     @ApiOperation(value = "Get all competitions")
     @GetMapping("/all")
-    public List<CompetitionDto> getAll() {
+    public List<Competition> getAll() {
         return service.getAll();
     }
 
     @ApiOperation(value = "Get competition specific by id")
     @GetMapping("/{id}")
-    public CompetitionDto get(@PathVariable Integer id) {
+    public Competition get(@PathVariable Integer id) {
         return service.get(id);
     }
 
     @ApiOperation(value = "Add new competition", notes = "Do not insert id field, it will be generated automatically anyway. All other fields are mandatory. Return added competition")
     @PostMapping("")
-    public CompetitionDto add(@RequestBody CompetitionDto competition) {
+    public Competition add(@RequestBody Competition competition) {
         return service.add(competition);
     }
 
     @ApiOperation(value = "Update competition", notes = "Only field name can by updated after creation. Return updated competition")
     @PutMapping("/{id}")
-    public CompetitionDto update(@RequestBody CompetitionDto competition, @PathVariable Integer id) {
+    public Competition update(@RequestBody Competition competition, @PathVariable Integer id) {
         return service.update(id, competition);
     }
 

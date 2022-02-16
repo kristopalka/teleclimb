@@ -1,12 +1,12 @@
 package com.teleclimb.rest.repositories;
 
-import com.teleclimb.rest.entities.Participant;
+import com.teleclimb.rest.entities.ParticipantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ParticipantRepository extends JpaRepository<Participant, Integer> {
-    List<Participant> findByCompetitionId(Integer competitionId);
+public interface ParticipantRepository extends JpaRepository<ParticipantEntity, Integer> {
+    List<ParticipantEntity> findByCompetitionId(Integer competitionId);
 
-    List<Participant> findByCompetitionIdAndRoundSequenceNumber(Integer competitionId, Integer roundSequenceNumber);
+    List<ParticipantEntity> findByCompetitionIdAndRoundSequenceNumber(Integer competitionId, Integer roundSequenceNumber);
 }
