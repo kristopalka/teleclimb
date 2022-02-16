@@ -1,7 +1,7 @@
 package com.teleclimb.rest.dto.custom;
 
 import com.teleclimb.rest.dto.CompetitionDto;
-import com.teleclimb.rest.dto.raw.RoundRawDto;
+import com.teleclimb.rest.dto.RoundRawDto;
 import lombok.Data;
 
 import java.util.List;

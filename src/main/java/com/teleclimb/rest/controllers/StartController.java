@@ -27,7 +27,7 @@ public class StartController {
 
     @ApiOperation(value = "Get start specific by id")
     @GetMapping("/{id}")
-    public StartDto get(@PathVariable Long id) {
+    public StartDto get(@PathVariable Integer id) {
         return service.get(id);
     }
 

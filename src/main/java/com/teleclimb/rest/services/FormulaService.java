@@ -1,7 +1,7 @@
 package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.dto.FormulaDto;
+import com.teleclimb.rest.dto.FormulaRawDto;
 import com.teleclimb.rest.entities.Formula;
 import com.teleclimb.rest.repositories.FormulaRepository;
 import org.modelmapper.ModelMapper;
@@ -13,17 +13,17 @@ import java.util.stream.Collectors;
 @Service
 public record FormulaService(ModelMapper mapper, FormulaRepository repo) {
 
-    public List<FormulaDto> getAll() {
+    public List<FormulaRawDto> getAll() {
         return repo.findAll()
                 .stream()
-                .map(c -> mapper.map(c, FormulaDto.class))
+                .map(c -> mapper.map(c, FormulaRawDto.class))
                 .collect(Collectors.toList());
     }
 
-    public FormulaDto get(Long id) {
+    public FormulaRawDto get(Integer id) {
         Formula schema = repo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found formula by with: " + id));
 
-        return mapper.map(schema, FormulaDto.class);
+        return mapper.map(schema, FormulaRawDto.class);
     }
 }

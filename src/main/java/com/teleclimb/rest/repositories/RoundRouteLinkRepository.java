@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface RoundRouteLinkRepository extends JpaRepository<RoundRouteLink, Long> {
-    List<RoundRouteLink> findByRoundId(Long roundId);
+public interface RoundRouteLinkRepository extends JpaRepository<RoundRouteLink, Integer> {
+    List<RoundRouteLink> findByRoundId(Integer roundId);
 
-    List<RoundRouteLink> findByRoundIdAndRouteId(Long roundId, Long routeId);
+    List<RoundRouteLink> findByRoundIdAndRouteId(Integer roundId, Integer routeId);
 }

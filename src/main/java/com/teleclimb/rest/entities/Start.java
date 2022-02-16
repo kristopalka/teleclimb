@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Start {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "round_id")

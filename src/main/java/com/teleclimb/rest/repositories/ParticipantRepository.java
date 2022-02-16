@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ParticipantRepository extends JpaRepository<Participant, Long> {
-    List<Participant> findByCompetitionId(Long competitionId);
+public interface ParticipantRepository extends JpaRepository<Participant, Integer> {
+    List<Participant> findByCompetitionId(Integer competitionId);
 
-    List<Participant> findByCompetitionIdAndRoundSequenceNumber(Long competitionId, Integer roundSequenceNumber);
+    List<Participant> findByCompetitionIdAndRoundSequenceNumber(Integer competitionId, Integer roundSequenceNumber);
 }

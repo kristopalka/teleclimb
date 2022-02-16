@@ -1,4 +1,4 @@
-package com.teleclimb.rest.dto.raw;
+package com.teleclimb.rest.dto;
 
 import lombok.Data;
 
@@ -6,9 +6,9 @@ import java.time.LocalDate;
 
 @Data
 public class ParticipantRawDto {
-    private Long id;
+    private Integer id;
 
-    private Long competitionId;
+    private Integer competitionId;
 
     private Integer roundSequenceNumber;
 

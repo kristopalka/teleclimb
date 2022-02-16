@@ -1,7 +1,7 @@
 package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
-import com.teleclimb.rest.dto.RouteDto;
+import com.teleclimb.rest.dto.RouteRawDto;
 import com.teleclimb.rest.entities.Round;
 import com.teleclimb.rest.entities.RoundRouteLink;
 import com.teleclimb.rest.entities.Route;
@@ -13,16 +13,16 @@ import java.util.List;
 
 @Service
 public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository linkRepo) {
-    public List<RouteDto> getAllRoutesIdForRound(Long roundId) {
+    public List<RouteRawDto> getAllRoutesIdForRound(Integer roundId) {
         List<RoundRouteLink> links = linkRepo.findByRoundId(roundId);
 
         return links.stream()
                 .map(RoundRouteLink::getRoute)
-                .map(r -> mapper.map(r, RouteDto.class))
+                .map(r -> mapper.map(r, RouteRawDto.class))
                 .toList();
     }
 
-    public void addLink(Long roundId, Long routeId) {
+    public void addLink(Integer roundId, Integer routeId) {
         if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() != 0)
             throw new BadRequestException("There is existing link between route id: " + roundId + " and round id: " + roundId);
 
@@ -39,7 +39,7 @@ public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository
     }
 
 
-    public void removeLink(Long roundId, Long routeId) {
+    public void removeLink(Integer roundId, Integer routeId) {
         if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() == 0)
             throw new BadRequestException("There is no link to remove, between route id: " + roundId + " and round id: " + roundId);
 

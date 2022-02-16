@@ -23,7 +23,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
                 .collect(Collectors.toList());
     }
 
-    public ParticipantDto get(Long id) {
+    public ParticipantDto get(Integer id) {
         Participant participant = participantRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found participant with id: " + id));
 
@@ -40,7 +40,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         return toDto(participant);
     }
 
-    public ParticipantDto update(Long id, ParticipantDto newDto) {
+    public ParticipantDto update(Integer id, ParticipantDto newDto) {
         ParticipantDto dto = get(id);
 
         if (newDto.getName() != null) dto.setName(newDto.getName());
@@ -54,7 +54,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         return toDto(participant);
     }
 
-    public void updateRoundSequenceNumber(Long participantId, Integer newRoundSequenceNumber) {
+    public void updateRoundSequenceNumber(Integer participantId, Integer newRoundSequenceNumber) {
         ParticipantDto dto = get(participantId);
 
         if (newRoundSequenceNumber < 0 || newRoundSequenceNumber >= dto.getCompetition().getFormula().getNumberOfRounds())
@@ -71,7 +71,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
                 .toList();
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         //todo remove all starts (use @transactional?)
         participantRepo.deleteById(id);
     }

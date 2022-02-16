@@ -24,7 +24,7 @@ public class ParticipantController {
 
     @ApiOperation(value = "Get participant specific by id")
     @GetMapping("/{id}")
-    public ParticipantDto get(@PathVariable Long id) {
+    public ParticipantDto get(@PathVariable Integer id) {
         return service.get(id);
     }
 
@@ -36,13 +36,13 @@ public class ParticipantController {
 
     @ApiOperation(value = "Update participant", notes = "All fields can be updated apart from id, competition and roundSequenceNumber. Return updated participant")
     @PutMapping("/{id}")
-    public ParticipantDto update(@RequestBody ParticipantDto participant, @PathVariable Long id) {
+    public ParticipantDto update(@RequestBody ParticipantDto participant, @PathVariable Integer id) {
         return service.update(id, participant);
     }
 
     @ApiOperation(value = "Remove participant", notes = "This operation will also remove all participant starts.")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         service.delete(id);
     }
 

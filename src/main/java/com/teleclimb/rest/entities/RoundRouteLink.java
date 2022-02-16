@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class RoundRouteLink {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "route_id")

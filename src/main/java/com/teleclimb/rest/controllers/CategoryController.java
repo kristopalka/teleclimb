@@ -1,6 +1,6 @@
 package com.teleclimb.rest.controllers;
 
-import com.teleclimb.rest.dto.CategoryDto;
+import com.teleclimb.rest.dto.CategoryRawDto;
 import com.teleclimb.rest.services.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,13 +21,13 @@ public class CategoryController {
 
     @ApiOperation(value = "Get all categories", notes = "categories are constant")
     @GetMapping("/all")
-    public List<CategoryDto> getAll() {
+    public List<CategoryRawDto> getAll() {
         return service.getAll();
     }
 
     @ApiOperation(value = "Get category by id")
     @GetMapping("/{id}")
-    public CategoryDto get(@PathVariable Long id) {
+    public CategoryRawDto get(@PathVariable Integer id) {
         return service.get(id);
     }
 }

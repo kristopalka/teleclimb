@@ -1,18 +1,18 @@
 package com.teleclimb.rest.entities;
 
-import com.teleclimb.rest.dto.CategoryDto;
 import lombok.Data;
-import org.modelmapper.ModelMapper;
-import springfox.documentation.swagger2.mappers.ModelMapperImpl;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Data
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String name;
 

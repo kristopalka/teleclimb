@@ -1,15 +1,15 @@
-package com.teleclimb.rest.dto.raw;
+package com.teleclimb.rest.dto;
 
 import com.teleclimb.enums.StartsGenerationMethod;
 import lombok.Data;
 
 @Data
 public class RoundRawDto {
-    private Long id;
+    private Integer id;
 
     private Integer sequenceNumber;
 
-    private Long competitionId;
+    private Integer competitionId;
 
     private String name;
 

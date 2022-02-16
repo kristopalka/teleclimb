@@ -24,7 +24,7 @@ public class CompetitionController {
 
     @ApiOperation(value = "Get competition specific by id")
     @GetMapping("/{id}")
-    public CompetitionDto get(@PathVariable Long id) {
+    public CompetitionDto get(@PathVariable Integer id) {
         return service.get(id);
     }
 
@@ -36,13 +36,13 @@ public class CompetitionController {
 
     @ApiOperation(value = "Update competition", notes = "Only field name can by updated after creation. Return updated competition")
     @PutMapping("/{id}")
-    public CompetitionDto update(@RequestBody CompetitionDto competition, @PathVariable Long id) {
+    public CompetitionDto update(@RequestBody CompetitionDto competition, @PathVariable Integer id) {
         return service.update(id, competition);
     }
 
     @ApiOperation(value = "Remove competition", notes = "This operation will also remove all rounds and participants belonging to competition.")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         service.delete(id);
     }
 }

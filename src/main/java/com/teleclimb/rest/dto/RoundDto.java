@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class RoundDto {
-    private Long id;
+    private Integer id;
 
     private Integer sequenceNumber;
 

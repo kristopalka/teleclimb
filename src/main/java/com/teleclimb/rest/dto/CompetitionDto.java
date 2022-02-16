@@ -5,13 +5,13 @@ import lombok.Data;
 
 @Data
 public class CompetitionDto {
-    private Long id;
+    private Integer id;
 
     private String name;
 
-    private CategoryDto category;
+    private CategoryRawDto category;
 
     private Gender gender;
 
-    private FormulaDto formula;
+    private FormulaRawDto formula;
 }

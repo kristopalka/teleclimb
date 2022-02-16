@@ -5,7 +5,7 @@ import com.teleclimb.responses.error.exception.InternalServerError;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.ParticipantDto;
 import com.teleclimb.rest.dto.RoundDto;
-import com.teleclimb.rest.dto.RouteDto;
+import com.teleclimb.rest.dto.RouteRawDto;
 import com.teleclimb.rest.entities.Round;
 import com.teleclimb.rest.entities.Start;
 import com.teleclimb.rest.repositories.RoundRepository;
@@ -28,18 +28,18 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartR
                 .collect(Collectors.toList());
     }
 
-    public RoundDto get(Long id) {
+    public RoundDto get(Integer id) {
         Round round = roundRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found round with id: " + id));
 
         return mapper.map(round, RoundDto.class);
     }
 
-    public List<RouteDto> getRoutes(Long roundId) {
+    public List<RouteRawDto> getRoutes(Integer roundId) {
         return linkService.getAllRoutesIdForRound(roundId);
     }
 
-    public void linkRoute(Long id, Long routeId) {
+    public void linkRoute(Integer id, Integer routeId) {
         RoundDto round = get(id);
 
         if (getRoutes(id).size() >= round.getNumberOfRoutes())
@@ -48,12 +48,12 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartR
         linkService.addLink(id, routeId);
     }
 
-    public void unlinkRoute(Long id, Long routeId) {
+    public void unlinkRoute(Integer id, Integer routeId) {
         linkService.removeLink(id, routeId);
     }
 
 
-    public void generateStarts(Long roundId) {
+    public void generateStarts(Integer roundId) {
         try {
             tryToGenerateStarts(roundId);
         } catch (Exception e) {
@@ -61,9 +61,9 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartR
         }
     }
 
-    private void tryToGenerateStarts(Long roundId) {
+    private void tryToGenerateStarts(Integer roundId) {
         RoundDto round = get(roundId);
-        List<RouteDto> routes = getRoutes(roundId);
+        List<RouteRawDto> routes = getRoutes(roundId);
         List<ParticipantDto> participants = participantService.getParticipantsByRound(round);
 
         StartsGenerator generator = new StartsGenerator(round, participants, routes);

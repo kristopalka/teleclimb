@@ -4,7 +4,6 @@ import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.StartDto;
 import com.teleclimb.rest.entities.Start;
 import com.teleclimb.rest.repositories.StartRepository;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public record StartService(ModelMapper mapper, StartRepository startRepo) {
                 .collect(Collectors.toList());
     }
 
-    public StartDto get(Long id) {
+    public StartDto get(Integer id) {
         Start start = startRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found start with id: " + id));
 

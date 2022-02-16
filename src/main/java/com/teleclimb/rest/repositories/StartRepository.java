@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface StartRepository extends JpaRepository<Start, Long> {
-    List<Start> findByRoundId(Long roundId);
+public interface StartRepository extends JpaRepository<Start, Integer> {
+    List<Start> findByRoundId(Integer roundId);
 
-    List<Start> findByRouteId(Long routeId);
+    List<Start> findByRouteId(Integer routeId);
 
-    List<Start> findByParticipantId(Long participantId);
+    List<Start> findByParticipantId(Integer participantId);
 }

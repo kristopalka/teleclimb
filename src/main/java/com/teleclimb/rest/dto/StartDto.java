@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StartDto {
-    private Long id;
+    private Integer id;
 
     private RoundDto round;
 
-    private RouteDto route;
+    private RouteRawDto route;
 
     private Integer routeSequenceNumber;
 

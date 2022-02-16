@@ -22,7 +22,7 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
                 .collect(Collectors.toList());
     }
 
-    public CompetitionDto get(Long id) {
+    public CompetitionDto get(Integer id) {
         Competition competition = competitionRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id));
 
@@ -37,7 +37,7 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
         return toDto(competition);
     }
 
-    public CompetitionDto update(Long id, CompetitionDto newDto) {
+    public CompetitionDto update(Integer id, CompetitionDto newDto) {
         CompetitionDto dto = get(id);
 
         if (newDto.getName() != null) dto.setName(newDto.getName());
@@ -46,7 +46,7 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
         return toDto(competition);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         //todo remove all belonging fields (contestants and rounds)
         competitionRepo.deleteById(id);
     }

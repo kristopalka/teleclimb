@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class ParticipantDto {
-    private Long id;
+    private Integer id;
 
     private CompetitionDto competition;
 

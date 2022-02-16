@@ -1,11 +1,10 @@
 package com.teleclimb.rest.dto;
 
-import com.teleclimb.rest.entities.Category;
 import lombok.Data;
 
 @Data
-public class CategoryDto {
-    private Long id;
+public class CategoryRawDto {
+    private Integer id;
 
     private String name;
 

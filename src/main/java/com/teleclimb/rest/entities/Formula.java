@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Formula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String identifier;
 
