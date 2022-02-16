@@ -9,4 +9,4 @@ VALUES (1, 'Dziecko młodsze', 'DM', 0, 9),
 
 INSERT INTO FORMULA (ID, IDENTIFIER, NAME, DISCIPLINE, DESCRIPTION)
 VALUES (1, 'LEAD_DEFAULT', 'Standardowe prowadzenie', 'LEAD',
-        'Dwie rundy: eliminacyjna i finałowa. Dwie drogi eliminacyjne i jedna finałowa. ');
+        'Dwie rundy: eliminacyjna i finałowa. Dwie drogi eliminacyjne i jedna finałowa. 8 zawodników w finale.');
