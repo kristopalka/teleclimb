@@ -1,6 +1,7 @@
 package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.RoundDto;
+import com.teleclimb.rest.dto.RouteDto;
 import com.teleclimb.rest.services.RoundService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,5 +30,25 @@ public class RoundController {
     }
 
 
+    @ApiOperation(value = "Get routes linked to the round")
+    @GetMapping("/{id}/routes")
+    public List<RouteDto> getRoutes(@PathVariable Long id) {
+        return service.getRoutes(id);
+    }
+
+    @ApiOperation(value = "Link route to the round")
+    @PostMapping("/{id}/route/link/{routeId}")
+    public void linkRoute(@PathVariable Long id, @PathVariable Long routeId) {
+        service.linkRoute(id, routeId);
+    }
+
+    @ApiOperation(value = "Unlink route to the round")
+    @PostMapping("/{id}/route/unlink/{routeId}")
+    public void unlinkRoute(@PathVariable Long id, @PathVariable Long routeId) {
+        service.unlinkRoute(id, routeId);
+    }
+
+
+    //todo generowanie startów
     //todo add endpoint - get all starts in this round
 }
