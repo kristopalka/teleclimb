@@ -1,8 +1,8 @@
 package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
+import com.teleclimb.responses.error.exception.InternalServerError;
 import com.teleclimb.responses.error.exception.NotFoundException;
-import com.teleclimb.responses.error.exception.NotImplementedException;
 import com.teleclimb.rest.dto.RoundDto;
 import com.teleclimb.rest.dto.RouteDto;
 import com.teleclimb.rest.entities.Round;
@@ -48,7 +48,17 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundR
     }
 
 
-    public void generateStarts(Long id) {
-        throw new NotImplementedException("not implemented yet");
+    public void generateStarts(Long roundId) {
+        try {
+            //todo sprawdzneie poprawności
+
+            tryToGenerateStarts(roundId);
+        } catch (Exception e) {
+            throw new InternalServerError("Something went wrong while generating starts: '" + e.getMessage() + "'");
+        }
+    }
+
+    private void tryToGenerateStarts(Long competiroundIdtionId) {
+        //todo generowanko :) użyć ROund generato
     }
 }
