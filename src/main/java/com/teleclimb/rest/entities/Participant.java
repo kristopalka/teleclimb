@@ -1,6 +1,5 @@
 package com.teleclimb.rest.entities;
 
-import com.teleclimb.rest.dto.ParticipantDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +15,8 @@ public class Participant {
     @ManyToOne
     @JoinColumn(name = "competition_id")
     private Competition competition;
+
+    private Integer roundSequenceNumber;  // point the highest round, participant reach
 
     private String name;
 

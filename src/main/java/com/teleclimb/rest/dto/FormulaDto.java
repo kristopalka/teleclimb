@@ -11,6 +11,8 @@ public class FormulaDto {
 
     private Discipline discipline;
 
+    private Integer numberOfRounds;
+
     private String name;
 
     private String description;

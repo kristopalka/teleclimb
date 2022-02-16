@@ -10,6 +10,8 @@ public class ParticipantRawDto {
 
     private Long competitionId;
 
+    private Integer roundSequenceNumber;
+
     private String name;
 
     private String lastName;

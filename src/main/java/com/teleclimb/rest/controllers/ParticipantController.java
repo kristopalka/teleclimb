@@ -28,13 +28,13 @@ public class ParticipantController {
         return service.get(id);
     }
 
-    @ApiOperation(value = "Add new participant", notes = "Do not insert id field, it will be generated automatically anyway. Competition field is mandatory.")
+    @ApiOperation(value = "Add new participant", notes = "Do not insert id field, it will be generated automatically anyway. Competition field is mandatory - participant is assigned to competition.")
     @PostMapping("")
     public void add(@RequestBody ParticipantDto participant) {
         service.add(participant);
     }
 
-    @ApiOperation(value = "Update competition", notes = "All fields can be updated apart from id and competition.")
+    @ApiOperation(value = "Update competition", notes = "All fields can be updated apart from id, competition and roundSequenceNumber")
     @PutMapping("/{id}")
     public void update(@RequestBody ParticipantDto participant, @PathVariable Long id) {
         service.update(id, participant);

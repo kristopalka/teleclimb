@@ -10,6 +10,8 @@ public class ParticipantDto {
 
     private CompetitionDto competition;
 
+    private Integer roundSequenceNumber;
+
     private String name;
 
     private String lastName;

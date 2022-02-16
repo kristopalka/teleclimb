@@ -31,8 +31,19 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     public void add(ParticipantDto dto) {
         dto.setId(null);
+        dto.setRoundSequenceNumber(0);
         newDtoValidation(dto);
 
+        participantRepo.save(mapper.map(dto, Participant.class));
+    }
+
+    public void updateRoundSequenceNumber(Long participantId, Integer newRoundSequenceNumber) {
+        ParticipantDto dto = get(participantId);
+
+        if (newRoundSequenceNumber < 0 || newRoundSequenceNumber >= dto.getCompetition().getFormula().getNumberOfRounds())
+            throw new RuntimeException("New round sequence number is out of range possible values");
+
+        dto.setRoundSequenceNumber(newRoundSequenceNumber);
         participantRepo.save(mapper.map(dto, Participant.class));
     }
 

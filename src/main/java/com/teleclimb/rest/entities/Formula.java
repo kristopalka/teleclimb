@@ -17,6 +17,8 @@ public class Formula {
     @Enumerated(EnumType.STRING)
     private Discipline discipline;
 
+    private Integer numberOfRounds;
+
     private String name;
 
     private String description;
