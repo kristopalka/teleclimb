@@ -30,11 +30,12 @@ public class RoundsGenerator {
     }
 
     private void generateLeadDefault() {
+        //TODO można to zapisać jako obiekty w formie json, to może być w bazie w nowym polu w FORMULA
         Round eliminationRound = Round.builder()
                 .competition(competition)
                 .name("Eliminacyje")
                 .sequenceNumber(1)
-                .resultCalculatingFunction("?") //todo
+                .resultCalculatingFunction("?") //todo napisać funkcję
                 .numberOfRoutes(2)
                 .maxParticipants(Integer.MAX_VALUE)
                 .build();
@@ -43,7 +44,7 @@ public class RoundsGenerator {
                 .competition(competition)
                 .name("Finał")
                 .sequenceNumber(2)
-                .resultCalculatingFunction("?") //todo
+                .resultCalculatingFunction("?") //todo napisać funkcję
                 .numberOfRoutes(1)
                 .maxParticipants(8)
                 .build();
