@@ -39,7 +39,7 @@ public class RoundsGenerator {
                 .resultCalculatingFunction("?") //todo napisać funkcję
                 .numberOfRoutes(2)
                 .maxParticipants(Integer.MAX_VALUE)
-                .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC)
+                .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_ELIMINATIONS)
                 .build();
 
         Round finalRound = Round.builder()
@@ -49,7 +49,7 @@ public class RoundsGenerator {
                 .resultCalculatingFunction("?") //todo napisać funkcję
                 .numberOfRoutes(1)
                 .maxParticipants(8)
-                .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC)
+                .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_FINAL)
                 .build();
 
         rounds.add(eliminationRound);

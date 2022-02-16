@@ -58,7 +58,7 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundR
         }
     }
 
-    private void tryToGenerateStarts(Long competiroundIdtionId) {
+    private void tryToGenerateStarts(Long roundId) {
         //todo generowanko :) użyć ROund generato
     }
 }
