@@ -3,6 +3,7 @@ package com.teleclimb.rest.services;
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.ParticipantDto;
+import com.teleclimb.rest.dto.RoundDto;
 import com.teleclimb.rest.entities.Participant;
 import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.repositories.ParticipantRepository;
@@ -59,6 +60,13 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
         dto.setRoundSequenceNumber(newRoundSequenceNumber);
         participantRepo.save(toEntity(dto));
+    }
+
+    public List<ParticipantDto> getParticipantsByRound(RoundDto round) {
+        return participantRepo.findByCompetitionIdAndRoundSequenceNumber(round.getCompetition().getId(), round.getSequenceNumber())
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
     public void delete(Long id) {

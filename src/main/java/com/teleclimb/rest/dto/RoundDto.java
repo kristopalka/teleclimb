@@ -1,25 +1,24 @@
 package com.teleclimb.rest.dto;
 
+import com.teleclimb.enums.StartsGenerationMethod;
+import com.teleclimb.rest.entities.Competition;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class RoundDto {
     private Long id;
 
-    private Long sequenceNumber;
+    private Integer sequenceNumber;
 
-    private String resultCalculatingFunction;
-
-    private List<RouteDto> routes;
-
-    private Integer numberOfRoutes;
-
-    private CompetitionDto competition;
+    private Competition competition;
 
     private String name;
 
+    private Integer numberOfRoutes;
+
     private Integer maxParticipants;
 
+    private String resultCalculatingFunction;
+
+    private StartsGenerationMethod startsGenerationMethod;
 }

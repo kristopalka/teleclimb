@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
     List<Participant> findByCompetitionId(Long competitionId);
+
+    List<Participant> findByCompetitionIdAndRoundSequenceNumber(Long competitionId, Integer roundSequenceNumber);
 }

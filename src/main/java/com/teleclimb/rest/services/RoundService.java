@@ -3,10 +3,14 @@ package com.teleclimb.rest.services;
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.InternalServerError;
 import com.teleclimb.responses.error.exception.NotFoundException;
+import com.teleclimb.rest.dto.ParticipantDto;
 import com.teleclimb.rest.dto.RoundDto;
 import com.teleclimb.rest.dto.RouteDto;
 import com.teleclimb.rest.entities.Round;
+import com.teleclimb.rest.entities.Start;
 import com.teleclimb.rest.repositories.RoundRepository;
+import com.teleclimb.rest.repositories.StartRepository;
+import com.teleclimb.util.StartsGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundRouteLinkService linkService) {
+public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartRepository startRepo,
+                           RoundRouteLinkService linkService, ParticipantService participantService) {
 
     public List<RoundDto> getAll() {
         return roundRepo.findAll()
@@ -50,8 +55,6 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundR
 
     public void generateStarts(Long roundId) {
         try {
-            //todo sprawdzneie poprawności
-
             tryToGenerateStarts(roundId);
         } catch (Exception e) {
             throw new InternalServerError("Something went wrong while generating starts: '" + e.getMessage() + "'");
@@ -59,6 +62,17 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundR
     }
 
     private void tryToGenerateStarts(Long roundId) {
-        //todo generowanko :) użyć ROund generato
+        RoundDto round = get(roundId);
+        List<RouteDto> routes = getRoutes(roundId);
+        List<ParticipantDto> participants = participantService.getParticipantsByRound(round);
+
+        StartsGenerator generator = new StartsGenerator(round, participants, routes);
+        List<Start> starts = generator
+                .generate()
+                .stream()
+                .map(s -> mapper.map(s, Start.class))
+                .toList();
+
+        startRepo.saveAll(starts);
     }
 }
