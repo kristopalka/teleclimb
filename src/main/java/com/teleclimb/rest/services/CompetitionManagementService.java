@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record CompetitionAdditionalService(ModelMapper mapper, ParticipantRepository contestantRepo,
+public record CompetitionManagementService(ModelMapper mapper, ParticipantRepository contestantRepo,
                                            RoundRepository roundRepo, CompetitionRepository competitionRepo) {
     public CompetitionWithParticipantsList getAllParticipants(Long competitionId) {
         CompetitionWithParticipantsList dto = new CompetitionWithParticipantsList();

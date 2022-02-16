@@ -1,9 +1,6 @@
 package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.CompetitionDto;
-import com.teleclimb.rest.dto.custom.CompetitionWithParticipantsList;
-import com.teleclimb.rest.dto.custom.CompetitionWithRoundsList;
-import com.teleclimb.rest.services.CompetitionAdditionalService;
 import com.teleclimb.rest.services.CompetitionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +15,6 @@ import java.util.List;
 @Api(tags = "competition")
 public class CompetitionController {
     private final CompetitionService service;
-    private final CompetitionAdditionalService additionalService;
 
     @ApiOperation(value = "Get all competitions")
     @GetMapping("/all")
@@ -49,29 +45,4 @@ public class CompetitionController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
-
-
-    // Extended
-
-    @ApiOperation(value = "Return CUSTOM OBJECT: competition and participants list")
-    @GetMapping("/{id}/participants")
-    public CompetitionWithParticipantsList getAllParticipants(@PathVariable Long id) {
-        return additionalService.getAllParticipants(id);
-    }
-
-    @ApiOperation(value = "Return CUSTOM OBJECT: competition and rounds list")
-    @GetMapping("/{id}/rounds")
-    public CompetitionWithRoundsList getAllRounds(@PathVariable Long id) {
-        return additionalService.getAllRounds(id);
-    }
-
-
-    @ApiOperation(value = "Generate rounds for competition based on rounds schema. It generate, save to database and return the same as endpoint /competition/{id}/rounds")
-    @GetMapping("/{id}/rounds/generate")
-    public CompetitionWithRoundsList generateRounds(@PathVariable Long id) {
-        return additionalService.generateRounds(id);
-    }
-
-    //todo add endpoint - generate rounds (potrzebuję dodatkowego pola - schemat rund? - przeczytać przepisy)
-    //todo add endpoint - remove rounds
 }
