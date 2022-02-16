@@ -25,5 +25,4 @@ public class FormulaEntity {
     private String name;
 
     private String description;
-
 }

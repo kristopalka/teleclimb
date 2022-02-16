@@ -15,17 +15,16 @@ public class CompetitionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
     @ManyToOne
     @JoinColumn(name = "formula_id")
     private FormulaEntity formula;
 
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    private String name;
 }

@@ -25,6 +25,13 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
                 .collect(Collectors.toList());
     }
 
+    public List<Participant> getAllByCompetitionId(Integer competitionId) {
+        return participantRepo.findByCompetitionId(competitionId)
+                .stream()
+                .map(p -> mapper.map(p, Participant.class))
+                .toList();
+    }
+
     public Participant get(Integer id) {
         ParticipantEntity participantEntity = participantRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found participant with id: " + id));

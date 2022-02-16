@@ -15,45 +15,39 @@ import java.util.List;
 @RequestMapping("/round")
 @Api(tags = "round")
 public class RoundController {
-    private final RoundService service;
+    private final RoundService roundService;
 
     @ApiOperation(value = "Get all rounds")
     @GetMapping("/all")
     public List<Round> getAll() {
-        return service.getAll();
+        return roundService.getAll();
     }
 
     @ApiOperation(value = "Get round specific by id")
     @GetMapping("/{id}")
     public Round get(@PathVariable Integer id) {
-        return service.get(id);
+        return roundService.get(id);
     }
 
 
     @ApiOperation(value = "Get routes linked to the round")
     @GetMapping("/{id}/routes")
     public List<Route> getRoutes(@PathVariable Integer id) {
-        return service.getRoutes(id);
+        return roundService.getRoutes(id);
     }
 
     @ApiOperation(value = "Link route to the round", notes = "Before generating starts, number of routes must be equal RoundEntity.numberOfRoutes field")
     @PostMapping("/{id}/route/link/{routeId}")
     public void linkRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
-        service.linkRoute(id, routeId);
+        roundService.linkRoute(id, routeId);
     }
 
     @ApiOperation(value = "Unlink route from the round")
     @PostMapping("/{id}/route/unlink/{routeId}")
     public void unlinkRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
-        service.unlinkRoute(id, routeId);
+        roundService.unlinkRoute(id, routeId);
     }
 
-    @ApiOperation(value = "Generate starts, based on StartsGenerationMethod")
-    @PostMapping("/{id}/starts/generate")
-    public void generateStarts(@PathVariable Integer id) {
-        service.generateStarts(id);
-    }
 
-    //todo generowanie startów
     //todo add endpoint - get all starts in this round
 }

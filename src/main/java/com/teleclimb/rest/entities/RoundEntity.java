@@ -1,14 +1,10 @@
 package com.teleclimb.rest.entities;
 
 import com.teleclimb.enums.StartsGenerationMethod;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-
-
-@Builder //todo remove
-@NoArgsConstructor
-@AllArgsConstructor
 
 @Entity
 @Getter
@@ -19,11 +15,11 @@ public class RoundEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer sequenceNumber;
-
     @ManyToOne
     @JoinColumn(name = "competition_id")
     private CompetitionEntity competition;
+
+    private Integer sequenceNumber;
 
     private String name;
 
@@ -31,9 +27,8 @@ public class RoundEntity {
 
     private Integer maxParticipants;
 
-    private String resultCalculatingFunction;
-
     @Enumerated(value = EnumType.STRING)
     private StartsGenerationMethod startsGenerationMethod;
 
+    private String resultCalculatingFunction;
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository linkRepo) {
-    public List<Route> getAllRoutesIdForRound(Integer roundId) {
+    public List<Route> getAllRoutesForRoundId(Integer roundId) {
         List<RoundRouteLinkEntity> links = linkRepo.findByRoundId(roundId);
 
         return links.stream()

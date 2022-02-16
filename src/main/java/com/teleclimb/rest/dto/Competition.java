@@ -7,11 +7,11 @@ import lombok.Data;
 public class Competition {
     private Integer id;
 
-    private String name;
-
     private Integer categoryId;
+
+    private Integer formulaId;
 
     private Gender gender;
 
-    private Integer formulaId;
+    private String name;
 }

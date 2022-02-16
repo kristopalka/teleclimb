@@ -1,5 +1,6 @@
 package com.teleclimb.rest.services;
 
+import com.teleclimb.annotations.EntityDtoMapping;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.Start;
 import com.teleclimb.rest.entities.StartEntity;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@EntityDtoMapping(entity = StartEntity.class, dto = Start.class)
 public record StartService(ModelMapper mapper, StartRepository startRepo) {
 
     public List<Start> getAll() {
@@ -25,5 +27,22 @@ public record StartService(ModelMapper mapper, StartRepository startRepo) {
                 .orElseThrow(() -> new NotFoundException("Not found start with id: " + id));
 
         return mapper.map(startEntity, Start.class);
+    }
+
+    public void addAll(List<Start> starts) {
+        starts.forEach(this::newStartValidation);
+        starts.forEach(r -> startRepo.save(toEntity(r)));
+    }
+
+    private void newStartValidation(Start start) {
+        //todo start validation
+    }
+
+    private Start toDto(StartEntity entity) {
+        return mapper.map(entity, Start.class);
+    }
+
+    private StartEntity toEntity(Start dto) {
+        return mapper.map(dto, StartEntity.class);
     }
 }

@@ -16,5 +16,4 @@ public class Formula {
     private String name;
 
     private String description;
-
 }

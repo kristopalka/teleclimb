@@ -23,5 +23,4 @@ public class RouteEntity {
     private Discipline discipline;
 
     private Integer timeLimitSeconds;
-
 }

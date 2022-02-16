@@ -1,16 +1,12 @@
 package com.teleclimb.rest.services;
 
 import com.teleclimb.responses.error.exception.BadRequestException;
-import com.teleclimb.responses.error.exception.InternalServerError;
 import com.teleclimb.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.dto.Participant;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.entities.RoundEntity;
-import com.teleclimb.rest.entities.StartEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
 import com.teleclimb.rest.repositories.StartRepository;
-import com.teleclimb.util.StartsGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +20,15 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartR
     public List<Round> getAll() {
         return roundRepo.findAll()
                 .stream()
-                .map(r -> mapper.map(r, Round.class))
+                .map(this::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public List<Round> getAllByCompetitionId(Integer competitionId) {
+        return roundRepo.findByCompetitionId(competitionId)
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
     public Round get(Integer id) {
@@ -35,8 +38,26 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartR
         return mapper.map(roundEntity, Round.class);
     }
 
+    public void addAll(List<Round> rounds) {
+        rounds.forEach(this::newRoundValidation);
+        rounds.forEach(r -> roundRepo.save(toEntity(r)));
+    }
+
+    private void newRoundValidation(Round round) {
+        //todo round validation
+    }
+
+    private Round toDto(RoundEntity entity) {
+        return mapper.map(entity, Round.class);
+    }
+
+    private RoundEntity toEntity(Round dto) {
+        return mapper.map(dto, RoundEntity.class);
+    }
+
+
     public List<Route> getRoutes(Integer roundId) {
-        return linkService.getAllRoutesIdForRound(roundId);
+        return linkService.getAllRoutesForRoundId(roundId);
     }
 
     public void linkRoute(Integer id, Integer routeId) {
@@ -52,27 +73,4 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, StartR
         linkService.removeLink(id, routeId);
     }
 
-
-    public void generateStarts(Integer roundId) {
-        try {
-            tryToGenerateStarts(roundId);
-        } catch (Exception e) {
-            throw new InternalServerError("Something went wrong while generating starts: '" + e.getMessage() + "'");
-        }
-    }
-
-    private void tryToGenerateStarts(Integer roundId) {
-        Round round = get(roundId);
-        List<Route> routes = getRoutes(roundId);
-        List<Participant> participants = participantService.getParticipantsByRound(round);
-
-        StartsGenerator generator = new StartsGenerator(round, participants, routes);
-        List<StartEntity> startEntities = generator
-                .generate()
-                .stream()
-                .map(s -> mapper.map(s, StartEntity.class))
-                .toList();
-
-        startRepo.saveAll(startEntities);
-    }
 }

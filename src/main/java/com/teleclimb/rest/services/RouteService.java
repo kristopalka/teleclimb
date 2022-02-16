@@ -21,6 +21,13 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
                 .collect(Collectors.toList());
     }
 
+    public List<Route> getAllByRoundId(Integer roundId) {
+        return routeRepo.findAll()
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
     public Route get(Integer id) {
         RouteEntity routeEntity = routeRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found route with id: " + id));
