@@ -1,6 +1,5 @@
 package com.teleclimb.rest.dto;
 
-import com.teleclimb.rest.entities.Start;
 import lombok.Data;
 
 @Data
@@ -10,6 +9,8 @@ public class StartDto {
     private RoundDto round;
 
     private RouteDto route;
+
+    private Integer routeSequenceNumber;
 
     private ParticipantDto participant;
 

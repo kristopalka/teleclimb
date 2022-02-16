@@ -1,9 +1,6 @@
 package com.teleclimb.rest.entities;
 
-import com.teleclimb.rest.dto.StartDto;
 import lombok.Data;
-import springfox.documentation.swagger2.mappers.ModelMapper;
-import springfox.documentation.swagger2.mappers.ModelMapperImpl;
 
 import javax.persistence.*;
 
@@ -21,6 +18,8 @@ public class Start {
     @ManyToOne
     @JoinColumn(name = "route_id")
     private Route route;
+
+    private Integer routeSequenceNumber;
 
     @ManyToOne
     @JoinColumn(name = "participant_id")
