@@ -25,7 +25,7 @@ public class RouteController {
     }
 
     @ApiOperation(value = "Get all routes with specific ", notes = "This operation will also remove all contestant starts on this route.")
-    @GetMapping("/all/by-discipline/{discipline}")
+    @GetMapping("/by-discipline/{discipline}")
     public List<Route> getAllByDiscipline(@PathVariable Discipline discipline) {
         return service.getAllByDiscipline(discipline);
     }
