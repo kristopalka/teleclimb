@@ -23,6 +23,12 @@ public class RouteController {
         return service.getAll();
     }
 
+    @ApiOperation(value = "Get all routes with specific ", notes = "This operation will also remove all contestant starts on this route.")
+    @GetMapping("/all/by-discipline/{disciplineName}")
+    public List<Route> getAllByDiscipline(@PathVariable String disciplineName) {
+        return service.getAllByDiscipline(disciplineName);
+    }
+
     @ApiOperation(value = "Get route specific by id")
     @GetMapping("/{id}")
     public Route get(@PathVariable Integer id) {
@@ -46,6 +52,7 @@ public class RouteController {
     public void delete(@PathVariable Integer id) {
         service.delete(id);
     }
+
 
     //todo dodać endpointa do wzięcia wszystkich startów na drodze
 }

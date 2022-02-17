@@ -1,5 +1,6 @@
 package com.teleclimb.rest.services;
 
+import com.teleclimb.enums.Discipline;
 import com.teleclimb.responses.error.exception.BadRequestException;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.Route;
@@ -16,6 +17,14 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
 
     public List<Route> getAll() {
         return routeRepo.findAll()
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<Route> getAllByDiscipline(String disciplineName) {
+        Discipline discipline = mapper.map(disciplineName, Discipline.class);
+        return routeRepo.findByDiscipline(discipline)
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
@@ -70,4 +79,5 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
     private RouteEntity toEntity(Route dto) {
         return mapper.map(dto, RouteEntity.class);
     }
+
 }
