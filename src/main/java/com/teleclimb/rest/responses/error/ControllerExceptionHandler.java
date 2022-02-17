@@ -1,8 +1,8 @@
-package com.teleclimb.responses.error;
+package com.teleclimb.rest.responses.error;
 
 
-import com.teleclimb.responses.Response;
-import com.teleclimb.responses.error.exception.TeleclimbException;
+import com.teleclimb.rest.responses.Response;
+import com.teleclimb.rest.responses.error.exception.TeleclimbException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

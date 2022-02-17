@@ -1,4 +1,4 @@
-package com.teleclimb.responses.error.exception;
+package com.teleclimb.rest.responses.error.exception;
 
 import org.springframework.http.HttpStatus;
 

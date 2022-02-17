@@ -1,6 +1,6 @@
-package com.teleclimb.responses.success;
+package com.teleclimb.rest.responses.success;
 
-import com.teleclimb.responses.Response;
+import com.teleclimb.rest.responses.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

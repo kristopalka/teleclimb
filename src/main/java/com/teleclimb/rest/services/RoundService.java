@@ -1,9 +1,9 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.entities.RoundEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
+import com.teleclimb.rest.responses.error.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

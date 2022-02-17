@@ -1,4 +1,4 @@
-package com.teleclimb.responses;
+package com.teleclimb.rest.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

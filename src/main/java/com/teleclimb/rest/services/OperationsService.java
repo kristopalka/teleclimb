@@ -1,7 +1,7 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.responses.error.exception.InternalServerError;
 import com.teleclimb.rest.dto.*;
+import com.teleclimb.rest.responses.error.exception.InternalServerError;
 import com.teleclimb.util.RoundsGenerator;
 import com.teleclimb.util.StartsGenerator;
 import org.modelmapper.ModelMapper;
