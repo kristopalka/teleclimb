@@ -22,8 +22,7 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
                 .collect(Collectors.toList());
     }
 
-    public List<Route> getAllByDiscipline(String disciplineName) {
-        Discipline discipline = mapper.map(disciplineName, Discipline.class);
+    public List<Route> getAllByDiscipline(Discipline discipline) {
         return routeRepo.findByDiscipline(discipline)
                 .stream()
                 .map(this::toDto)
