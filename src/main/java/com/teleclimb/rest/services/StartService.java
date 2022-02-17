@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public record StartService(ModelMapper mapper, StartRepository startRepo) {
@@ -16,15 +15,22 @@ public record StartService(ModelMapper mapper, StartRepository startRepo) {
     public List<Start> getAll() {
         return startRepo.findAll()
                 .stream()
-                .map(s -> mapper.map(s, Start.class))
-                .collect(Collectors.toList());
+                .map(this::toDto)
+                .toList();
+    }
+
+    public List<Start> getByRoundIdAndRouteId(Integer roundId, Integer routeId) {
+        return startRepo.getByRoundIdAndRouteId(roundId, routeId)
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
     public Start get(Integer id) {
         StartEntity startEntity = startRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found start with id: " + id));
 
-        return mapper.map(startEntity, Start.class);
+        return toDto(startEntity);
     }
 
     public void addAll(List<Start> starts) {
@@ -43,4 +49,5 @@ public record StartService(ModelMapper mapper, StartRepository startRepo) {
     private StartEntity toEntity(Start dto) {
         return mapper.map(dto, StartEntity.class);
     }
+
 }

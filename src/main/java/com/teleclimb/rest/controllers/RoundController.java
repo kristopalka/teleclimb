@@ -2,8 +2,10 @@ package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.dto.Route;
+import com.teleclimb.rest.dto.Start;
 import com.teleclimb.rest.services.RoundRouteLinkService;
 import com.teleclimb.rest.services.RoundService;
+import com.teleclimb.rest.services.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 public class RoundController {
     private final RoundService roundService;
     private final RoundRouteLinkService linkService;
+    private final StartService startService;
 
     @ApiOperation(value = "Get all rounds")
     @GetMapping("/all")
@@ -48,5 +51,11 @@ public class RoundController {
     @PostMapping("/{id}/remove-route/{routeId}")
     public void removeRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
         linkService.removeLink(id, routeId);
+    }
+
+    @ApiOperation(value = "Get all starts in round, by route")
+    @PostMapping("/{id}/route/{routeId}/starts")
+    public List<Start> getStartsOnRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
+        return startService.getByRoundIdAndRouteId(id, routeId);
     }
 }

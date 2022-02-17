@@ -41,12 +41,13 @@ public class StartsGenerator {
 
 
     private void generateLeadClassicEliminations() {
-        if (routes.size() != 2) throw new RuntimeException("should be 2 rotes linked to round id: " + round.getId());
+        if (routes.size() != 2) throw new RuntimeException("should be 2 routes linked to round id: " + round.getId());
         Route routeA = routes.get(0);
         Route routeB = routes.get(1);
 
         TreeSet<Participant> randomizedParticipants = randomizeSet(participants);
 
+        System.out.println("XDDDDDDDDDDDDDD");
         int numberOfParticipants = participants.size();
         int routeACounter = 0;
         int routeBCounter = (int) Math.ceil(((double) numberOfParticipants) / 2);
@@ -66,7 +67,9 @@ public class StartsGenerator {
                     .build();
 
             starts.add(startOnA);
+            System.out.println(startOnA);
             starts.add(startOnB);
+            System.out.println(startOnB);
 
             routeACounter++;
             routeBCounter++;

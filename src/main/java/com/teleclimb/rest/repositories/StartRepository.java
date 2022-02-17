@@ -11,4 +11,6 @@ public interface StartRepository extends JpaRepository<StartEntity, Integer> {
     List<StartEntity> findByRouteId(Integer routeId);
 
     List<StartEntity> findByParticipantId(Integer participantId);
+
+    List<StartEntity> getByRoundIdAndRouteId(Integer roundId, Integer routeId);
 }

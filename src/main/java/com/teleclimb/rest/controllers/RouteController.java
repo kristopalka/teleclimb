@@ -4,6 +4,7 @@ package com.teleclimb.rest.controllers;
 import com.teleclimb.enums.Discipline;
 import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.services.RouteService;
+import com.teleclimb.rest.services.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @Api(tags = "route")
 public class RouteController {
     private final RouteService service;
+    private final StartService startService;
 
     @ApiOperation(value = "Get all routes")
     @GetMapping("/all")
@@ -24,7 +26,7 @@ public class RouteController {
         return service.getAll();
     }
 
-    @ApiOperation(value = "Get all routes with specific ", notes = "This operation will also remove all contestant starts on this route.")
+    @ApiOperation(value = "Get all routes by discipline")
     @GetMapping("/by-discipline/{discipline}")
     public List<Route> getAllByDiscipline(@PathVariable Discipline discipline) {
         return service.getAllByDiscipline(discipline);
