@@ -1,6 +1,5 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.annotations.EntityDtoMapping;
 import com.teleclimb.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.dto.Start;
 import com.teleclimb.rest.entities.StartEntity;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@EntityDtoMapping(entity = StartEntity.class, dto = Start.class)
 public record StartService(ModelMapper mapper, StartRepository startRepo) {
 
     public List<Start> getAll() {
