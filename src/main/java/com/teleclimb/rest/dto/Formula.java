@@ -7,13 +7,13 @@ import lombok.Data;
 public class Formula {
     private Integer id;
 
-    private String identifier;
+    private String name;
+
+    private String description;
 
     private Discipline discipline;
 
     private Integer numberOfRounds;
 
-    private String name;
-
-    private String description;
+    private String jsonConfiguration;
 }

@@ -15,14 +15,15 @@ public class FormulaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String identifier;
+    private String name;
+
+    private String description;
 
     @Enumerated(EnumType.STRING)
     private Discipline discipline;
 
     private Integer numberOfRounds;
 
-    private String name;
-
-    private String description;
+    @Lob
+    private String jsonConfiguration;
 }
