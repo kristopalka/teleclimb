@@ -1,4 +1,4 @@
-package com.teleclimb.rest.services;
+package com.teleclimb.rest.services.custom;
 
 import com.teleclimb.enums.Discipline;
 import com.teleclimb.enums.Gender;
@@ -6,6 +6,7 @@ import com.teleclimb.rest.dto.Competition;
 import com.teleclimb.rest.dto.Participant;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.dto.Route;
+import com.teleclimb.rest.services.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

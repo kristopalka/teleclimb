@@ -9,4 +9,6 @@ public interface RoundRouteLinkRepository extends JpaRepository<RoundRouteLinkEn
     List<RoundRouteLinkEntity> findByRoundId(Integer roundId);
 
     List<RoundRouteLinkEntity> findByRoundIdAndRouteId(Integer roundId, Integer routeId);
+
+    List<RoundRouteLinkEntity> findByRouteId(Integer routeId);
 }

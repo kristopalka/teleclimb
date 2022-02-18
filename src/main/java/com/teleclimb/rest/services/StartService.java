@@ -12,19 +12,7 @@ import java.util.List;
 @Service
 public record StartService(ModelMapper mapper, StartRepository startRepo) {
 
-    public List<Start> getAll() {
-        return startRepo.findAll()
-                .stream()
-                .map(this::toDto)
-                .toList();
-    }
-
-    public List<Start> getByRoundIdAndRouteId(Integer roundId, Integer routeId) {
-        return startRepo.getByRoundIdAndRouteId(roundId, routeId)
-                .stream()
-                .map(this::toDto)
-                .toList();
-    }
+    // --------------------------------- GET ---------------------------------
 
     public Start get(Integer id) {
         StartEntity startEntity = startRepo.findById(id)
@@ -33,14 +21,37 @@ public record StartService(ModelMapper mapper, StartRepository startRepo) {
         return toDto(startEntity);
     }
 
-    public void addAll(List<Start> starts) {
-        starts.forEach(this::newStartValidation);
-        starts.forEach(r -> startRepo.save(toEntity(r)));
+    public List<Start> getAll() {
+        return startRepo.findAll().stream().map(this::toDto).toList();
     }
 
-    private void newStartValidation(Start start) {
-        //todo start validation
+    public List<Start> getAllByRoundId(Integer roundId) {
+        return startRepo.findByRoundId(roundId).stream().map(this::toDto).toList();
     }
+
+    public List<Start> getAllByRoundIdAndRouteId(Integer roundId, Integer routeId) {
+        return startRepo.findByRoundIdAndRouteId(roundId, routeId).stream().map(this::toDto).toList();
+    }
+
+
+    // --------------------------------- ADD ---------------------------------
+
+    public Start add(Start start) {
+        validateStart(start);
+
+        return toDto(startRepo.save(toEntity(start)));
+    }
+
+    private void validateStart(Start start) {
+        //todo validate start
+    }
+
+    public void addAll(List<Start> starts) {
+        starts.forEach(this::add);
+    }
+
+
+    // --------------------------------- MAPPING ---------------------------------
 
     private Start toDto(StartEntity entity) {
         return mapper.map(entity, Start.class);

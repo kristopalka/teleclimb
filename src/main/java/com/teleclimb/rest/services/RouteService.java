@@ -1,6 +1,7 @@
 package com.teleclimb.rest.services;
 
 import com.teleclimb.enums.Discipline;
+import com.teleclimb.rest.dto.RoundRouteLink;
 import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.entities.RouteEntity;
 import com.teleclimb.rest.repositories.RouteRepository;
@@ -10,45 +11,46 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
+public record RouteService(ModelMapper mapper, RouteRepository routeRepo, RoundRouteLinkService linkService) {
 
-    public List<Route> getAll() {
-        return routeRepo.findAll()
-                .stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<Route> getAllByDiscipline(Discipline discipline) {
-        return routeRepo.findByDiscipline(discipline)
-                .stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<Route> getAllByRoundId(Integer roundId) {
-        return routeRepo.findAll()
-                .stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
+    // --------------------------------- GET ---------------------------------
 
     public Route get(Integer id) {
         RouteEntity routeEntity = routeRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found route with id: " + id));
+
         return toDto(routeEntity);
     }
+
+    public List<Route> getAll() {
+        return routeRepo.findAll().stream().map(this::toDto).toList();
+    }
+
+    public List<Route> getAllByDiscipline(Discipline discipline) {
+        return routeRepo.findByDiscipline(discipline).stream().map(this::toDto).toList();
+    }
+
+    public List<Route> getAllByRoundId(Integer roundId) {
+        List<RoundRouteLink> links = linkService.getAllLinksByRoundId(roundId);
+        return links.stream().map(RoundRouteLink::getRouteId).map(this::get).toList();
+    }
+
+
+    // --------------------------------- ADD ---------------------------------
 
     public Route add(Route dto) {
-        dto.setId(null);
-        newDtoValidation(dto);
-
-        RouteEntity routeEntity = routeRepo.save(toEntity(dto));
-        return toDto(routeEntity);
+        validateRoute(dto);
+        return toDto(routeRepo.save(toEntity(dto)));
     }
+
+    private void validateRoute(Route dto) {
+        if (dto.getDiscipline() == null) throw new BadRequestException("CompetitionType cannot be null");
+    }
+
+
+    // --------------------------------- UPDATE ---------------------------------
 
     public Route update(Integer id, Route newRoute) {
         Route route = get(id);
@@ -57,9 +59,11 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
         if (newRoute.getDescription() != null) route.setDescription(newRoute.getDescription());
         if (newRoute.getTimeLimitSeconds() != null) route.setName(newRoute.getName());
 
-        RouteEntity routeEntity = routeRepo.save(toEntity(route));
-        return toDto(routeEntity);
+        return toDto(routeRepo.save(toEntity(route)));
     }
+
+
+    // --------------------------------- DELETE ---------------------------------
 
     public void delete(Integer id) {
         //todo remove all starts on this route
@@ -67,9 +71,7 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo) {
     }
 
 
-    private void newDtoValidation(Route dto) {
-        if (dto.getDiscipline() == null) throw new BadRequestException("CompetitionType cannot be null");
-    }
+    // --------------------------------- MAPPING ---------------------------------
 
     private Route toDto(RouteEntity entity) {
         return mapper.map(entity, Route.class);

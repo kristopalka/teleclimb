@@ -1,9 +1,7 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.rest.dto.Route;
-import com.teleclimb.rest.entities.RoundEntity;
+import com.teleclimb.rest.dto.RoundRouteLink;
 import com.teleclimb.rest.entities.RoundRouteLinkEntity;
-import com.teleclimb.rest.entities.RouteEntity;
 import com.teleclimb.rest.repositories.RoundRouteLinkRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
 import org.modelmapper.ModelMapper;
@@ -13,44 +11,40 @@ import java.util.List;
 
 @Service
 public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository linkRepo, RoundService roundService) {
-    public List<Route> getAllRoutesForRoundId(Integer roundId) {
-        List<RoundRouteLinkEntity> links = linkRepo.findByRoundId(roundId);
 
-        return links.stream()
-                .map(RoundRouteLinkEntity::getRoute)
-                .map(r -> mapper.map(r, Route.class))
-                .toList();
+    // --------------------------------- GET ---------------------------------
+
+    public List<RoundRouteLink> getAllLinksByRoundId(Integer roundId) {
+        return linkRepo.findByRoundId(roundId).stream().map(this::toDto).toList();
     }
+
+    public List<RoundRouteLink> getAllLinksByRouteId(Integer routeId) {
+        return linkRepo.findByRouteId(routeId).stream().map(this::toDto).toList();
+    }
+
+
+    // --------------------------------- ADD ---------------------------------
 
     public void addLink(Integer roundId, Integer routeId) {
-        if (getAllRoutesForRoundId(roundId).size() >= roundService.get(roundId).getNumberOfRoutes())
-            throw new BadRequestException("There is max number of links to round with id: " + routeId);
-
-        if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() != 0)
+        if (doesLinkExist(roundId, routeId))
             throw new BadRequestException("There is existing link between route id: " + roundId + " and round id: " + roundId);
 
-        RoundEntity roundEntity = new RoundEntity();
-        roundEntity.setId(roundId);
+        RoundRouteLink link = new RoundRouteLink();
+        link.setRoundId(roundId);
+        link.setRouteId(routeId);
+        linkRepo.save(toEntity(link));
+    }
 
-        RouteEntity routeEntity = new RouteEntity();
-        routeEntity.setId(routeId);
-
-        RoundRouteLinkEntity link = new RoundRouteLinkEntity();
-        link.setRound(roundEntity);
-        link.setRoute(routeEntity);
-        linkRepo.save(link);
+    private boolean doesLinkExist(Integer roundId, Integer routeId) {
+        return linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() != 0;
     }
 
 
+    // --------------------------------- DELETE ---------------------------------
+
     public void removeLink(Integer roundId, Integer routeId) {
-        if (linkRepo.findByRoundIdAndRouteId(roundId, routeId).size() == 0)
+        if (doesLinkExist(roundId, routeId))
             throw new BadRequestException("There is no link to remove, between routeEntity id: " + roundId + " and roundEntity id: " + roundId);
-
-        RoundEntity roundEntity = new RoundEntity();
-        roundEntity.setId(roundId);
-
-        RouteEntity routeEntity = new RouteEntity();
-        routeEntity.setId(routeId);
 
         List<RoundRouteLinkEntity> links = linkRepo.findByRoundIdAndRouteId(roundId, routeId);
 
@@ -58,4 +52,13 @@ public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository
     }
 
 
+    // --------------------------------- MAPPING ---------------------------------
+
+    private RoundRouteLink toDto(RoundRouteLinkEntity entity) {
+        return mapper.map(entity, RoundRouteLink.class);
+    }
+
+    private RoundRouteLinkEntity toEntity(RoundRouteLink dto) {
+        return mapper.map(dto, RoundRouteLinkEntity.class);
+    }
 }

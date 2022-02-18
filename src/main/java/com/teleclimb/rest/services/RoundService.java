@@ -3,45 +3,78 @@ package com.teleclimb.rest.services;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.entities.RoundEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
+import com.teleclimb.rest.responses.error.exception.BadRequestException;
 import com.teleclimb.rest.responses.error.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public record RoundService(ModelMapper mapper, RoundRepository roundRepo) {
+public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundRouteLinkService linkService) {
 
-    public List<Round> getAll() {
-        return roundRepo.findAll()
-                .stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<Round> getAllByCompetitionId(Integer competitionId) {
-        return roundRepo.findByCompetitionId(competitionId)
-                .stream()
-                .map(this::toDto)
-                .toList();
-    }
+    // --------------------------------- GET ---------------------------------
 
     public Round get(Integer id) {
         RoundEntity roundEntity = roundRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found round with id: " + id));
 
-        return mapper.map(roundEntity, Round.class);
+        return toDto(roundEntity);
+    }
+
+    public List<Round> getAll() {
+        return roundRepo.findAll().stream().map(this::toDto).toList();
+    }
+
+    public List<Round> getAllByCompetitionId(Integer competitionId) {
+        return roundRepo.findByCompetitionId(competitionId).stream().map(this::toDto).toList();
+    }
+
+
+    // --------------------------------- ADD ---------------------------------
+
+    public Round add(Round round) {
+        validateRound(round);
+
+        return toDto(roundRepo.save(toEntity(round)));
+    }
+
+    private void validateRound(Round round) {
+        //todo round validation
     }
 
     public void addAll(List<Round> rounds) {
-        rounds.forEach(this::newRoundValidation);
-        rounds.forEach(r -> roundRepo.save(toEntity(r)));
+        rounds.forEach(this::add);
     }
 
-    private void newRoundValidation(Round round) {
-        //todo round validation
+
+    // --------------------------------- UPDATE ---------------------------------
+
+    public void addRoute(Integer roundId, Integer routeId) {
+        if (linkService.getAllLinksByRoundId(roundId).size() >= get(roundId).getNumberOfRoutes())
+            throw new BadRequestException("There is max number of links to round with id: " + routeId);
+
+        linkService.addLink(roundId, routeId);
     }
+
+    public void removeRoute(Integer roundId, Integer routeId) {
+        linkService.removeLink(roundId, routeId);
+    }
+
+
+    // --------------------------------- DELETE ---------------------------------
+
+    public void delete(Integer id) {
+        //todo remove all starts and links
+        roundRepo.deleteById(id);
+    }
+
+    public void deleteAllByCompetitionId(Integer competitionId) {
+        getAllByCompetitionId(competitionId).forEach(p -> delete(p.getId()));
+    }
+
+
+    // --------------------------------- MAPPING ---------------------------------
 
     private Round toDto(RoundEntity entity) {
         return mapper.map(entity, Round.class);

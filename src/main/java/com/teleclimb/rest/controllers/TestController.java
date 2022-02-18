@@ -1,6 +1,6 @@
 package com.teleclimb.rest.controllers;
 
-import com.teleclimb.rest.services.TestService;
+import com.teleclimb.rest.services.custom.TestService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

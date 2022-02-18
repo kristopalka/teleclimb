@@ -8,17 +8,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public record FormulaService(ModelMapper mapper, FormulaRepository formulaRepo) {
 
-    public List<Formula> getAll() {
-        return formulaRepo.findAll()
-                .stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
+    // --------------------------------- GET ---------------------------------
 
     public Formula get(Integer id) {
         FormulaEntity formula = formulaRepo.findById(id)
@@ -27,12 +21,24 @@ public record FormulaService(ModelMapper mapper, FormulaRepository formulaRepo) 
         return toDto(formula);
     }
 
-    public Formula add(Formula Formula) {
-        Formula.setId(null);
-
-        return toDto(formulaRepo.save(toEntity(Formula)));
+    public List<Formula> getAll() {
+        return formulaRepo.findAll().stream().map(this::toDto).toList();
     }
 
+
+    // --------------------------------- ADD ---------------------------------
+
+    public Formula add(Formula formula) {
+        validateFormula(formula);
+        return toDto(formulaRepo.save(toEntity(formula)));
+    }
+
+    private void validateFormula(Formula formula) {
+        //todo formula validation
+    }
+
+
+    // --------------------------------- MAPPING ---------------------------------
 
     private Formula toDto(FormulaEntity entity) {
         return mapper.map(entity, Formula.class);

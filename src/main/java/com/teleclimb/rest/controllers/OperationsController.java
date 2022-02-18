@@ -2,7 +2,7 @@ package com.teleclimb.rest.controllers;
 
 
 import com.teleclimb.rest.dto.Round;
-import com.teleclimb.rest.services.OperationsService;
+import com.teleclimb.rest.services.custom.OperationsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
