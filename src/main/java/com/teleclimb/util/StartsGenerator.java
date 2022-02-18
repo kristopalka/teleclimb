@@ -6,7 +6,10 @@ import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.dto.Start;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class StartsGenerator {
     private final Round round;
@@ -33,46 +36,40 @@ public class StartsGenerator {
         return starts;
     }
 
-    public static <T> TreeSet<T> randomizeSet(Collection<T> collection) {
+    public static <T> ArrayList<T> randomizeSet(Collection<T> collection) {
         List<T> shuffleMe = new ArrayList<T>(collection);
         Collections.shuffle(shuffleMe);
-        return new TreeSet<>(shuffleMe);
+        return new ArrayList<>(shuffleMe);
     }
 
-
+    // two routes, random list on first route, list moved for a half on the second route
     private void generateLeadClassicEliminations() {
         if (routes.size() != 2) throw new RuntimeException("should be 2 routes linked to round id: " + round.getId());
         Route routeA = routes.get(0);
         Route routeB = routes.get(1);
 
-        TreeSet<Participant> randomizedParticipants = randomizeSet(participants);
+        ArrayList<Participant> randomizedParticipants = randomizeSet(participants);
+        int numberOfParticipants = randomizedParticipants.size();
 
-        System.out.println("XDDDDDDDDDDDDDD");
-        int numberOfParticipants = participants.size();
-        int routeACounter = 0;
-        int routeBCounter = (int) Math.ceil(((double) numberOfParticipants) / 2);
-        for (Participant participant : randomizedParticipants) {
-            Start startOnA = Start.builder()
-                    .roundId(round.getId())
+        int iteratorA = 0;
+        int iteratorB = (int) Math.floor(((double) numberOfParticipants) / 2);
+        for (int i = 0; i < numberOfParticipants; i++) {
+            Start startOnA = Start.builder().roundId(round.getId())
                     .routeId(routeA.getId())
-                    .participantId(participant.getId())
-                    .routeSequenceNumber(routeACounter)
-                    .build();
-
-            Start startOnB = Start.builder()
-                    .roundId(round.getId())
-                    .routeId(routeB.getId())
-                    .participantId(participant.getId())
-                    .routeSequenceNumber(routeBCounter)
-                    .build();
+                    .participantId(randomizedParticipants.get(iteratorA).getId())
+                    .routeSequenceNumber(i).build();
 
             starts.add(startOnA);
-            System.out.println(startOnA);
-            starts.add(startOnB);
-            System.out.println(startOnB);
+            iteratorA++;
 
-            routeACounter++;
-            routeBCounter++;
+            Start startOnB = Start.builder().roundId(round.getId())
+                    .routeId(routeB.getId())
+                    .participantId(randomizedParticipants.get(iteratorB).getId())
+                    .routeSequenceNumber(i).build();
+
+            starts.add(startOnB);
+            iteratorB++;
+            iteratorB = iteratorB % numberOfParticipants;
         }
     }
 

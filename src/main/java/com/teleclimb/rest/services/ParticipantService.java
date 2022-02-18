@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 
 @Service
 public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo,
-                                 CompetitionService competitionService, FormulaService formulaService) {
+                                 CompetitionService competitionService, FormulaService formulaService,
+                                 RoundService roundService) {
 
     public List<Participant> getAll() {
         return participantRepo.findAll()
@@ -29,6 +30,14 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         return participantRepo.findByCompetitionId(competitionId)
                 .stream()
                 .map(p -> mapper.map(p, Participant.class))
+                .toList();
+    }
+
+    public List<Participant> getParticipantsByRoundId(Integer roundId) {
+        Round round = roundService.get(roundId);
+        return participantRepo.findByCompetitionIdAndRoundSequenceNumber(round.getCompetitionId(), round.getSequenceNumber())
+                .stream()
+                .map(this::toDto)
                 .toList();
     }
 
@@ -73,13 +82,6 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
         participant.setRoundSequenceNumber(newRoundSequenceNumber);
         participantRepo.save(toEntity(participant));
-    }
-
-    public List<Participant> getParticipantsByRound(Round round) {
-        return participantRepo.findByCompetitionIdAndRoundSequenceNumber(round.getCompetitionId(), round.getSequenceNumber())
-                .stream()
-                .map(this::toDto)
-                .toList();
     }
 
     public void delete(Integer id) {

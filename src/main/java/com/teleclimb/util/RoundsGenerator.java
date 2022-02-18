@@ -38,7 +38,7 @@ public class RoundsGenerator {
         Round eliminationRound = Round.builder()
                 .competitionId(competition.getId())
                 .name("Eliminacyje")
-                .sequenceNumber(1)
+                .sequenceNumber(0)
                 .resultCalculatingFunction("?") //todo napisać funkcję
                 .numberOfRoutes(2)
                 .maxParticipants(Integer.MAX_VALUE)
@@ -48,7 +48,7 @@ public class RoundsGenerator {
         Round finalRound = Round.builder()
                 .competitionId(competition.getId())
                 .name("Finał")
-                .sequenceNumber(2)
+                .sequenceNumber(1)
                 .resultCalculatingFunction("?") //todo napisać funkcję
                 .numberOfRoutes(1)
                 .maxParticipants(8)

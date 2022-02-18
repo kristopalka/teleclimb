@@ -50,7 +50,7 @@ public record OperationsService(ModelMapper mapper, RoundService roundService,
     private void tryToGenerateStarts(Integer roundId) {
         Round round = roundService.get(roundId);
         List<Route> routes = linkService.getAllRoutesForRoundId(roundId);
-        List<Participant> participants = participantService.getParticipantsByRound(round);
+        List<Participant> participants = participantService.getParticipantsByRoundId(roundId);
 
         StartsGenerator generator = new StartsGenerator(round, participants, routes);
         List<Start> starts = generator.generate();

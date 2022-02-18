@@ -10,7 +10,7 @@ public class DataInitializer {
     @Bean
     public CommandLineRunner loadData(TestService testService) {
         return args -> {
-            // write test endpoint that will be started after run of app
+            // this code will be done right after app initialization
             testService.testWeird();
         };
     }
