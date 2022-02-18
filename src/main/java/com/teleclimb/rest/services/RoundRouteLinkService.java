@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository linkRepo, RoundService roundService) {
+public record RoundRouteLinkService(ModelMapper mapper, RoundRouteLinkRepository linkRepo) {
 
     // --------------------------------- GET ---------------------------------
 
