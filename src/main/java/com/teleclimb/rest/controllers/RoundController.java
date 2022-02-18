@@ -54,7 +54,7 @@ public class RoundController {
     }
 
     @ApiOperation(value = "Get all starts in round, by route")
-    @PostMapping("/{id}/route/{routeId}/starts")
+    @GetMapping("/{id}/route/{routeId}/starts")
     public List<Start> getStartsOnRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
         return startService.getByRoundIdAndRouteId(id, routeId);
     }
