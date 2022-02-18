@@ -11,19 +11,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public record FormulaService(ModelMapper mapper, FormulaRepository repo) {
+public record FormulaService(ModelMapper mapper, FormulaRepository formulaRepo) {
 
     public List<Formula> getAll() {
-        return repo.findAll()
+        return formulaRepo.findAll()
                 .stream()
-                .map(c -> mapper.map(c, Formula.class))
+                .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
     public Formula get(Integer id) {
-        FormulaEntity schema = repo.findById(id)
+        FormulaEntity formula = formulaRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found formula by with: " + id));
 
-        return mapper.map(schema, Formula.class);
+        return toDto(formula);
+    }
+
+    public Formula add(Formula Formula) {
+        Formula.setId(null);
+
+        return toDto(formulaRepo.save(toEntity(Formula)));
+    }
+
+
+    private Formula toDto(FormulaEntity entity) {
+        return mapper.map(entity, Formula.class);
+    }
+
+    private FormulaEntity toEntity(Formula dto) {
+        return mapper.map(dto, FormulaEntity.class);
     }
 }

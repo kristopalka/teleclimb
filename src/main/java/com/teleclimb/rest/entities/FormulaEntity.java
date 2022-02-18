@@ -17,6 +17,7 @@ public class FormulaEntity {
 
     private String name;
 
+    @Lob
     private String description;
 
     @Enumerated(EnumType.STRING)

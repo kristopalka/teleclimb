@@ -29,21 +29,19 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
         return toDto(competitionEntity);
     }
 
-    public Competition add(Competition dto) {
-        dto.setId(null);
-        newCompetitionValidation(dto);
+    public Competition add(Competition competition) {
+        competition.setId(null);
+        newCompetitionValidation(competition);
 
-        CompetitionEntity competitionEntity = competitionRepo.save(toEntity(dto));
-        return toDto(competitionEntity);
+        return toDto(competitionRepo.save(toEntity(competition)));
     }
 
-    public Competition update(Integer id, Competition newDto) {
-        Competition dto = get(id);
+    public Competition update(Integer id, Competition newCompetition) {
+        Competition competition = get(id);
 
-        if (newDto.getName() != null) dto.setName(newDto.getName());
+        if (newCompetition.getName() != null) competition.setName(newCompetition.getName());
 
-        CompetitionEntity competitionEntity = competitionRepo.save(toEntity(dto));
-        return toDto(competitionEntity);
+        return toDto(competitionRepo.save(toEntity(competition)));
     }
 
     public void delete(Integer id) {
