@@ -2,8 +2,8 @@ package com.teleclimb.util;
 
 import com.teleclimb.enums.StartsGenerationMethod;
 import com.teleclimb.rest.dto.Participant;
+import com.teleclimb.rest.dto.RefereePosition;
 import com.teleclimb.rest.dto.Round;
-import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.dto.Start;
 
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import java.util.List;
 public class StartsGenerator {
     private final Round round;
     private final List<Participant> participants;
-    private final List<Route> routes;
+    private final List<RefereePosition> positions;
     private final List<Start> starts;
 
-    public StartsGenerator(Round round, List<Participant> participants, List<Route> routes) {
+    public StartsGenerator(Round round, List<Participant> participants, List<RefereePosition> positions) {
         this.round = round;
         this.participants = participants;
-        this.routes = routes;
+        this.positions = positions;
         this.starts = new ArrayList<>();
     }
 
@@ -44,10 +44,8 @@ public class StartsGenerator {
 
     // two routes, random list on first route, list moved for a half on the second route
     private void generateLeadClassicEliminations() {
-        if (routes.size() != 2)
-            throw new RuntimeException("should be 2 routes added to round with id: " + round.getId());
-        Route routeA = routes.get(0);
-        Route routeB = routes.get(1);
+        RefereePosition positionA = positions.get(0);
+        RefereePosition positionB = positions.get(1);
 
         ArrayList<Participant> randomizedParticipants = randomizeSet(participants);
         int numberOfParticipants = randomizedParticipants.size();
@@ -55,18 +53,20 @@ public class StartsGenerator {
         int iteratorA = 0;
         int iteratorB = (int) Math.floor(((double) numberOfParticipants) / 2);
         for (int i = 0; i < numberOfParticipants; i++) {
-            Start startOnA = Start.builder().roundId(round.getId())
-                    .routeId(routeA.getId())
+            Start startOnA = Start.builder()
+                    .positionId(positionA.getId())
                     .participantId(randomizedParticipants.get(iteratorA).getId())
-                    .routeSequenceNumber(i).build();
+                    .positionSequenceNumber(i)
+                    .build();
 
             starts.add(startOnA);
             iteratorA++;
 
-            Start startOnB = Start.builder().roundId(round.getId())
-                    .routeId(routeB.getId())
+            Start startOnB = Start.builder()
+                    .positionId(positionB.getId())
                     .participantId(randomizedParticipants.get(iteratorB).getId())
-                    .routeSequenceNumber(i).build();
+                    .positionSequenceNumber(i)
+                    .build();
 
             starts.add(startOnB);
             iteratorB++;

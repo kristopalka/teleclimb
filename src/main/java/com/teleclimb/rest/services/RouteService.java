@@ -33,7 +33,7 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo, Refere
     }
 
     public List<Route> getAllByRoundId(Integer roundId) {
-        List<RefereePosition> positions = positionServoce.getAllPositionsByRoundId(roundId);
+        List<RefereePosition> positions = positionServoce.getAllByRoundId(roundId);
         return positions.stream().map(RefereePosition::getRouteId).map(this::get).toList();
     }
 

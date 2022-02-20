@@ -58,7 +58,7 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
     // --------------------------------- UPDATE ---------------------------------
 
     public void addRoute(Integer roundId, Integer routeId) {
-        if (positionServoce.getAllPositionsByRoundId(roundId).size() >= get(roundId).getNumberOfRoutes())
+        if (positionServoce.getAllByRoundId(roundId).size() >= get(roundId).getNumberOfRoutes())
             throw new BadRequestException("There is max number of referees positions created to round with id: " + routeId);
 
         positionServoce.addPosition(roundId, routeId);

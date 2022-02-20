@@ -15,14 +15,10 @@ public class StartEntity {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "round_id")
-    private RoundEntity round;
+    @JoinColumn(name = "referee_position_id")
+    private RefereePositionEntity refereePosition;
 
-    @ManyToOne
-    @JoinColumn(name = "route_id")
-    private RouteEntity route;
-
-    private Integer routeSequenceNumber;
+    private Integer positionSequenceNumber;
 
     @ManyToOne
     @JoinColumn(name = "participant_id")

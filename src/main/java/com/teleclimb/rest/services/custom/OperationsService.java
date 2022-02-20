@@ -13,15 +13,12 @@ import java.util.List;
 public record OperationsService(RoundService roundService,
                                 CompetitionService competitionService, FormulaService formulaService,
                                 ParticipantService participantService,
-                                StartService startService, RouteService routeService) {
+                                StartService startService, RefereePositionService positionService) {
 
     // --------------------------------- ROUNDS GENERATION ---------------------------------
 
     public List<Round> generateRounds(Integer competitionId) {
         try {
-            if (roundService.getAllByCompetitionId(competitionId).size() != 0)
-                throw new RuntimeException("There are already rounds for this competition. Probably generations was done before.");
-
             return tryToGenerateRounds(competitionId);
         } catch (Exception e) {
             throw new InternalServerError("Something went wrong while generating rounds: '" + e.getMessage() + "'");
@@ -31,6 +28,10 @@ public record OperationsService(RoundService roundService,
     private List<Round> tryToGenerateRounds(Integer competitionId) {
         Competition competition = competitionService.get(competitionId);
         Formula formula = formulaService.get(competition.getFormulaId());
+
+        if (roundService.getAllByCompetitionId(competitionId).size() != 0)
+            throw new RuntimeException("there are already rounds for this competition. Probably generations was done before.");
+
 
         RoundsGenerator generator = new RoundsGenerator(competition, formula);
         List<Round> rounds = generator.generate();
@@ -45,9 +46,6 @@ public record OperationsService(RoundService roundService,
 
     public void generateStarts(Integer roundId) {
         try {
-            if (startService.getAllByRoundId(roundId).size() != 0)
-                throw new RuntimeException("There are already starts for this round. Probably generations was done before.");
-
             tryToGenerateStarts(roundId);
         } catch (Exception e) {
             throw new InternalServerError("Something went wrong while generating starts: '" + e.getMessage() + "'");
@@ -56,12 +54,25 @@ public record OperationsService(RoundService roundService,
 
     private void tryToGenerateStarts(Integer roundId) {
         Round round = roundService.get(roundId);
-        List<Route> routes = routeService.getAllByRoundId(roundId);
+        List<RefereePosition> positions = positionService.getAllByRoundId(roundId);
         List<Participant> participants = participantService.getParticipantsByRoundId(roundId);
 
-        StartsGenerator generator = new StartsGenerator(round, participants, routes);
+        if (ifAnyOfPositionsHasStarts(positions))
+            throw new RuntimeException("there are already starts for this round, probably generations was done before");
+        if (positions.size() != round.getNumberOfRoutes())
+            throw new RuntimeException("number of routes in this round is not match expected number: is: " + positions.size() + " expected: " + round.getNumberOfRoutes());
+
+
+        StartsGenerator generator = new StartsGenerator(round, participants, positions);
         List<Start> starts = generator.generate();
 
         startService.addAll(starts);
+    }
+
+    private boolean ifAnyOfPositionsHasStarts(List<RefereePosition> positions) {
+        for (RefereePosition position : positions) {
+            if (startService.getAllByRefereePositionId(position.getId()).size() != 0) return true;
+        }
+        return false;
     }
 }

@@ -2,7 +2,6 @@ package com.teleclimb.rest.controllers;
 
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.dto.Route;
-import com.teleclimb.rest.dto.Start;
 import com.teleclimb.rest.services.RoundService;
 import com.teleclimb.rest.services.RouteService;
 import com.teleclimb.rest.services.StartService;
@@ -51,11 +50,5 @@ public class RoundController {
     @PostMapping("/{id}/remove-route/{routeId}")
     public void removeRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
         roundService.removeRoute(id, routeId);
-    }
-
-    @ApiOperation(value = "Get all starts in round, by route")
-    @GetMapping("/{id}/route/{routeId}/starts")
-    public List<Start> getStartsOnRoute(@PathVariable Integer id, @PathVariable Integer routeId) {
-        return startService.getAllByRoundIdAndRouteId(id, routeId);
     }
 }

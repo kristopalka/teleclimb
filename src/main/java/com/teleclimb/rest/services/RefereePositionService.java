@@ -14,11 +14,11 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
 
     // --------------------------------- GET ---------------------------------
 
-    public List<RefereePosition> getAllPositionsByRoundId(Integer roundId) {
+    public List<RefereePosition> getAllByRoundId(Integer roundId) {
         return positionRepo.findByRoundId(roundId).stream().map(this::toDto).toList();
     }
 
-    public List<RefereePosition> getAllPositionsByRouteId(Integer routeId) {
+    public List<RefereePosition> getAllByRouteId(Integer routeId) {
         return positionRepo.findByRouteId(routeId).stream().map(this::toDto).toList();
     }
 
@@ -27,7 +27,7 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
 
     public void addPosition(Integer roundId, Integer routeId) {
         if (doesPositionExist(roundId, routeId))
-            throw new BadRequestException("There is existing position between route id: " + roundId + " and round id: " + roundId);
+            throw new BadRequestException("There is existing position for route id: " + roundId + " and round id: " + roundId);
 
         RefereePosition position = new RefereePosition();
         position.setRoundId(roundId);
@@ -44,7 +44,7 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
 
     public void removePosition(Integer roundId, Integer routeId) {
         if (doesPositionExist(roundId, routeId))
-            throw new BadRequestException("There is no position to remove, between routeEntity id: " + roundId + " and roundEntity id: " + roundId);
+            throw new BadRequestException("There is no position to remove, considering route id: " + roundId + " and round id: " + roundId);
 
         List<RefereePositionEntity> positions = positionRepo.findByRoundIdAndRouteId(roundId, routeId);
 

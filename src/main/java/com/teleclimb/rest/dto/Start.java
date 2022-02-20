@@ -12,11 +12,9 @@ import lombok.NoArgsConstructor;
 public class Start {
     private Integer id;
 
-    private Integer roundId;
+    private Integer positionId;
 
-    private Integer routeId;
-
-    private Integer routeSequenceNumber;
+    private Integer positionSequenceNumber;
 
     private Integer participantId;
 

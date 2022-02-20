@@ -25,12 +25,8 @@ public record StartService(ModelMapper mapper, StartRepository startRepo) {
         return startRepo.findAll().stream().map(this::toDto).toList();
     }
 
-    public List<Start> getAllByRoundId(Integer roundId) {
-        return startRepo.findByRoundId(roundId).stream().map(this::toDto).toList();
-    }
-
-    public List<Start> getAllByRoundIdAndRouteId(Integer roundId, Integer routeId) {
-        return startRepo.findByRoundIdAndRouteId(roundId, routeId).stream().map(this::toDto).toList();
+    public List<Start> getAllByRefereePositionId(Integer positionId) {
+        return startRepo.findByRefereePositionId(positionId).stream().map(this::toDto).toList();
     }
 
 
