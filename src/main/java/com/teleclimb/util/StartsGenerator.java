@@ -54,7 +54,7 @@ public class StartsGenerator {
         int iteratorB = (int) Math.floor(((double) numberOfParticipants) / 2);
         for (int i = 0; i < numberOfParticipants; i++) {
             Start startOnA = Start.builder()
-                    .positionId(positionA.getId())
+                    .refereePositionId(positionA.getId())
                     .participantId(randomizedParticipants.get(iteratorA).getId())
                     .positionSequenceNumber(i)
                     .build();
@@ -63,7 +63,7 @@ public class StartsGenerator {
             iteratorA++;
 
             Start startOnB = Start.builder()
-                    .positionId(positionB.getId())
+                    .refereePositionId(positionB.getId())
                     .participantId(randomizedParticipants.get(iteratorB).getId())
                     .positionSequenceNumber(i)
                     .build();

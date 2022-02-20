@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Start {
     private Integer id;
 
-    private Integer positionId;
+    private Integer refereePositionId;
 
     private Integer positionSequenceNumber;
 
