@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "round_route_link")
-public class RoundRouteLinkEntity {
+@Table(name = "referee_position")
+public class RefereePositionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

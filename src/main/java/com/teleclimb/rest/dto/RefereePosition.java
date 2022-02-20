@@ -3,7 +3,7 @@ package com.teleclimb.rest.dto;
 import lombok.Data;
 
 @Data
-public class RoundRouteLink {
+public class RefereePosition {
     private Integer id;
 
     private Integer routeId;

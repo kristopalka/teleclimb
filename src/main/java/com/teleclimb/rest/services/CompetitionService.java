@@ -1,6 +1,5 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.enums.Discipline;
 import com.teleclimb.rest.dto.Competition;
 import com.teleclimb.rest.entities.CompetitionEntity;
 import com.teleclimb.rest.repositories.CompetitionRepository;
@@ -22,12 +21,6 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
         validationService.validateCompetitionId(id);
         CompetitionEntity competitionEntity = competitionRepo.findById(id).orElseThrow();
         return toDto(competitionEntity);
-    }
-
-    public Discipline getDiscipline(Integer id) {
-        validationService.validateRoundId(id);
-        CompetitionEntity competitionEntity = competitionRepo.findById(id).orElseThrow();
-        return competitionEntity.getFormula().getDiscipline();
     }
 
     public List<Competition> getAll() {

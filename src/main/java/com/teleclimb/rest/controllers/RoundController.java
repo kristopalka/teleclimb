@@ -35,7 +35,7 @@ public class RoundController {
     }
 
 
-    @ApiOperation(value = "Get routes linked to the round")
+    @ApiOperation(value = "Get routes added to the round by referee positions")
     @GetMapping("/{id}/routes")
     public List<Route> getRoutes(@PathVariable Integer id) {
         return routeService.getAllByRoundId(id);

@@ -44,7 +44,8 @@ public class StartsGenerator {
 
     // two routes, random list on first route, list moved for a half on the second route
     private void generateLeadClassicEliminations() {
-        if (routes.size() != 2) throw new RuntimeException("should be 2 routes linked to round id: " + round.getId());
+        if (routes.size() != 2)
+            throw new RuntimeException("should be 2 routes added to round with id: " + round.getId());
         Route routeA = routes.get(0);
         Route routeB = routes.get(1);
 

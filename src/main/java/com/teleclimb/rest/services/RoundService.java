@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundRouteLinkService linkService,
+public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionServoce,
                            ValidationService validationService) {
 
     // --------------------------------- GET ---------------------------------
@@ -58,21 +58,21 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundR
     // --------------------------------- UPDATE ---------------------------------
 
     public void addRoute(Integer roundId, Integer routeId) {
-        if (linkService.getAllLinksByRoundId(roundId).size() >= get(roundId).getNumberOfRoutes())
-            throw new BadRequestException("There is max number of links to round with id: " + routeId);
+        if (positionServoce.getAllPositionsByRoundId(roundId).size() >= get(roundId).getNumberOfRoutes())
+            throw new BadRequestException("There is max number of referees positions created to round with id: " + routeId);
 
-        linkService.addLink(roundId, routeId);
+        positionServoce.addPosition(roundId, routeId);
     }
 
     public void removeRoute(Integer roundId, Integer routeId) {
-        linkService.removeLink(roundId, routeId);
+        positionServoce.removePosition(roundId, routeId);
     }
 
 
     // --------------------------------- DELETE ---------------------------------
 
     public void delete(Integer id) {
-        //todo remove all starts and links
+        //todo remove all starts and referee positions
         roundRepo.deleteById(id);
     }
 

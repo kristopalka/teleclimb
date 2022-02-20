@@ -1,7 +1,7 @@
 package com.teleclimb.rest.services;
 
 import com.teleclimb.enums.Discipline;
-import com.teleclimb.rest.dto.RoundRouteLink;
+import com.teleclimb.rest.dto.RefereePosition;
 import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.entities.RouteEntity;
 import com.teleclimb.rest.repositories.RouteRepository;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record RouteService(ModelMapper mapper, RouteRepository routeRepo, RoundRouteLinkService linkService) {
+public record RouteService(ModelMapper mapper, RouteRepository routeRepo, RefereePositionService positionServoce) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -33,8 +33,8 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo, RoundR
     }
 
     public List<Route> getAllByRoundId(Integer roundId) {
-        List<RoundRouteLink> links = linkService.getAllLinksByRoundId(roundId);
-        return links.stream().map(RoundRouteLink::getRouteId).map(this::get).toList();
+        List<RefereePosition> positions = positionServoce.getAllPositionsByRoundId(roundId);
+        return positions.stream().map(RefereePosition::getRouteId).map(this::get).toList();
     }
 
 

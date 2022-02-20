@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public record ValidationService(CategoryRepository categoryRepo, CompetitionRepository competitionRepo,
                                 FormulaRepository formulaRepo, ParticipantRepository participantRepo,
-                                RoundRouteLinkRepository linkRepo, RoundRepository roundRepo,
+                                RefereePositionRepository positionRepo, RoundRepository roundRepo,
                                 RouteRepository routeRepo, StartRepository startRepo) {
 
     public void validateCategoryId(Integer categoryId) {
@@ -30,9 +30,9 @@ public record ValidationService(CategoryRepository categoryRepo, CompetitionRepo
             throw new NotFoundException("Participant with specific id: " + participantId + " does not exist");
     }
 
-    public void validateRoundRouteLinkId(Integer roundRouteLinkId) {
-        if (!linkRepo.existsById(roundRouteLinkId))
-            throw new NotFoundException("RoundRouteLink with specific id: " + roundRouteLinkId + " does not exist");
+    public void validateRefereePositionId(Integer positionId) {
+        if (!positionRepo.existsById(positionId))
+            throw new NotFoundException("RefereePosition with specific id: " + positionId + " does not exist");
     }
 
     public void validateRoundId(Integer roundId) {
