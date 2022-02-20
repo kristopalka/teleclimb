@@ -38,7 +38,7 @@ class RepositoryIntegrationTest {
                 .competitionId(null)
                 .name("Eliminacyje")
                 .sequenceNumber(0)
-                .resultCalculatingFunction("?") //todo napisać funkcję
+                .resultCalculatingFunction("?")
                 .numberOfRoutes(2)
                 .maxParticipants(Integer.MAX_VALUE)
                 .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_ELIMINATIONS)
@@ -48,7 +48,7 @@ class RepositoryIntegrationTest {
                 .competitionId(null)
                 .name("Finał")
                 .sequenceNumber(1)
-                .resultCalculatingFunction("?") //todo napisać funkcję
+                .resultCalculatingFunction("?")
                 .numberOfRoutes(1)
                 .maxParticipants(8)
                 .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_FINAL)
