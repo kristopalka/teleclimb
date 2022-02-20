@@ -1,25 +1,32 @@
 package com.teleclimb.rest.services;
 
+import com.teleclimb.enums.Discipline;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.entities.RoundEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
-import com.teleclimb.rest.responses.error.exception.NotFoundException;
+import com.teleclimb.rest.services.custom.ValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundRouteLinkService linkService) {
+public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RoundRouteLinkService linkService,
+                           ValidationService validationService) {
 
     // --------------------------------- GET ---------------------------------
 
     public Round get(Integer id) {
-        RoundEntity roundEntity = roundRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found round with id: " + id));
-
+        validationService.validateRoundId(id);
+        RoundEntity roundEntity = roundRepo.findById(id).orElseThrow();
         return toDto(roundEntity);
+    }
+
+    public Discipline getDiscipline(Integer id) {
+        validationService.validateRoundId(id);
+        RoundEntity roundEntity = roundRepo.findById(id).orElseThrow();
+        return roundEntity.getCompetition().getFormula().getDiscipline();
     }
 
     public List<Round> getAll() {

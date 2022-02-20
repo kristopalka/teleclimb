@@ -1,10 +1,10 @@
 package com.teleclimb.rest.services;
 
+import com.teleclimb.enums.Discipline;
 import com.teleclimb.rest.dto.Competition;
 import com.teleclimb.rest.entities.CompetitionEntity;
 import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
-import com.teleclimb.rest.responses.error.exception.NotFoundException;
 import com.teleclimb.rest.services.custom.ValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,15 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
     // --------------------------------- GET ---------------------------------
 
     public Competition get(Integer id) {
-        CompetitionEntity competitionEntity = competitionRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found competition with id: " + id));
-
+        validationService.validateCompetitionId(id);
+        CompetitionEntity competitionEntity = competitionRepo.findById(id).orElseThrow();
         return toDto(competitionEntity);
+    }
+
+    public Discipline getDiscipline(Integer id) {
+        validationService.validateRoundId(id);
+        CompetitionEntity competitionEntity = competitionRepo.findById(id).orElseThrow();
+        return competitionEntity.getFormula().getDiscipline();
     }
 
     public List<Competition> getAll() {
