@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TeleClimbApplication {
+public class TeleClimbApp {
     public static void main(String[] args) {
-        SpringApplication.run(TeleClimbApplication.class, args);
+        SpringApplication.run(TeleClimbApp.class, args);
     }
 }
