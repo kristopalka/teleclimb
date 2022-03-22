@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Date;
 
-
 public class ControllerResponse {
     public static ResponseEntity<Response> okResponse(String message) {
         HttpStatus statusHttp = HttpStatus.OK;

@@ -1,6 +1,5 @@
 package com.teleclimb.rest.controllers;
 
-
 import com.teleclimb.enums.Discipline;
 import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.services.RouteService;

@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/category")
 @Api(tags = "category")
 public class CategoryController {
+
     private final CategoryService service;
 
     @ApiOperation(value = "Get all categories", notes = "categories are constant")
