@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "competition")
 public class CompetitionEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

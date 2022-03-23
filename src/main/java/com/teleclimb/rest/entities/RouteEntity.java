@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "route")
 public class RouteEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

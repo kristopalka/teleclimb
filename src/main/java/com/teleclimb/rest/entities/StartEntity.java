@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "start")
 public class StartEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,5 +26,4 @@ public class StartEntity {
     private ParticipantEntity participant;
 
     private String result;
-
 }

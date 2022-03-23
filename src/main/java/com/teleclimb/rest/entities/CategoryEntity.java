@@ -2,7 +2,6 @@ package com.teleclimb.rest.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "category")
 public class CategoryEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,5 +21,4 @@ public class CategoryEntity {
     private Integer fromAge;
 
     private Integer toAge;
-
 }

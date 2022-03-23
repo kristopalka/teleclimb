@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class StartsGenerator {
+
     private final Round round;
     private final List<Participant> participants;
     private final List<RefereePosition> positions;

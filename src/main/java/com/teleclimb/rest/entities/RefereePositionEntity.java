@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "referee_position")
 public class RefereePositionEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

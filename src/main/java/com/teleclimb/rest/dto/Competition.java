@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Competition {
+
     private Integer id;
 
     private Integer categoryId;

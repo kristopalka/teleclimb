@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RoundsGenerator {
+
     private final Competition competition;
     private final Formula formula;
     private final Gson gson;

@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "round")
 public class RoundEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

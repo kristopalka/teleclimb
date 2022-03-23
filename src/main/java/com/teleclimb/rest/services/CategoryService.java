@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public record CategoryService(ModelMapper mapper, CategoryRepository categoryRepo,
-                              ValidationService validationService) {
+public record CategoryService(ModelMapper mapper, CategoryRepository categoryRepo, ValidationService validationService) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -33,7 +32,6 @@ public record CategoryService(ModelMapper mapper, CategoryRepository categoryRep
     public Category add(Category category) {
         return toDto(categoryRepo.save(toEntity(category)));
     }
-
 
     // --------------------------------- MAPPING ---------------------------------
 

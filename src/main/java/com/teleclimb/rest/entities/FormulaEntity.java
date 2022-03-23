@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "formula")
 public class FormulaEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
