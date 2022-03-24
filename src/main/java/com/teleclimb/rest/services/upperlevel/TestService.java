@@ -1,4 +1,4 @@
-package com.teleclimb.rest.services.custom;
+package com.teleclimb.rest.services.upperlevel;
 
 import com.teleclimb.enums.Discipline;
 import com.teleclimb.enums.Gender;
@@ -16,13 +16,13 @@ import java.util.List;
 public record TestService(RoundService roundService, CompetitionService competitionService,
                           FormulaService formulaService, RouteService routeService,
                           RefereePositionService positionServoce, ParticipantService participantService,
-                          StartService startService, OperationsService operationsService) {
+                          StartService startService, GeneratingService operationsService) {
     public void testWeird() {
         Route e1 = routeService.add(new Route(null, "Męska eliminacje A", "eliminacyjna", Discipline.LEAD, null));
         Route e2 = routeService.add(new Route(null, "Męska eliminacje B", "eliminacyjna", Discipline.LEAD, null));
         Route f = routeService.add(new Route(null, "Męska finał", "finałowa", Discipline.LEAD, null));
 
-        Competition competition = competitionService.add(new Competition(0, 4, 1, Gender.MALE, "Puchar Polski"));
+        Competition competition = competitionService.add(new Competition(0, 4, 1, null, Gender.MALE, "Puchar Polski"));
 
         participantService.add(new Participant(null, competition.getId(), null, "Krzysztof", "Pałka", 1, "0001", "Oblak", LocalDate.of(2000, 8, 26)));
         participantService.add(new Participant(null, competition.getId(), null, "Kinga", "Pałka", 6, "0002", "Oblak", LocalDate.of(2000, 8, 26)));

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record RouteService(ModelMapper mapper, RouteRepository routeRepo, RefereePositionService positionServoce) {
+public record RouteService(ModelMapper mapper, RouteRepository routeRepo, RefereePositionService positionService) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -33,7 +33,7 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo, Refere
     }
 
     public List<Route> getAllByRoundId(Integer roundId) {
-        List<RefereePosition> positions = positionServoce.getAllByRoundId(roundId);
+        List<RefereePosition> positions = positionService.getAllByRoundId(roundId);
         return positions.stream().map(RefereePosition::getRouteId).map(this::get).toList();
     }
 

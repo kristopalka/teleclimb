@@ -4,7 +4,6 @@ import com.teleclimb.rest.dto.Competition;
 import com.teleclimb.rest.entities.CompetitionEntity;
 import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
-import com.teleclimb.rest.services.custom.ValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -78,4 +77,5 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
     private CompetitionEntity toEntity(Competition dto) {
         return mapper.map(dto, CompetitionEntity.class);
     }
+
 }

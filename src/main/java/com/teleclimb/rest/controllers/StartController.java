@@ -25,10 +25,17 @@ public class StartController {
         return service.getAll();
     }
 
+    @ApiOperation(value = "Get starts in round by route id")
+    @GetMapping("/all/by/{roundId}/and/{routeId}")
+    public List<Start> getByRouteIdAndRoundId(@PathVariable Integer roundId, @PathVariable Integer routeId) {
+        return service.getByRoundIdAndRouteId(roundId, routeId);
+    }
+
     @ApiOperation(value = "Get start specific by id")
     @GetMapping("/{id}")
     public Start get(@PathVariable Integer id) {
         return service.get(id);
     }
+
 
 }

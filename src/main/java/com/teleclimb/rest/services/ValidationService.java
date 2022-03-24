@@ -1,4 +1,4 @@
-package com.teleclimb.rest.services.custom;
+package com.teleclimb.rest.services;
 
 import com.teleclimb.rest.repositories.*;
 import com.teleclimb.rest.responses.error.exception.NotFoundException;

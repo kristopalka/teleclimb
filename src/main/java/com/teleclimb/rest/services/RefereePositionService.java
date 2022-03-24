@@ -14,6 +14,10 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
 
     // --------------------------------- GET ---------------------------------
 
+    public RefereePosition getByRoundIdAndRouteId(Integer roundId, Integer routeId) {
+        return toDto(positionRepo.findByRoundIdAndRouteId(roundId, routeId).get(0));
+    }
+
     public List<RefereePosition> getAllByRoundId(Integer roundId) {
         return positionRepo.findByRoundId(roundId).stream().map(this::toDto).toList();
     }
