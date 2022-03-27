@@ -1,4 +1,4 @@
-package com.teleclimb.rest.services.custom;
+package com.teleclimb.rest.services.upperlevel;
 
 import com.teleclimb.rest.dto.*;
 import com.teleclimb.rest.responses.error.exception.InternalServerError;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record OperationsService(RoundService roundService,
+public record GeneratingService(RoundService roundService,
                                 CompetitionService competitionService, FormulaService formulaService,
                                 ParticipantService participantService,
                                 StartService startService, RefereePositionService positionService) {

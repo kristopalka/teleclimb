@@ -4,7 +4,6 @@ import com.teleclimb.rest.dto.Category;
 import com.teleclimb.rest.entities.CategoryEntity;
 import com.teleclimb.rest.repositories.CategoryRepository;
 import com.teleclimb.rest.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.services.custom.ValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

@@ -6,7 +6,6 @@ import com.teleclimb.rest.entities.ParticipantEntity;
 import com.teleclimb.rest.repositories.ParticipantRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
 import com.teleclimb.rest.responses.error.exception.NotFoundException;
-import com.teleclimb.rest.services.custom.ValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

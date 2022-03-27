@@ -19,7 +19,7 @@ import java.util.List;
 public class FormulaController {
     private final FormulaService service;
 
-    @ApiOperation(value = "Get all schemas", notes = "Competition formulas are hardcoded")
+    @ApiOperation(value = "Get all formulas", notes = "Competition formulas are hardcoded")
     @GetMapping("/all")
     public List<Formula> getAll() {
         return service.getAll();

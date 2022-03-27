@@ -3,7 +3,6 @@ package com.teleclimb.rest.controllers;
 import com.teleclimb.enums.Discipline;
 import com.teleclimb.rest.dto.Route;
 import com.teleclimb.rest.services.RouteService;
-import com.teleclimb.rest.services.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.List;
 @Api(tags = "route")
 public class RouteController {
     private final RouteService service;
-    private final StartService startService;
 
     @ApiOperation(value = "Get all routes")
     @GetMapping("/all")
@@ -26,9 +24,15 @@ public class RouteController {
     }
 
     @ApiOperation(value = "Get all routes by discipline")
-    @GetMapping("/by-discipline/{discipline}")
+    @GetMapping("/all/by/discipline/{discipline}")
     public List<Route> getAllByDiscipline(@PathVariable Discipline discipline) {
         return service.getAllByDiscipline(discipline);
+    }
+
+    @ApiOperation(value = "Get all routes added to the round")
+    @GetMapping("/all/by/{roundId}")
+    public List<Route> getRoutes(@PathVariable Integer roundId) {
+        return service.getAllByRoundId(roundId);
     }
 
     @ApiOperation(value = "Get route specific by id")
@@ -54,7 +58,4 @@ public class RouteController {
     public void delete(@PathVariable Integer id) {
         service.delete(id);
     }
-
-
-    //todo dodać endpointa do wzięcia wszystkich startów na drodze
 }

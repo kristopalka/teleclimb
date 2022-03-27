@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.Duration;
 
 @Data
-public class LeadResult {
+public class ResultLead {
     private Integer value;
     private Boolean plus;
     private Duration duration;

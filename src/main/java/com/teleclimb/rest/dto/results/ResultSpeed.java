@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.Duration;
 
 @Data
-public class SpeedResult {
+public class ResultSpeed {
     private boolean isFinished;
     private Duration duration;
 }

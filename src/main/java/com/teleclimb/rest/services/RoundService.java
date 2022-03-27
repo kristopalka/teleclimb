@@ -5,14 +5,13 @@ import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.entities.RoundEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
-import com.teleclimb.rest.services.custom.ValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionServoce,
+public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionService,
                            ValidationService validationService) {
 
     // --------------------------------- GET ---------------------------------
@@ -58,14 +57,14 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
     // --------------------------------- UPDATE ---------------------------------
 
     public void addRoute(Integer roundId, Integer routeId) {
-        if (positionServoce.getAllByRoundId(roundId).size() >= get(roundId).getNumberOfRoutes())
+        if (positionService.getAllByRoundId(roundId).size() >= get(roundId).getNumberOfRoutes())
             throw new BadRequestException("There is max number of referees positions created to round with id: " + routeId);
 
-        positionServoce.addPosition(roundId, routeId);
+        positionService.addPosition(roundId, routeId);
     }
 
     public void removeRoute(Integer roundId, Integer routeId) {
-        positionServoce.removePosition(roundId, routeId);
+        positionService.removePosition(roundId, routeId);
     }
 
 
