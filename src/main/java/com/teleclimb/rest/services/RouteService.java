@@ -21,15 +21,15 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo, Refere
         RouteEntity routeEntity = routeRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found route with id: " + id));
 
-        return toDto(routeEntity);
+        return mapper.map(routeEntity, Route.class);
     }
 
     public List<Route> getAll() {
-        return routeRepo.findAll().stream().map(this::toDto).toList();
+        return routeRepo.findAll().stream().map(entity -> mapper.map(entity, Route.class)).toList();
     }
 
     public List<Route> getAllByDiscipline(Discipline discipline) {
-        return routeRepo.findByDiscipline(discipline).stream().map(this::toDto).toList();
+        return routeRepo.findByDiscipline(discipline).stream().map(entity -> mapper.map(entity, Route.class)).toList();
     }
 
     public List<Route> getAllByRoundId(Integer roundId) {
@@ -42,7 +42,7 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo, Refere
 
     public Route add(Route dto) {
         validateRoute(dto);
-        return toDto(routeRepo.save(toEntity(dto)));
+        return mapper.map(routeRepo.save(mapper.map(dto, RouteEntity.class)), Route.class);
     }
 
     private void validateRoute(Route dto) {
@@ -59,7 +59,7 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo, Refere
         if (newRoute.getDescription() != null) route.setDescription(newRoute.getDescription());
         if (newRoute.getTimeLimitSeconds() != null) route.setName(newRoute.getName());
 
-        return toDto(routeRepo.save(toEntity(route)));
+        return mapper.map(routeRepo.save(mapper.map(route, RouteEntity.class)), Route.class);
     }
 
 
@@ -69,16 +69,4 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo, Refere
         //todo remove all starts on this route
         routeRepo.deleteById(id);
     }
-
-
-    // --------------------------------- MAPPING ---------------------------------
-
-    private Route toDto(RouteEntity entity) {
-        return mapper.map(entity, Route.class);
-    }
-
-    private RouteEntity toEntity(Route dto) {
-        return mapper.map(dto, RouteEntity.class);
-    }
-
 }

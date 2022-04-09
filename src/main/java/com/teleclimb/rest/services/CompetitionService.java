@@ -4,6 +4,7 @@ import com.teleclimb.rest.dto.Competition;
 import com.teleclimb.rest.entities.CompetitionEntity;
 import com.teleclimb.rest.repositories.CompetitionRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
+import com.teleclimb.rest.responses.error.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -11,19 +12,19 @@ import java.util.List;
 
 @Service
 public record CompetitionService(ModelMapper mapper, CompetitionRepository competitionRepo,
-                                 ValidationService validationService,
                                  ParticipantService participantService, RoundService roundService) {
 
     // --------------------------------- GET ---------------------------------
 
     public Competition get(Integer id) {
-        validationService.validateCompetitionId(id);
-        CompetitionEntity competitionEntity = competitionRepo.findById(id).orElseThrow();
-        return toDto(competitionEntity);
+        CompetitionEntity competitionEntity = competitionRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not found competition with: " + id));
+
+        return mapper.map(competitionEntity, Competition.class);
     }
 
     public List<Competition> getAll() {
-        return competitionRepo.findAll().stream().map(this::toDto).toList();
+        return competitionRepo.findAll().stream().map(entity -> mapper.map(entity, Competition.class)).toList();
     }
 
 
@@ -33,7 +34,8 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
         competition.setId(null);
         validateCompetition(competition);
 
-        return toDto(competitionRepo.save(toEntity(competition)));
+        CompetitionEntity competitionEntity = competitionRepo.save(mapper.map(competition, CompetitionEntity.class));
+        return mapper.map(competitionEntity, Competition.class);
     }
 
     private void validateCompetition(Competition competition) {
@@ -41,9 +43,6 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
         if (competition.getFormulaId() == null) throw new BadRequestException("Formula id cannot be null");
         if (competition.getGender() == null) throw new BadRequestException("Gender cannot be null");
         if (competition.getCategoryId() == null) throw new BadRequestException("Category id cannot be null");
-
-        validationService.validateCategoryId(competition.getCategoryId());
-        validationService.validateFormulaId(competition.getFormulaId());
     }
 
 
@@ -54,7 +53,8 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
 
         if (newCompetition.getName() != null) competition.setName(newCompetition.getName());
 
-        return toDto(competitionRepo.save(toEntity(competition)));
+        CompetitionEntity competitionEntity = competitionRepo.save(mapper.map(competition, CompetitionEntity.class));
+        return mapper.map(competitionEntity, Competition.class);
     }
 
 
@@ -66,16 +66,4 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
 
         competitionRepo.deleteById(id);
     }
-
-
-    // --------------------------------- MAPPING ---------------------------------
-
-    private Competition toDto(CompetitionEntity entity) {
-        return mapper.map(entity, Competition.class);
-    }
-
-    private CompetitionEntity toEntity(Competition dto) {
-        return mapper.map(dto, CompetitionEntity.class);
-    }
-
 }

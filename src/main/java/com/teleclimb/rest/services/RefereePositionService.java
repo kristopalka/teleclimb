@@ -15,15 +15,19 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
     // --------------------------------- GET ---------------------------------
 
     public RefereePosition getByRoundIdAndRouteId(Integer roundId, Integer routeId) {
-        return toDto(positionRepo.findByRoundIdAndRouteId(roundId, routeId).get(0));
+        return mapper.map(positionRepo.findByRoundIdAndRouteId(roundId, routeId).get(0), RefereePosition.class);
     }
 
     public List<RefereePosition> getAllByRoundId(Integer roundId) {
-        return positionRepo.findByRoundId(roundId).stream().map(this::toDto).toList();
+        return positionRepo.findByRoundId(roundId).stream()
+                .map(entity -> mapper.map(entity, RefereePosition.class))
+                .toList();
     }
 
     public List<RefereePosition> getAllByRouteId(Integer routeId) {
-        return positionRepo.findByRouteId(routeId).stream().map(this::toDto).toList();
+        return positionRepo.findByRouteId(routeId).stream()
+                .map(entity -> mapper.map(entity, RefereePosition.class))
+                .toList();
     }
 
 
@@ -36,7 +40,7 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
         RefereePosition position = new RefereePosition();
         position.setRoundId(roundId);
         position.setRouteId(routeId);
-        positionRepo.save(toEntity(position));
+        positionRepo.save(mapper.map(position, RefereePositionEntity.class));
     }
 
     private boolean doesPositionExist(Integer roundId, Integer routeId) {
@@ -53,16 +57,5 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
         List<RefereePositionEntity> positions = positionRepo.findByRoundIdAndRouteId(roundId, routeId);
 
         positionRepo.deleteAll(positions);
-    }
-
-
-    // --------------------------------- MAPPING ---------------------------------
-
-    private RefereePosition toDto(RefereePositionEntity entity) {
-        return mapper.map(entity, RefereePosition.class);
-    }
-
-    private RefereePositionEntity toEntity(RefereePosition dto) {
-        return mapper.map(dto, RefereePositionEntity.class);
     }
 }

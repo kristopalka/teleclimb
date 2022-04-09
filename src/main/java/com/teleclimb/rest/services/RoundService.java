@@ -1,39 +1,32 @@
 package com.teleclimb.rest.services;
 
-import com.teleclimb.enums.Discipline;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.entities.RoundEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
+import com.teleclimb.rest.responses.error.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionService,
-                           ValidationService validationService) {
+public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionService) {
 
     // --------------------------------- GET ---------------------------------
 
     public Round get(Integer id) {
-        validationService.validateRoundId(id);
-        RoundEntity roundEntity = roundRepo.findById(id).orElseThrow();
-        return toDto(roundEntity);
-    }
-
-    public Discipline getDiscipline(Integer id) {
-        validationService.validateRoundId(id);
-        RoundEntity roundEntity = roundRepo.findById(id).orElseThrow();
-        return roundEntity.getCompetition().getFormula().getDiscipline();
+        RoundEntity roundEntity = roundRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not found round with id: " + id));
+        return mapper.map(roundEntity, Round.class);
     }
 
     public List<Round> getAll() {
-        return roundRepo.findAll().stream().map(this::toDto).toList();
+        return roundRepo.findAll().stream().map(entity -> mapper.map(entity, Round.class)).toList();
     }
 
     public List<Round> getAllByCompetitionId(Integer competitionId) {
-        return roundRepo.findByCompetitionId(competitionId).stream().map(this::toDto).toList();
+        return roundRepo.findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, Round.class)).toList();
     }
 
 
@@ -42,7 +35,7 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
     public Round add(Round round) {
         validateRound(round);
 
-        return toDto(roundRepo.save(toEntity(round)));
+        return mapper.map(roundRepo.save(mapper.map(round, RoundEntity.class)), Round.class);
     }
 
     private void validateRound(Round round) {
@@ -78,16 +71,4 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
     public void deleteAllByCompetitionId(Integer competitionId) {
         getAllByCompetitionId(competitionId).forEach(p -> delete(p.getId()));
     }
-
-
-    // --------------------------------- MAPPING ---------------------------------
-
-    private Round toDto(RoundEntity entity) {
-        return mapper.map(entity, Round.class);
-    }
-
-    private RoundEntity toEntity(Round dto) {
-        return mapper.map(dto, RoundEntity.class);
-    }
-
 }

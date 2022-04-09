@@ -19,21 +19,21 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         StartEntity startEntity = startRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found start with id: " + id));
 
-        return toDto(startEntity);
+        return mapper.map(startEntity, Start.class);
     }
 
     public List<Start> getAll() {
-        return startRepo.findAll().stream().map(this::toDto).toList();
+        return startRepo.findAll().stream().map(entity -> mapper.map(entity, Start.class)).toList();
     }
 
     public List<Start> getAllByRefereePositionId(Integer positionId) {
-        return startRepo.findByRefereePositionId(positionId).stream().map(this::toDto).toList();
+        return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
     }
 
     public List<Start> getByRoundIdAndRouteId(Integer roundId, Integer routeId) {
         try {
             Integer positionId = positionService.getByRoundIdAndRouteId(roundId, routeId).getId();
-            return startRepo.findByRefereePositionId(positionId).stream().map(this::toDto).toList();
+            return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
         } catch (RuntimeException e) {
             throw new BadRequestException("Route " + routeId + " is not added to round " + roundId);
         }
@@ -45,7 +45,7 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     public Start add(Start start) {
         validateStart(start);
 
-        return toDto(startRepo.save(toEntity(start)));
+        return mapper.map(startRepo.save(mapper.map(start, StartEntity.class)), Start.class);
     }
 
     private void validateStart(Start start) {
@@ -60,18 +60,6 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     // --------------------------------- UPDATE ---------------------------------
 
     public void updateResult(Integer id, String result) {
-
+        //todo
     }
-
-    // --------------------------------- MAPPING ---------------------------------
-
-    private Start toDto(StartEntity entity) {
-        return mapper.map(entity, Start.class);
-    }
-
-    private StartEntity toEntity(Start dto) {
-        return mapper.map(dto, StartEntity.class);
-    }
-
-
 }

@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo,
-                                 ValidationService validationService, RoundService roundService) {
+public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo, RoundService roundService) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -21,21 +20,21 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         ParticipantEntity participantEntity = participantRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found participant with id: " + id));
 
-        return toDto(participantEntity);
+        return mapper.map(participantEntity, Participant.class);
     }
 
     public List<Participant> getAll() {
-        return participantRepo.findAll().stream().map(this::toDto).toList();
+        return participantRepo.findAll().stream().map(entity -> mapper.map(entity, Participant.class)).toList();
     }
 
     public List<Participant> getAllByCompetitionId(Integer competitionId) {
-        return participantRepo.findByCompetitionId(competitionId).stream().map(this::toDto).toList();
+        return participantRepo.findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, Participant.class)).toList();
     }
 
     public List<Participant> getParticipantsByRoundId(Integer roundId) {
         Round round = roundService.get(roundId);
         List<ParticipantEntity> participantEntities = participantRepo.findByCompetitionIdAndRoundSequenceNumber(round.getCompetitionId(), round.getSequenceNumber());
-        return participantEntities.stream().map(this::toDto).toList();
+        return participantEntities.stream().map(entity -> mapper.map(entity, Participant.class)).toList();
     }
 
 
@@ -46,12 +45,12 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         if (participant.getRankingPosition() == null) participant.setRankingPosition(Integer.MAX_VALUE);
         validateParticipant(participant);
 
-        return toDto(participantRepo.save(toEntity(participant)));
+        ParticipantEntity participantEntity = participantRepo.save(mapper.map(participant, ParticipantEntity.class));
+        return mapper.map(participantEntity, Participant.class);
     }
 
     private void validateParticipant(Participant participant) {
         if (participant.getCompetitionId() == null) throw new BadRequestException("Competition id cannot be null");
-        validationService.validateCompetitionId(participant.getCompetitionId());
     }
 
 
@@ -67,7 +66,8 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         if (newParticipant.getClubName() != null) dto.setClubName(newParticipant.getClubName());
         if (newParticipant.getBirthDate() != null) dto.setBirthDate(newParticipant.getBirthDate());
 
-        return toDto(participantRepo.save(toEntity(dto)));
+        ParticipantEntity participantEntity = participantRepo.save(mapper.map(dto, ParticipantEntity.class));
+        return mapper.map(participantEntity, Participant.class);
     }
 
 
@@ -80,17 +80,6 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     public void deleteAllByCompetitionId(Integer competitionId) {
         getAllByCompetitionId(competitionId).forEach(p -> delete(p.getId()));
-    }
-
-
-    // --------------------------------- MAPPING ---------------------------------
-
-    private Participant toDto(ParticipantEntity entity) {
-        return mapper.map(entity, Participant.class);
-    }
-
-    private ParticipantEntity toEntity(Participant dto) {
-        return mapper.map(dto, ParticipantEntity.class);
     }
 }
 

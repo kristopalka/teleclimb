@@ -16,13 +16,13 @@ public record FormulaService(ModelMapper mapper, FormulaRepository formulaRepo) 
 
     public Formula get(Integer id) {
         FormulaEntity formula = formulaRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found formula by with: " + id));
+                .orElseThrow(() -> new NotFoundException("Not found formula with: " + id));
 
-        return toDto(formula);
+        return mapper.map(formula, Formula.class);
     }
 
     public List<Formula> getAll() {
-        return formulaRepo.findAll().stream().map(this::toDto).toList();
+        return formulaRepo.findAll().stream().map(entity -> mapper.map(entity, Formula.class)).toList();
     }
 
 
@@ -30,21 +30,11 @@ public record FormulaService(ModelMapper mapper, FormulaRepository formulaRepo) 
 
     public Formula add(Formula formula) {
         validateFormula(formula);
-        return toDto(formulaRepo.save(toEntity(formula)));
+        return mapper.map(formulaRepo.save(mapper.map(formula, FormulaEntity.class)), Formula.class);
     }
 
     private void validateFormula(Formula formula) {
         //todo formula validation
     }
 
-
-    // --------------------------------- MAPPING ---------------------------------
-
-    private Formula toDto(FormulaEntity entity) {
-        return mapper.map(entity, Formula.class);
-    }
-
-    private FormulaEntity toEntity(Formula dto) {
-        return mapper.map(dto, FormulaEntity.class);
-    }
 }

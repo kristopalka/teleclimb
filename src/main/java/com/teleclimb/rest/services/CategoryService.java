@@ -11,36 +11,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public record CategoryService(ModelMapper mapper, CategoryRepository categoryRepo,
-                              ValidationService validationService) {
+public record CategoryService(ModelMapper mapper, CategoryRepository categoryRepo) {
 
     // --------------------------------- GET ---------------------------------
 
     public Category get(Integer id) {
-        CategoryEntity category = categoryRepo.findById(id)
+        CategoryEntity categoryEntity = categoryRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found category by with: " + id));
-        return toDto(category);
+        return mapper.map(categoryEntity, Category.class);
     }
 
     public List<Category> getAll() {
-        return categoryRepo.findAll().stream().map(this::toDto).collect(Collectors.toList());
+        return categoryRepo.findAll().stream().map(categoryEntity -> mapper.map(categoryEntity, Category.class)).collect(Collectors.toList());
     }
-
 
     // --------------------------------- ADD ---------------------------------
 
     public Category add(Category category) {
-        return toDto(categoryRepo.save(toEntity(category)));
-    }
-
-
-    // --------------------------------- MAPPING ---------------------------------
-
-    private Category toDto(CategoryEntity entity) {
-        return mapper.map(entity, Category.class);
-    }
-
-    private CategoryEntity toEntity(Category dto) {
-        return mapper.map(dto, CategoryEntity.class);
+        CategoryEntity categoryEntity = categoryRepo.save(mapper.map(category, CategoryEntity.class));
+        return mapper.map(categoryEntity, Category.class);
     }
 }
