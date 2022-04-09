@@ -5,7 +5,6 @@ import com.teleclimb.enums.Gender;
 import com.teleclimb.rest.dto.*;
 import com.teleclimb.rest.services.*;
 import com.teleclimb.rest.services.upperlevel.GeneratingService;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -40,8 +39,8 @@ class IntegrationTests {
     private GeneratingService operationsService;
 
 
-    @Before
-    public void addData() {
+    @Test
+    public void generatingStarts() {
         routeA = routeService.add(new Route(null, "Męska eliminacje A", "eliminacyjna", Discipline.LEAD, null));
         routeB = routeService.add(new Route(null, "Męska eliminacje B", "eliminacyjna", Discipline.LEAD, null));
         routeF = routeService.add(new Route(null, "Męska finał", "finałowa", Discipline.LEAD, null));
@@ -55,11 +54,7 @@ class IntegrationTests {
         participantService.add(new Participant(null, competition.getId(), null, "Aleksandra", "Kotwas", null, "0005", "Skarpa Bytom", LocalDate.of(2000, 8, 26)));
         participantService.add(new Participant(null, competition.getId(), null, "Kinga", "Ociepka", null, "0006", "Korona", LocalDate.of(2000, 8, 26)));
 
-    }
 
-
-    @Test
-    public void generatingStarts() {
         // generate rounds
         operationsService.generateRounds(competition.getId());
         List<Round> round = roundService.getAllByCompetitionId(competition.getId());
