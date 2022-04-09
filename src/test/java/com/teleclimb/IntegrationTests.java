@@ -39,6 +39,7 @@ class IntegrationTests {
     @Autowired
     private GeneratingService operationsService;
 
+
     @Before
     public void addData() {
         routeA = routeService.add(new Route(null, "Męska eliminacje A", "eliminacyjna", Discipline.LEAD, null));
