@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 public record TestService(RoundService roundService, CompetitionService competitionService,
                           FormulaService formulaService, RouteService routeService,
-                          RefereePositionService positionServoce, ParticipantService participantService,
+                          RefereePositionService positionService, ParticipantService participantService,
                           StartService startService, GeneratingService operationsService) {
-    public void testWeird() {
+    public void addEverythingAndGenerateStarts() {
         Route e1 = routeService.add(new Route(null, "Męska eliminacje A", "eliminacyjna", Discipline.LEAD, null));
         Route e2 = routeService.add(new Route(null, "Męska eliminacje B", "eliminacyjna", Discipline.LEAD, null));
         Route f = routeService.add(new Route(null, "Męska finał", "finałowa", Discipline.LEAD, null));
@@ -36,9 +36,9 @@ public record TestService(RoundService roundService, CompetitionService competit
         List<Round> round = roundService.getAllByCompetitionId(competition.getId());
 
         // dodawanie dróg do rund
-        positionServoce.addPosition(round.get(0).getId(), e1.getId());
-        positionServoce.addPosition(round.get(0).getId(), e2.getId());
-        positionServoce.addPosition(round.get(1).getId(), f.getId());
+        positionService.addPosition(round.get(0).getId(), e1.getId());
+        positionService.addPosition(round.get(0).getId(), e2.getId());
+        positionService.addPosition(round.get(1).getId(), f.getId());
 
         // generowanie startów
         operationsService.generateStarts(round.get(0).getId());

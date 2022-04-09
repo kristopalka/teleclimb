@@ -17,8 +17,8 @@ public class TestController {
         return "ok";
     }
 
-    @GetMapping("/test/weird")
-    public void testWeird() {
-        service.testWeird();
+    @GetMapping("/test/add-everything-and-generate-starts")
+    public void addEverythingAndGenerateStarts() {
+        service.addEverythingAndGenerateStarts();
     }
 }
