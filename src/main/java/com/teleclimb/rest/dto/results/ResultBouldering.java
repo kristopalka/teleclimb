@@ -1,9 +1,15 @@
 package com.teleclimb.rest.dto.results;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-public class ResultBouldering {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ResultBouldering extends Result {
     private boolean bonus;
     private int bonusNumberOfTries;
     private boolean top;

@@ -5,10 +5,7 @@ import com.teleclimb.rest.services.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +32,12 @@ public class StartController {
     @GetMapping("/{id}")
     public Start get(@PathVariable Integer id) {
         return service.get(id);
+    }
+
+    @ApiOperation(value = "Insert result")
+    @PutMapping("/{id}/result")
+    public void updateResult(@PathVariable Integer id, @RequestBody String result) {
+        service.updateResult(id, result);
     }
 
 

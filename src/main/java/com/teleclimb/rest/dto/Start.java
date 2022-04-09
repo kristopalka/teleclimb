@@ -1,5 +1,6 @@
 package com.teleclimb.rest.dto;
 
+import com.teleclimb.enums.Discipline;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,6 @@ public class Start {
     private Integer participantId;
 
     private String result;
+
+    private Discipline competitionDiscipline;
 }

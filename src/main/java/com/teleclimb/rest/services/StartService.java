@@ -57,6 +57,12 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     }
 
 
+    // --------------------------------- UPDATE ---------------------------------
+
+    public void updateResult(Integer id, String result) {
+
+    }
+
     // --------------------------------- MAPPING ---------------------------------
 
     private Start toDto(StartEntity entity) {
@@ -66,4 +72,6 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     private StartEntity toEntity(Start dto) {
         return mapper.map(dto, StartEntity.class);
     }
+
+
 }
