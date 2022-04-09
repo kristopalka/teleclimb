@@ -21,6 +21,7 @@ import java.util.List;
 class IntegrationTests {
     Route routeA, routeB, routeF;
     Competition competition;
+
     @Autowired
     private RoundService roundService;
     @Autowired
