@@ -26,7 +26,7 @@ public class ModelMapperConfig {
         mapper.addMappings(new PropertyMap<StartEntity, Start>() {
             @Override
             protected void configure() {
-                map(source.getRefereePosition().getRound().getCompetition().getFormula().getDiscipline()).setCompetitionDiscipline(null);
+                map(source.getRefereePosition().getRound().getCompetition().getFormula().getDiscipline()).setDiscipline(null);
             }
         });
 

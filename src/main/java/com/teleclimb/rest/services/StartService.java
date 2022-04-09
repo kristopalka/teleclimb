@@ -43,13 +43,7 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     // --------------------------------- ADD ---------------------------------
 
     public Start add(Start start) {
-        validateStart(start);
-
         return mapper.map(startRepo.save(mapper.map(start, StartEntity.class)), Start.class);
-    }
-
-    private void validateStart(Start start) {
-        //todo validate start
     }
 
     public void addAll(List<Start> starts) {
@@ -59,7 +53,22 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
 
     // --------------------------------- UPDATE ---------------------------------
 
-    public void updateResult(Integer id, String result) {
-        //todo
+    public Start updateSequenceNumber(Integer id, Integer sequenceNumber) {
+        Start start = get(id);
+
+        start.setPositionSequenceNumber(sequenceNumber);
+
+        StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));
+        return mapper.map(startEntity, Start.class);
     }
+
+    public Start updateResult(Integer id, String result) {
+        Start start = get(id);
+
+        start.setResult(result);
+
+        StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));
+        return mapper.map(startEntity, Start.class);
+    }
+
 }

@@ -34,11 +34,16 @@ public class StartController {
         return service.get(id);
     }
 
-    @ApiOperation(value = "Insert result")
-    @PutMapping("/{id}/result")
-    public void updateResult(@PathVariable Integer id, @RequestBody String result) {
-        service.updateResult(id, result);
+    @ApiOperation(value = "Update sequence number", notes = "Attention: do not leave two or more starts (for one referee position) with the same sequence number")
+    @PutMapping("/{id}/sequence-number")
+    public Start updateSequenceNumber(@PathVariable Integer id, @RequestBody Integer sequenceNumber) {
+        return service.updateSequenceNumber(id, sequenceNumber);
     }
 
+    @ApiOperation(value = "Update result", notes = "Put result as json. Examples of result available in this")
+    @PutMapping("/{id}/result")
+    public Start updateResult(@PathVariable Integer id, @RequestBody String result) {
+        return service.updateResult(id, result);
+    }
 
 }

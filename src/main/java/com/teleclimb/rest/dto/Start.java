@@ -21,5 +21,5 @@ public class Start {
 
     private String result;
 
-    private Discipline competitionDiscipline;
+    private Discipline discipline;
 }

@@ -1,18 +1,12 @@
 package com.teleclimb.rest.dto.results;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-import java.time.Duration;
+import java.time.LocalTime;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ResultLead extends Result {
+@Data
+public class ResultLead {
     private Integer value;
     private Boolean plus;
-    private Duration duration;
+    private LocalTime time;
 }

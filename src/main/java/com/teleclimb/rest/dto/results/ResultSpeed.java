@@ -1,18 +1,12 @@
 package com.teleclimb.rest.dto.results;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-import java.time.Duration;
+import java.time.LocalTime;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ResultSpeed extends Result {
+@Data
+public class ResultSpeed {
     private boolean isFinished;
     private boolean falseStart;
-    private Duration duration;
+    private LocalTime time;
 }
