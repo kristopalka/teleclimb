@@ -1,6 +1,7 @@
 package com.teleclimb.util;
 
 import com.google.gson.Gson;
+import com.teleclimb.config.GsonConfig;
 import com.teleclimb.rest.dto.Competition;
 import com.teleclimb.rest.dto.Formula;
 import com.teleclimb.rest.dto.Round;
@@ -16,7 +17,7 @@ public class RoundsGenerator {
     public RoundsGenerator(Competition competition, Formula formula) {
         this.competition = competition;
         this.formula = formula;
-        gson = new Gson();
+        gson = GsonConfig.gson();
     }
 
     public List<Round> generate() {

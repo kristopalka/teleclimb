@@ -44,7 +44,7 @@ public class ResultController {
         ResultSpeed result = new ResultSpeed();
         result.setTime(LocalTime.of(0, 0, 7, 275000000));
         result.setFalseStart(false);
-        result.setFinished(true);
+        result.setIsFinished(true);
         return result;
     }
 

@@ -15,7 +15,6 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper mapper = new ModelMapper();
 
-
         mapper.addMappings(new PropertyMap<CompetitionEntity, Competition>() {
             @Override
             protected void configure() {
@@ -29,7 +28,6 @@ public class ModelMapperConfig {
                 map(source.getRefereePosition().getRound().getCompetition().getFormula().getDiscipline()).setDiscipline(null);
             }
         });
-
 
         return mapper;
     }

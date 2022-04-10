@@ -5,6 +5,7 @@ import com.teleclimb.rest.entities.StartEntity;
 import com.teleclimb.rest.repositories.StartRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
 import com.teleclimb.rest.responses.error.exception.NotFoundException;
+import com.teleclimb.util.ResultChecker;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +66,7 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     public Start updateResult(Integer id, String result) {
         Start start = get(id);
 
+        ResultChecker.check(result, start.getDiscipline());
         start.setResult(result);
 
         StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));
