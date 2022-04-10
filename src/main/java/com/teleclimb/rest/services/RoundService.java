@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionService) {
@@ -20,6 +21,14 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
         RoundEntity roundEntity = roundRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found round with id: " + id));
         return mapper.map(roundEntity, Round.class);
+    }
+
+    public Round getByCompetitionIdAndSequenceNumber(Integer competitionId, Integer sequenceNumber) {
+        List<Round> rounds = getAllByCompetitionId(competitionId);
+        return rounds.stream()
+                .filter(r -> (Objects.equals(r.getSequenceNumber(), sequenceNumber)))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Not found round with sequence number: " + sequenceNumber + " for competition with id: " + competitionId));
     }
 
     public List<Round> getAll() {

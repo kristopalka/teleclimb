@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/round-management")
+@RequestMapping("/round/manage")
 @Api(tags = "round management")
 public class RoundManagementController {
     private final RoundManagementService service;

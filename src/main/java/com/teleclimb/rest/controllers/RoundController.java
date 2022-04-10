@@ -34,6 +34,12 @@ public class RoundController {
         return service.get(id);
     }
 
+    @ApiOperation(value = "Get round by competition id and sequence number")
+    @GetMapping("/by/{competitionId}/and/{sequenceNumber}")
+    public Round get(@PathVariable Integer competitionId, @PathVariable Integer sequenceNumber) {
+        return service.getByCompetitionIdAndSequenceNumber(competitionId, sequenceNumber);
+    }
+
     @ApiOperation(value = "Add route to the round", notes = "Before generating starts, number of routes must be equal RoundEntity.numberOfRoutes field")
     @PostMapping("/{id}/add-route/{routeId}")
     public void addRoute(@PathVariable Integer id, @PathVariable Integer routeId) {

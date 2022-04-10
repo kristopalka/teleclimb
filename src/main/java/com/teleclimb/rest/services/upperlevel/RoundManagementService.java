@@ -3,9 +3,9 @@ package com.teleclimb.rest.services.upperlevel;
 import com.teleclimb.enums.RoundState;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
-import com.teleclimb.rest.responses.error.exception.NotImplementedException;
 import com.teleclimb.rest.services.RoundService;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public record RoundManagementService(RoundService roundService, StartsGeneratingService startsGeneratingService) {
@@ -13,10 +13,18 @@ public record RoundManagementService(RoundService roundService, StartsGenerating
         Round round = roundService.get(roundId);
         if (round.getState() != RoundState.NOT_STARTED)
             throw new BadRequestException("Can not start round, it was started before");
-
+        if (!isPreviousRoundFinished(round))
+            throw new BadRequestException("Can not start round, previous did not finished");
         startsGeneratingService.generateStarts(roundId);
 
         roundService.setState(roundId, RoundState.IN_PROGRESS);
+    }
+
+    private boolean isPreviousRoundFinished(Round round) {
+        if (round.getSequenceNumber() == 0) return true;
+
+        Round previousRound = roundService.getByCompetitionIdAndSequenceNumber(round.getCompetitionId(), round.getSequenceNumber() - 1);
+        return previousRound.getState() == RoundState.FINISHED;
     }
 
     public void finishRound(Integer roundId) {
@@ -26,6 +34,6 @@ public record RoundManagementService(RoundService roundService, StartsGenerating
 
         //todo posortować zawodników w kolejności po wynikach w rundzie
 
-        throw new NotImplementedException("not implemented");
+        roundService.setState(roundId, RoundState.FINISHED);
     }
 }
