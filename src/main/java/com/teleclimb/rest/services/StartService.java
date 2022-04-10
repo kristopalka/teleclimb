@@ -31,6 +31,10 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
     }
 
+    public List<Start> getAllByParticipantId(Integer participantId) {
+        return startRepo.findByParticipantId(participantId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
+    }
+
     public List<Start> getByRoundIdAndRouteId(Integer roundId, Integer routeId) {
         try {
             Integer positionId = positionService.getByRoundIdAndRouteId(roundId, routeId).getId();

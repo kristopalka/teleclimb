@@ -22,7 +22,7 @@ public class StartController {
         return service.getAll();
     }
 
-    @ApiOperation(value = "Get all starts for participant")
+    @ApiOperation(value = "Get all starts by participant id")
     @GetMapping("/all/by/{participantId}")
     public List<Start> getByParticipantId(@PathVariable Integer participantId) {
         return service.getAllByParticipantId(participantId);
