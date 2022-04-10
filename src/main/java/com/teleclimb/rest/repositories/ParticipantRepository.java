@@ -8,5 +8,5 @@ import java.util.List;
 public interface ParticipantRepository extends JpaRepository<ParticipantEntity, Integer> {
     List<ParticipantEntity> findByCompetitionId(Integer competitionId);
 
-    List<ParticipantEntity> findByCompetitionIdAndRoundSequenceNumber(Integer competitionId, Integer roundSequenceNumber);
+    List<ParticipantEntity> findByCompetitionIdAndTopRoundNumber(Integer competitionId, Integer roundSequenceNumber);
 }

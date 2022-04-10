@@ -16,8 +16,9 @@ public class Participant {
 
     private Integer competitionId;
 
-    private Integer roundSequenceNumber;
+    private Integer topRoundNumber;
 
+    // participant data
     private String name;
 
     private String lastName;

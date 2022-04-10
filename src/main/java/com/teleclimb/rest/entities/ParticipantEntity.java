@@ -19,8 +19,9 @@ public class ParticipantEntity {
     @JoinColumn(name = "competition_id")
     private CompetitionEntity competition;
 
-    private Integer roundSequenceNumber;  // point the highest round, participant reach
+    private Integer topRoundNumber;  // the highest round number, participant reach
 
+    // participant data
     private String name;
 
     private String lastName;

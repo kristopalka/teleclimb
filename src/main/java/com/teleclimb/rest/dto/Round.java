@@ -1,5 +1,6 @@
 package com.teleclimb.rest.dto;
 
+import com.teleclimb.enums.RoundState;
 import com.teleclimb.enums.StartsGenerationMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +27,6 @@ public class Round {
     private StartsGenerationMethod startsGenerationMethod;
 
     private String resultCalculatingFunction;
+
+    private RoundState state;
 }

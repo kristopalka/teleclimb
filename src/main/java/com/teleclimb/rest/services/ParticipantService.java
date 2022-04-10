@@ -33,7 +33,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     public List<Participant> getParticipantsByRoundId(Integer roundId) {
         Round round = roundService.get(roundId);
-        List<ParticipantEntity> participantEntities = participantRepo.findByCompetitionIdAndRoundSequenceNumber(round.getCompetitionId(), round.getSequenceNumber());
+        List<ParticipantEntity> participantEntities = participantRepo.findByCompetitionIdAndTopRoundNumber(round.getCompetitionId(), round.getSequenceNumber());
         return participantEntities.stream().map(entity -> mapper.map(entity, Participant.class)).toList();
     }
 
@@ -41,8 +41,9 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
     // --------------------------------- ADD ---------------------------------
 
     public Participant add(Participant participant) {
-        participant.setRoundSequenceNumber(0);
+        participant.setTopRoundNumber(0);
         if (participant.getRankingPosition() == null) participant.setRankingPosition(Integer.MAX_VALUE);
+
         validateParticipant(participant);
 
         ParticipantEntity participantEntity = participantRepo.save(mapper.map(participant, ParticipantEntity.class));
