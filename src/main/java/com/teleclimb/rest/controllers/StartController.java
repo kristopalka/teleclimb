@@ -22,6 +22,12 @@ public class StartController {
         return service.getAll();
     }
 
+    @ApiOperation(value = "Get all starts for participant")
+    @GetMapping("/all/by/{participantId}")
+    public List<Start> getByParticipantId(@PathVariable Integer participantId) {
+        return service.getAllByParticipantId(participantId);
+    }
+
     @ApiOperation(value = "Get starts in round by route id")
     @GetMapping("/all/by/{roundId}/and/{routeId}")
     public List<Start> getByRouteIdAndRoundId(@PathVariable Integer roundId, @PathVariable Integer routeId) {
@@ -40,7 +46,7 @@ public class StartController {
         return service.updateSequenceNumber(id, sequenceNumber);
     }
 
-    @ApiOperation(value = "Update result", notes = "Put result as json. Examples of result available in this")
+    @ApiOperation(value = "Update result", notes = "Put result as json. Examples of result in 'result examples'. ATTENTION: fields CAN NOT be null!")
     @PutMapping("/{id}/result")
     public Start updateResult(@PathVariable Integer id, @RequestBody String result) {
         return service.updateResult(id, result);
