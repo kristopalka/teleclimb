@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/result-example")
-@Api(tags = "result format")
+@Api(tags = "result example")
 public class ResultController {
     @ApiOperation(value = "Example of lead result")
     @GetMapping("/lead")
@@ -31,10 +31,11 @@ public class ResultController {
     @GetMapping("/bouldering")
     public ResultBouldering boulderingExample() {
         ResultBouldering result = new ResultBouldering();
+        result.setTries(8);
         result.setBonus(true);
-        result.setBonusNumberOfTries(4);
+        result.setTriesToBonus(4);
         result.setTop(false);
-        result.setTopNumberOfTries(0);
+        result.setTriesToTop(null);
         return result;
     }
 

@@ -46,7 +46,7 @@ public class StartController {
         return service.updateSequenceNumber(id, sequenceNumber);
     }
 
-    @ApiOperation(value = "Update result", notes = "Put result as json. Examples of result in 'result examples'. ATTENTION: fields CAN NOT be null!")
+    @ApiOperation(value = "Update result", notes = "Put result as json. Examples and correctness of result in 'result examples'")
     @PutMapping("/{id}/result")
     public Start updateResult(@PathVariable Integer id, @RequestBody String result) {
         return service.updateResult(id, result);

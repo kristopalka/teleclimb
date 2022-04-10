@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResultBouldering {
+    private Integer tries;
     private Boolean bonus;
-    private Integer bonusNumberOfTries;
+    private Integer triesToBonus;
     private Boolean top;
-    private Integer topNumberOfTries;
+    private Integer triesToTop;
 }
