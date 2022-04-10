@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResultSpeed {
-    private Boolean isFinished;
-    private Boolean falseStart;
     private LocalTime time;
+    private Boolean fellOff;
+    private Boolean disqualifyingFalseStart;
 }

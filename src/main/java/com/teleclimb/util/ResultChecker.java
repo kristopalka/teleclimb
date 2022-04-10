@@ -21,12 +21,17 @@ public class ResultChecker {
     private static void checkLead(String resultJson) {
         ResultLead result = gson.fromJson(resultJson, ResultLead.class);
 
-        if (result.getPlus() == null || result.getTime() == null || result.getValue() == null)
-            throw new RuntimeException("none of fields can be null");
+        if (result.getPlus() == null) throw new RuntimeException("plus can not be null");
+        if (result.getValue() == null) throw new RuntimeException("value can not be null");
+        if (result.getTime() == null) throw new RuntimeException("time can not be null");
+
+        if (result.getValue() < 0) throw new RuntimeException("value can not be negative");
     }
 
     private static void checkBouldering(String resultJson) {
         ResultBouldering result = gson.fromJson(resultJson, ResultBouldering.class);
+
+        if (result.getTries() < 0) throw new RuntimeException("tries can not be < 0");
 
         if (result.getTries() == null) throw new RuntimeException("tries can not be null");
         if (result.getBonus() == null) throw new RuntimeException("bonus can not be null");
@@ -55,7 +60,12 @@ public class ResultChecker {
     private static void checkSpeed(String resultJson) {
         ResultSpeed result = gson.fromJson(resultJson, ResultSpeed.class);
 
-        if (result.getTime() == null || result.getFalseStart() == null || result.getIsFinished() == null)
-            throw new RuntimeException("none of fields can be null");
+        if (result.getTime() == null && !(result.getFellOff() || result.getDisqualifyingFalseStart()))
+            throw new RuntimeException("time can not be null if no fell off and no false start");
+        if (result.getFellOff() == null) throw new RuntimeException("fell off can not be null");
+        if (result.getDisqualifyingFalseStart() == null) throw new RuntimeException("false start can not be null");
+
+        if (result.getFellOff() && result.getDisqualifyingFalseStart())
+            throw new RuntimeException("can not be both: false start and fell off");
     }
 }
