@@ -16,7 +16,8 @@ import java.util.List;
 public record TestService(RoundService roundService, CompetitionService competitionService,
                           FormulaService formulaService, RouteService routeService,
                           RefereePositionService positionService, ParticipantService participantService,
-                          StartService startService, GeneratingService operationsService) {
+                          StartService startService, RoundsGeneratingService roundsGeneratingService,
+                          RoundManagementService roundManagementService) {
     public void addEverythingAndGenerateStarts() {
         Route e1 = routeService.add(new Route(null, "Męska eliminacje A", "eliminacyjna", Discipline.LEAD, null));
         Route e2 = routeService.add(new Route(null, "Męska eliminacje B", "eliminacyjna", Discipline.LEAD, null));
@@ -32,7 +33,7 @@ public record TestService(RoundService roundService, CompetitionService competit
         participantService.add(new Participant(null, competition.getId(), null, "Kinga", "Ociepka", null, "0006", "Korona", LocalDate.of(2000, 8, 26)));
 
         // generowanie rund
-        operationsService.generateRounds(competition.getId());
+        roundsGeneratingService.generateRounds(competition.getId());
         List<Round> round = roundService.getAllByCompetitionId(competition.getId());
 
         // dodawanie dróg do rund
@@ -41,7 +42,7 @@ public record TestService(RoundService roundService, CompetitionService competit
         positionService.addPosition(round.get(1).getId(), f.getId());
 
         // generowanie startów
-        operationsService.generateStarts(round.get(0).getId());
+        roundManagementService.startRound(round.get(0).getId());
 
     }
 

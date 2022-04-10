@@ -3,7 +3,7 @@ package com.teleclimb.rest.controllers;
 import com.teleclimb.rest.dto.Competition;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.services.CompetitionService;
-import com.teleclimb.rest.services.upperlevel.GeneratingService;
+import com.teleclimb.rest.services.upperlevel.RoundsGeneratingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @Api(tags = "competition")
 public class CompetitionController {
     private final CompetitionService service;
-    private final GeneratingService generatingService;
+    private final RoundsGeneratingService roundsGeneratingService;
 
     @ApiOperation(value = "Get all competitions")
     @GetMapping("/all")
@@ -52,7 +52,7 @@ public class CompetitionController {
     @ApiOperation(value = "Generate rounds", notes = "Generate rounds for competition based on rounds schema. It generate, save to database and return the data")
     @PostMapping("/{id}/generate-rounds")
     public List<Round> generateRounds(@PathVariable Integer id) {
-        return generatingService.generateRounds(id);
+        return roundsGeneratingService.generateRounds(id);
     }
 
 }

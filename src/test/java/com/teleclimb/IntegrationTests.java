@@ -4,7 +4,8 @@ import com.teleclimb.enums.Discipline;
 import com.teleclimb.enums.Gender;
 import com.teleclimb.rest.dto.*;
 import com.teleclimb.rest.services.*;
-import com.teleclimb.rest.services.upperlevel.GeneratingService;
+import com.teleclimb.rest.services.upperlevel.RoundManagementService;
+import com.teleclimb.rest.services.upperlevel.RoundsGeneratingService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +37,9 @@ class IntegrationTests {
     @Autowired
     private StartService startService;
     @Autowired
-    private GeneratingService operationsService;
+    private RoundsGeneratingService roundsGeneratingService;
+    @Autowired
+    private RoundManagementService roundManagementService;
 
 
     @Test
@@ -56,7 +59,7 @@ class IntegrationTests {
 
 
         // generate rounds
-        operationsService.generateRounds(competition.getId());
+        roundsGeneratingService.generateRounds(competition.getId());
         List<Round> round = roundService.getAllByCompetitionId(competition.getId());
 
         // add routes to rounds
@@ -65,7 +68,7 @@ class IntegrationTests {
         positionService.addPosition(round.get(1).getId(), routeF.getId());
 
         // generate starts
-        operationsService.generateStarts(round.get(0).getId());
+        roundManagementService.startRound(round.get(0).getId());
 
         // check
         List<Start> starts = startService.getAll();

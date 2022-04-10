@@ -1,5 +1,6 @@
 package com.teleclimb.rest.services;
 
+import com.teleclimb.enums.RoundState;
 import com.teleclimb.rest.dto.Round;
 import com.teleclimb.rest.entities.RoundEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
@@ -50,6 +51,8 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
     // --------------------------------- UPDATE ---------------------------------
 
     public void addRoute(Integer roundId, Integer routeId) {
+        Round round = get(roundId);
+        if (round.getState() != RoundState.NOT_STARTED) throw new BadRequestException("Can not modify started round");
         if (positionService.getAllByRoundId(roundId).size() >= get(roundId).getNumberOfRoutes())
             throw new BadRequestException("There is max number of referees positions created to round with id: " + routeId);
 
@@ -57,9 +60,18 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
     }
 
     public void removeRoute(Integer roundId, Integer routeId) {
+        Round round = get(roundId);
+        if (round.getState() != RoundState.NOT_STARTED) throw new BadRequestException("Can not modify started round");
+
         positionService.removePosition(roundId, routeId);
     }
 
+    public void setState(Integer roundId, RoundState state) {
+        Round round = get(roundId);
+        round.setState(state);
+
+        roundRepo.save(mapper.map(round, RoundEntity.class));
+    }
 
     // --------------------------------- DELETE ---------------------------------
 
