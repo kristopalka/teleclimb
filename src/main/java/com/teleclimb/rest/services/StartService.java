@@ -70,8 +70,14 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     public Start updateResult(Integer id, String result) {
         Start start = get(id);
 
-        ResultChecker.check(result, start.getDiscipline());
+
+        try {
+            ResultChecker.check(result, start.getDiscipline());
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Given result is wrong: " + e.getMessage());
+        }
         start.setResult(result);
+
 
         StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));
         return mapper.map(startEntity, Start.class);
