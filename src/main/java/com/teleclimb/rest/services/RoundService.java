@@ -2,6 +2,7 @@ package com.teleclimb.rest.services;
 
 import com.teleclimb.enums.RoundState;
 import com.teleclimb.rest.dto.Round;
+import com.teleclimb.rest.dto.Start;
 import com.teleclimb.rest.entities.RoundEntity;
 import com.teleclimb.rest.repositories.RoundRepository;
 import com.teleclimb.rest.responses.error.exception.BadRequestException;
@@ -13,7 +14,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionService) {
+public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionService,
+                           StartService startService) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -37,6 +39,15 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
 
     public List<Round> getAllByCompetitionId(Integer competitionId) {
         return roundRepo.findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, Round.class)).toList();
+    }
+
+    public Boolean areAllResultsInserted(Integer id) {
+        List<Start> starts = startService.getAllByRoundId(id);
+
+        for (Start start : starts) {
+            if (start.getResult() == null) return false;
+        }
+        return true;
     }
 
 

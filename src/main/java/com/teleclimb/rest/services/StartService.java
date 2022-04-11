@@ -1,5 +1,6 @@
 package com.teleclimb.rest.services;
 
+import com.teleclimb.rest.dto.RefereePosition;
 import com.teleclimb.rest.dto.Start;
 import com.teleclimb.rest.entities.StartEntity;
 import com.teleclimb.rest.repositories.StartRepository;
@@ -9,6 +10,7 @@ import com.teleclimb.util.ResultChecker;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,6 +31,16 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
 
     public List<Start> getAllByRefereePositionId(Integer positionId) {
         return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
+    }
+
+    public List<Start> getAllByRoundId(Integer positionId) {
+        List<RefereePosition> positions = positionService.getAllByRoundId(positionId);
+
+        List<Start> starts = new ArrayList<>();
+        for (RefereePosition position : positions) {
+            starts.addAll(getAllByRefereePositionId(position.getId()));
+        }
+        return starts;
     }
 
     public List<Start> getAllByParticipantId(Integer participantId) {
