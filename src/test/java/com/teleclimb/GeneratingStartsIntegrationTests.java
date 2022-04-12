@@ -1,11 +1,9 @@
 package com.teleclimb;
 
-import com.teleclimb.enums.Discipline;
-import com.teleclimb.enums.Gender;
-import com.teleclimb.rest.dto.*;
-import com.teleclimb.rest.services.*;
-import com.teleclimb.rest.services.upperlevel.RoundManagementService;
-import com.teleclimb.rest.services.upperlevel.RoundsGeneratingService;
+import com.teleclimb.dto.*;
+import com.teleclimb.dto.enums.Discipline;
+import com.teleclimb.dto.enums.Gender;
+import com.teleclimb.services.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +41,7 @@ class GeneratingStartsIntegrationTests {
 
 
     @Test
-    public void generatingStarts() {
+    public void fullTest() {
         routeA = routeService.add(new Route(null, "Męska eliminacje A", "eliminacyjna", Discipline.LEAD, null));
         routeB = routeService.add(new Route(null, "Męska eliminacje B", "eliminacyjna", Discipline.LEAD, null));
         routeF = routeService.add(new Route(null, "Męska finał", "finałowa", Discipline.LEAD, null));

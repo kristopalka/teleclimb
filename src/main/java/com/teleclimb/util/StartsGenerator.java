@@ -1,10 +1,10 @@
 package com.teleclimb.util;
 
-import com.teleclimb.enums.StartsGenerationMethod;
-import com.teleclimb.rest.dto.Participant;
-import com.teleclimb.rest.dto.RefereePosition;
-import com.teleclimb.rest.dto.Round;
-import com.teleclimb.rest.dto.Start;
+import com.teleclimb.dto.Participant;
+import com.teleclimb.dto.RefereePosition;
+import com.teleclimb.dto.Round;
+import com.teleclimb.dto.Start;
+import com.teleclimb.dto.enums.StartsGenerationMethod;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -2,10 +2,10 @@ package com.teleclimb.util;
 
 import com.google.gson.Gson;
 import com.teleclimb.config.GsonConfig;
-import com.teleclimb.enums.RoundState;
-import com.teleclimb.rest.dto.Competition;
-import com.teleclimb.rest.dto.Formula;
-import com.teleclimb.rest.dto.Round;
+import com.teleclimb.dto.Competition;
+import com.teleclimb.dto.Formula;
+import com.teleclimb.dto.Round;
+import com.teleclimb.dto.enums.RoundState;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,13 +1,13 @@
 package com.teleclimb.config.database;
 
 import com.google.gson.Gson;
-import com.teleclimb.enums.Discipline;
-import com.teleclimb.enums.StartsGenerationMethod;
-import com.teleclimb.rest.dto.Category;
-import com.teleclimb.rest.dto.Formula;
-import com.teleclimb.rest.dto.Round;
-import com.teleclimb.rest.services.CategoryService;
-import com.teleclimb.rest.services.FormulaService;
+import com.teleclimb.dto.Category;
+import com.teleclimb.dto.Formula;
+import com.teleclimb.dto.Round;
+import com.teleclimb.dto.enums.Discipline;
+import com.teleclimb.dto.enums.StartsGenerationMethod;
+import com.teleclimb.services.CategoryService;
+import com.teleclimb.services.FormulaService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
