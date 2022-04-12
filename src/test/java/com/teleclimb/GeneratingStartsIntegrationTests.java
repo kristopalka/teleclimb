@@ -1,9 +1,9 @@
 package com.teleclimb;
 
-import com.teleclimb.dto.*;
 import com.teleclimb.dto.enums.Discipline;
 import com.teleclimb.dto.enums.Gender;
-import com.teleclimb.services.*;
+import com.teleclimb.dto.model.*;
+import com.teleclimb.service.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,9 @@
 package com.teleclimb.config;
 
-import com.teleclimb.dto.Competition;
-import com.teleclimb.dto.Start;
-import com.teleclimb.entities.CompetitionEntity;
-import com.teleclimb.entities.StartEntity;
+import com.teleclimb.dto.model.Competition;
+import com.teleclimb.dto.model.Start;
+import com.teleclimb.entitie.CompetitionEntity;
+import com.teleclimb.entitie.StartEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.context.annotation.Bean;
