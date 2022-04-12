@@ -6,7 +6,7 @@ import com.teleclimb.dto.enums.Discipline;
 import com.teleclimb.dto.model.RefereePosition;
 import com.teleclimb.dto.model.Route;
 import com.teleclimb.entitie.RouteEntity;
-import com.teleclimb.repositorie.RouteRepository;
+import com.teleclimb.repository.RouteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

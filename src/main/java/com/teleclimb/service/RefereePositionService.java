@@ -3,7 +3,7 @@ package com.teleclimb.service;
 import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.dto.model.RefereePosition;
 import com.teleclimb.entitie.RefereePositionEntity;
-import com.teleclimb.repositorie.RefereePositionRepository;
+import com.teleclimb.repository.RefereePositionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,7 @@ package com.teleclimb.service;
 import com.teleclimb.controller.responses.error.exception.NotFoundException;
 import com.teleclimb.dto.model.Formula;
 import com.teleclimb.entitie.FormulaEntity;
-import com.teleclimb.repositorie.FormulaRepository;
+import com.teleclimb.repository.FormulaRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.teleclimb.repositorie;
+package com.teleclimb.repository;
 
 import com.teleclimb.dto.enums.Discipline;
 import com.teleclimb.entitie.RouteEntity;

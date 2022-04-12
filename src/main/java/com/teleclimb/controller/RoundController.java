@@ -1,7 +1,7 @@
 package com.teleclimb.controller;
 
 import com.teleclimb.dto.model.Round;
-import com.teleclimb.service.RoundService;
+import com.teleclimb.service.round.RoundService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

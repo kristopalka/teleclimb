@@ -1,4 +1,4 @@
-package com.teleclimb.service;
+package com.teleclimb.service.round;
 
 import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.controller.responses.error.exception.NotFoundException;
@@ -6,7 +6,9 @@ import com.teleclimb.dto.enums.RoundState;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.dto.model.Start;
 import com.teleclimb.entitie.RoundEntity;
-import com.teleclimb.repositorie.RoundRepository;
+import com.teleclimb.repository.RoundRepository;
+import com.teleclimb.service.RefereePositionService;
+import com.teleclimb.service.start.StartService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

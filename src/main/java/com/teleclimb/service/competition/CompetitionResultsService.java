@@ -1,4 +1,4 @@
-package com.teleclimb.service;
+package com.teleclimb.service.competition;
 
 import org.springframework.stereotype.Service;
 

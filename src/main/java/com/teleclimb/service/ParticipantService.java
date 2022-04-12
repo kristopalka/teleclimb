@@ -5,7 +5,8 @@ import com.teleclimb.controller.responses.error.exception.NotFoundException;
 import com.teleclimb.dto.model.Participant;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.entitie.ParticipantEntity;
-import com.teleclimb.repositorie.ParticipantRepository;
+import com.teleclimb.repository.ParticipantRepository;
+import com.teleclimb.service.round.RoundService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.teleclimb.controller;
 
 import com.teleclimb.dto.model.Start;
-import com.teleclimb.service.StartService;
+import com.teleclimb.service.start.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

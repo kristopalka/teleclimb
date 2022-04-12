@@ -1,4 +1,4 @@
-package com.teleclimb.repositorie;
+package com.teleclimb.repository;
 
 import com.teleclimb.entitie.RoundEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

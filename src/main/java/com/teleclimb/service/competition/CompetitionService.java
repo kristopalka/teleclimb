@@ -1,10 +1,12 @@
-package com.teleclimb.service;
+package com.teleclimb.service.competition;
 
 import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.controller.responses.error.exception.NotFoundException;
 import com.teleclimb.dto.model.Competition;
 import com.teleclimb.entitie.CompetitionEntity;
-import com.teleclimb.repositorie.CompetitionRepository;
+import com.teleclimb.repository.CompetitionRepository;
+import com.teleclimb.service.ParticipantService;
+import com.teleclimb.service.round.RoundService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

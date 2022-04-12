@@ -6,6 +6,11 @@ import com.teleclimb.dto.model.Competition;
 import com.teleclimb.dto.model.Participant;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.dto.model.Route;
+import com.teleclimb.service.competition.CompetitionService;
+import com.teleclimb.service.round.RoundManagementService;
+import com.teleclimb.service.round.RoundService;
+import com.teleclimb.service.round.RoundsGeneratingService;
+import com.teleclimb.service.start.StartService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

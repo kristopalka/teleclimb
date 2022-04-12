@@ -1,10 +1,13 @@
-package com.teleclimb.service;
+package com.teleclimb.service.start;
 
 import com.teleclimb.controller.responses.error.exception.InternalServerError;
 import com.teleclimb.dto.model.Participant;
 import com.teleclimb.dto.model.RefereePosition;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.dto.model.Start;
+import com.teleclimb.service.ParticipantService;
+import com.teleclimb.service.RefereePositionService;
+import com.teleclimb.service.round.RoundService;
 import com.teleclimb.util.StartsGenerator;
 import org.springframework.stereotype.Service;
 
