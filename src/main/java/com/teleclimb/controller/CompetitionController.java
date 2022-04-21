@@ -54,5 +54,4 @@ public class CompetitionController {
     public List<Round> generateRounds(@PathVariable Integer id) {
         return roundsGeneratingService.generateRounds(id);
     }
-
 }

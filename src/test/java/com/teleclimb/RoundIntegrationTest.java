@@ -2,9 +2,7 @@ package com.teleclimb;
 
 import com.teleclimb.dto.enums.Discipline;
 import com.teleclimb.dto.enums.Gender;
-import com.teleclimb.dto.model.Competition;
-import com.teleclimb.dto.model.Round;
-import com.teleclimb.dto.model.Route;
+import com.teleclimb.dto.model.*;
 import com.teleclimb.service.FormulaService;
 import com.teleclimb.service.ParticipantService;
 import com.teleclimb.service.RefereePositionService;
@@ -54,7 +52,13 @@ class RoundIntegrationTest {
         routeB = routeService.add(new Route(null, "Męska eliminacje B", "eliminacyjna", Discipline.LEAD, null));
         routeF = routeService.add(new Route(null, "Męska finał", "finałowa", Discipline.LEAD, null));
 
-        competition = competitionService.add(new Competition(0, 4, 1, null, Gender.MALE, "Puchar Polski"));
+        Category category = new Category();
+        category.setId(4);
+
+        Formula formula = new Formula();
+        formula.setId(1);
+
+        Competition competition = competitionService.add(new Competition(0, category, formula, null, Gender.MALE, "Puchar Polski"));
 
         // generate rounds
         roundsGeneratingService.generateRounds(competition.getId());

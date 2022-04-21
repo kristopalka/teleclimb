@@ -1,6 +1,7 @@
 package com.teleclimb.dto.model;
 
 import com.teleclimb.dto.enums.Discipline;
+import com.teleclimb.dto.enums.RoundState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,8 @@ public class Start {
     private Integer id;
 
     private Integer refereePositionId;
+
+    private RoundState roundState;
 
     private Integer positionSequenceNumber;
 

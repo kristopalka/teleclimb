@@ -26,6 +26,7 @@ public class ModelMapperConfig {
             @Override
             protected void configure() {
                 map(source.getRefereePosition().getRound().getCompetition().getFormula().getDiscipline()).setDiscipline(null);
+                map(source.getRefereePosition().getRound().getState()).setRoundState(null);
             }
         });
 

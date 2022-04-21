@@ -42,9 +42,9 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
 
     private void validateCompetition(Competition competition) {
         if (competition.getName() == null) throw new BadRequestException("Name cannot be null");
-        if (competition.getFormulaId() == null) throw new BadRequestException("Formula id cannot be null");
+        if (competition.getFormula().getId() == null) throw new BadRequestException("Formula id cannot be null");
         if (competition.getGender() == null) throw new BadRequestException("Gender cannot be null");
-        if (competition.getCategoryId() == null) throw new BadRequestException("Category id cannot be null");
+        if (competition.getCategory().getId() == null) throw new BadRequestException("Category id cannot be null");
     }
 
 

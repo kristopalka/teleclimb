@@ -1,4 +1,4 @@
-package com.teleclimb.dto.start_results;
+package com.teleclimb.dto.model.start_result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

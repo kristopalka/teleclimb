@@ -7,6 +7,7 @@ import com.teleclimb.dto.model.Start;
 import com.teleclimb.entitie.StartEntity;
 import com.teleclimb.repository.StartRepository;
 import com.teleclimb.service.RefereePositionService;
+import com.teleclimb.service.round.RoundService;
 import com.teleclimb.util.ResultChecker;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public record StartService(ModelMapper mapper, StartRepository startRepo, RefereePositionService positionService) {
+public record StartService(ModelMapper mapper, StartRepository startRepo, RefereePositionService positionService,
+                           RoundService roundService) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -82,7 +84,6 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
 
     public Start updateResult(Integer id, String result) {
         Start start = get(id);
-
 
         try {
             ResultChecker.check(result, start.getDiscipline());

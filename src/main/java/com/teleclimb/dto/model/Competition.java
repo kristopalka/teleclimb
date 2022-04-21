@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class Competition {
     private Integer id;
 
-    private Integer categoryId;
+    private Category category;
 
-    private Integer formulaId;
+    private Formula formula;
 
     private Discipline discipline;
 

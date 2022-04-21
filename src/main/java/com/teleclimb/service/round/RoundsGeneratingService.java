@@ -25,7 +25,7 @@ public record RoundsGeneratingService(RoundService roundService,
 
     private List<Round> tryToGenerateRounds(Integer competitionId) {
         Competition competition = competitionService.get(competitionId);
-        Formula formula = formulaService.get(competition.getFormulaId());
+        Formula formula = competition.getFormula();
 
         if (roundService.getAllByCompetitionId(competitionId).size() != 0)
             throw new RuntimeException("there are already rounds for this competition. Probably generations was done before.");

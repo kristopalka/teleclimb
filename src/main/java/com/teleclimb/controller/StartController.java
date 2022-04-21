@@ -1,12 +1,18 @@
 package com.teleclimb.controller;
 
+import com.google.gson.Gson;
+import com.teleclimb.config.GsonConfig;
 import com.teleclimb.dto.model.Start;
+import com.teleclimb.dto.model.start_result.ResultBouldering;
+import com.teleclimb.dto.model.start_result.ResultLead;
+import com.teleclimb.dto.model.start_result.ResultSpeed;
 import com.teleclimb.service.start.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -15,6 +21,7 @@ import java.util.List;
 @Api(tags = "start")
 public class StartController {
     private final StartService service;
+    private final Gson gson = GsonConfig.gson();
 
     @ApiOperation(value = "Get all starts")
     @GetMapping("/all")
@@ -50,6 +57,39 @@ public class StartController {
     @PutMapping("/{id}/result")
     public Start updateResult(@PathVariable Integer id, @RequestBody String result) {
         return service.updateResult(id, result);
+    }
+
+
+    @ApiOperation(value = "Example of lead result")
+    @GetMapping("/result-example/lead")
+    public String leadExample() {
+        ResultLead result = new ResultLead();
+        result.setValue(21);
+        result.setPlus(true);
+        result.setTime(LocalTime.of(0, 2, 36, 523000000));
+        return gson.toJson(result);
+    }
+
+    @ApiOperation(value = "Example of bouldering result")
+    @GetMapping("/result-example/bouldering")
+    public String boulderingExample() {
+        ResultBouldering result = new ResultBouldering();
+        result.setTries(8);
+        result.setBonus(true);
+        result.setTriesToBonus(4);
+        result.setTop(false);
+        result.setTriesToTop(null);
+        return gson.toJson(result);
+    }
+
+    @ApiOperation(value = "Example of speed result")
+    @GetMapping("/result-example/speed")
+    public String speedExample() {
+        ResultSpeed result = new ResultSpeed();
+        result.setTime(LocalTime.of(0, 0, 7, 275000000));
+        result.setDisqualifyingFalseStart(false);
+        result.setFellOff(true);
+        return gson.toJson(result);
     }
 
 }

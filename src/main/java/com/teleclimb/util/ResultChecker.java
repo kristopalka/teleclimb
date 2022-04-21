@@ -3,9 +3,9 @@ package com.teleclimb.util;
 import com.google.gson.Gson;
 import com.teleclimb.config.GsonConfig;
 import com.teleclimb.dto.enums.Discipline;
-import com.teleclimb.dto.start_results.ResultBouldering;
-import com.teleclimb.dto.start_results.ResultLead;
-import com.teleclimb.dto.start_results.ResultSpeed;
+import com.teleclimb.dto.model.start_result.ResultBouldering;
+import com.teleclimb.dto.model.start_result.ResultLead;
+import com.teleclimb.dto.model.start_result.ResultSpeed;
 
 public class ResultChecker {
     private static final Gson gson = GsonConfig.gson();

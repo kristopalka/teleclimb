@@ -1,11 +1,11 @@
-package com.teleclimb.dto.model.competition_result;
+package com.teleclimb.dto.model.competition_results;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class ParticipantDataDto {
+public class ParticipantData {
     private Integer id;
 
     private Integer place;
