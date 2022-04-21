@@ -16,6 +16,7 @@ import java.util.List;
 @RequestMapping("/competition")
 @Api(tags = "competition")
 public class CompetitionController {
+
     private final CompetitionService service;
     private final GeneratingService generatingService;
 

@@ -17,10 +17,10 @@ import java.util.List;
 
 @Configuration
 public class Initializer {
+
     @Bean
     public CommandLineRunner loadData(CategoryService categoryService, FormulaService formulaService) {
         return args -> {
-            // this code will be done right after app initialization
             initCategories(categoryService);
             initFormula(formulaService);
         };

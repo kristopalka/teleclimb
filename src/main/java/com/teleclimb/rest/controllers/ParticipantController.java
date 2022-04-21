@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("/participant")
 @Api(tags = "participant")
 public class ParticipantController {
+
     private final ParticipantService service;
 
     @ApiOperation(value = "Get all participants")

@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("/route")
 @Api(tags = "route")
 public class RouteController {
+
     private final RouteService service;
 
     @ApiOperation(value = "Get all routes")

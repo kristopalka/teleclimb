@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Api(tags = "test")
 public class TestController {
+
     private final TestService service;
 
     @GetMapping("/test")

@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/formula")
 @Api(tags = "formula")
 public class FormulaController {
+
     private final FormulaService service;
 
     @ApiOperation(value = "Get all formulas", notes = "Competition formulas are hardcoded")

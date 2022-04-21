@@ -45,6 +45,7 @@ public class StartsGenerator {
 
     // two routes, random list on first route, list moved for a half on the second route
     private void generateLeadClassicEliminations() {
+
         RefereePosition positionA = positions.get(0);
         RefereePosition positionB = positions.get(1);
 

@@ -53,6 +53,7 @@ public record GeneratingService(RoundService roundService,
     }
 
     private void tryToGenerateStarts(Integer roundId) {
+
         Round round = roundService.get(roundId);
         List<RefereePosition> positions = positionService.getAllByRoundId(roundId);
         List<Participant> participants = participantService.getParticipantsByRoundId(roundId);

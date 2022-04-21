@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/start")
 @Api(tags = "start")
 public class StartController {
+
     private final StartService service;
 
     @ApiOperation(value = "Get all starts")
