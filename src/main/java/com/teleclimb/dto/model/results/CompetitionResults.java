@@ -1,4 +1,4 @@
-package com.teleclimb.dto.model.lead_competition_results;
+package com.teleclimb.dto.model.results;
 
 
 import com.teleclimb.dto.model.Competition;

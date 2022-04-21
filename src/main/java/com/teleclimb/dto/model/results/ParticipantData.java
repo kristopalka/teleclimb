@@ -1,4 +1,4 @@
-package com.teleclimb.dto.model.lead_competition_results;
+package com.teleclimb.dto.model.results;
 
 import lombok.Data;
 
@@ -8,11 +8,6 @@ import java.util.List;
 public class ParticipantData {
     private Integer id;
 
-    private Integer place;
-
-    private Integer topRoundNumber;
-
-    // participant data
     private String name;
 
     private String lastName;
@@ -20,6 +15,11 @@ public class ParticipantData {
     private String clubName;
 
     private String startNumber;
+
+    //
+    private Integer place;
+
+    private Integer topRoundNumber;
 
     private List<String> results;
 

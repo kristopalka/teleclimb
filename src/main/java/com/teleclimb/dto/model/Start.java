@@ -18,6 +18,8 @@ public class Start {
 
     private RoundState roundState;
 
+    private Integer roundSequenceNumber;
+
     private Integer positionSequenceNumber;
 
     private Integer participantId;
