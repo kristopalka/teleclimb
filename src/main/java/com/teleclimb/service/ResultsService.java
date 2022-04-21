@@ -2,8 +2,9 @@ package com.teleclimb.service;
 
 import com.teleclimb.controller.responses.error.exception.NotImplementedException;
 import com.teleclimb.dto.model.Participant;
-import com.teleclimb.dto.model.competition_results.CompetitionResults;
-import com.teleclimb.dto.model.competition_results.ParticipantData;
+import com.teleclimb.dto.model.Start;
+import com.teleclimb.dto.model.lead_competition_results.CompetitionResults;
+import com.teleclimb.dto.model.lead_competition_results.ParticipantData;
 import com.teleclimb.service.competition.CompetitionService;
 import com.teleclimb.service.start.StartService;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
     private List<ParticipantData> getParticipantsData(Integer competitionId) {
         List<Participant> participants = participantService.getAllByCompetitionId(competitionId);
 
-        throw new NotImplementedException("XD");
+        for (Participant participant : participants) {
+            List<Start> start = startService.getAllByParticipantId(participant.getId());
+        }
+
+        throw new NotImplementedException("");
     }
 }

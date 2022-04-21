@@ -1,4 +1,4 @@
-package com.teleclimb.dto.model.competition_results;
+package com.teleclimb.dto.model.lead_competition_results;
 
 import lombok.Data;
 

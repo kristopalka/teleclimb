@@ -2,13 +2,13 @@ package com.teleclimb.service.start;
 
 import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.controller.responses.error.exception.NotFoundException;
+import com.teleclimb.dto.enums.RoundState;
 import com.teleclimb.dto.model.RefereePosition;
 import com.teleclimb.dto.model.Start;
 import com.teleclimb.entitie.StartEntity;
 import com.teleclimb.repository.StartRepository;
 import com.teleclimb.service.RefereePositionService;
-import com.teleclimb.service.round.RoundService;
-import com.teleclimb.util.ResultChecker;
+import com.teleclimb.util.ScoreChecker;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public record StartService(ModelMapper mapper, StartRepository startRepo, RefereePositionService positionService,
-                           RoundService roundService) {
+public record StartService(ModelMapper mapper, StartRepository startRepo, RefereePositionService positionService) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -82,15 +81,17 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return mapper.map(startEntity, Start.class);
     }
 
-    public Start updateResult(Integer id, String result) {
+    public Start updateScore(Integer id, String score) {
         Start start = get(id);
+        if (start.getRoundState() != RoundState.IN_PROGRESS)
+            throw new BadRequestException("Round is not in progress. Can not update score");
 
         try {
-            ResultChecker.check(result, start.getDiscipline());
+            ScoreChecker.check(score, start.getDiscipline());
         } catch (RuntimeException e) {
-            throw new BadRequestException("Given result is wrong: " + e.getMessage());
+            throw new BadRequestException("Given score is wrong: " + e.getMessage());
         }
-        start.setResult(result);
+        start.setScore(score);
 
 
         StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));

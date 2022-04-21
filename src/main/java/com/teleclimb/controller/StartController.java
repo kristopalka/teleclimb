@@ -3,9 +3,9 @@ package com.teleclimb.controller;
 import com.google.gson.Gson;
 import com.teleclimb.config.GsonConfig;
 import com.teleclimb.dto.model.Start;
-import com.teleclimb.dto.model.start_result.ResultBouldering;
-import com.teleclimb.dto.model.start_result.ResultLead;
-import com.teleclimb.dto.model.start_result.ResultSpeed;
+import com.teleclimb.dto.model.score.ScoreBouldering;
+import com.teleclimb.dto.model.score.ScoreLead;
+import com.teleclimb.dto.model.score.ScoreSpeed;
 import com.teleclimb.service.start.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,27 +53,27 @@ public class StartController {
         return service.updateSequenceNumber(id, sequenceNumber);
     }
 
-    @ApiOperation(value = "Update result", notes = "Put result as json. Examples and correctness of result in 'result examples'")
-    @PutMapping("/{id}/result")
-    public Start updateResult(@PathVariable Integer id, @RequestBody String result) {
-        return service.updateResult(id, result);
+    @ApiOperation(value = "Update score", notes = "Put score as json. Examples and correctness of result in 'result examples'")
+    @PutMapping("/{id}/score")
+    public Start updateResult(@PathVariable Integer id, @RequestBody String score) {
+        return service.updateScore(id, score);
     }
 
 
-    @ApiOperation(value = "Example of lead result")
-    @GetMapping("/result-example/lead")
+    @ApiOperation(value = "Example of lead score")
+    @GetMapping("/score-example/lead")
     public String leadExample() {
-        ResultLead result = new ResultLead();
+        ScoreLead result = new ScoreLead();
         result.setValue(21);
         result.setPlus(true);
         result.setTime(LocalTime.of(0, 2, 36, 523000000));
         return gson.toJson(result);
     }
 
-    @ApiOperation(value = "Example of bouldering result")
-    @GetMapping("/result-example/bouldering")
+    @ApiOperation(value = "Example of bouldering score")
+    @GetMapping("/score-example/bouldering")
     public String boulderingExample() {
-        ResultBouldering result = new ResultBouldering();
+        ScoreBouldering result = new ScoreBouldering();
         result.setTries(8);
         result.setBonus(true);
         result.setTriesToBonus(4);
@@ -82,10 +82,10 @@ public class StartController {
         return gson.toJson(result);
     }
 
-    @ApiOperation(value = "Example of speed result")
-    @GetMapping("/result-example/speed")
+    @ApiOperation(value = "Example of speed score")
+    @GetMapping("/score-example/speed")
     public String speedExample() {
-        ResultSpeed result = new ResultSpeed();
+        ScoreSpeed result = new ScoreSpeed();
         result.setTime(LocalTime.of(0, 0, 7, 275000000));
         result.setDisqualifyingFalseStart(false);
         result.setFellOff(true);

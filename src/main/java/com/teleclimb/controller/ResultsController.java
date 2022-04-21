@@ -1,6 +1,6 @@
 package com.teleclimb.controller;
 
-import com.teleclimb.dto.model.competition_results.CompetitionResults;
+import com.teleclimb.dto.model.lead_competition_results.CompetitionResults;
 import com.teleclimb.service.ResultsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -32,8 +32,8 @@ public class RoundManagementController {
     }
 
     @ApiOperation(value = "Finish round", notes = "Round will be finished")
-    @GetMapping("/{id}/are-all-results-inserted")
-    public void areAllResults(@PathVariable Integer id) {
-        roundService.areAllResultsInserted(id);
+    @GetMapping("/{id}/are-all-scores-inserted")
+    public void areAllScores(@PathVariable Integer id) {
+        roundService.areAllScoresInserted(id);
     }
 }

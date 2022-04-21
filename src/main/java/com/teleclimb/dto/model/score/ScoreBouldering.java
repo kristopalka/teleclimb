@@ -1,4 +1,4 @@
-package com.teleclimb.dto.model.start_result;
+package com.teleclimb.dto.model.score;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResultBouldering {
+public class ScoreBouldering {
     private Integer tries;
     private Boolean bonus;
     private Integer triesToBonus;

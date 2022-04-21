@@ -22,7 +22,7 @@ public class Start {
 
     private Integer participantId;
 
-    private String result;
+    private String score;
 
     private Discipline discipline;
 }

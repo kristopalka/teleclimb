@@ -43,11 +43,11 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
         return roundRepo.findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, Round.class)).toList();
     }
 
-    public Boolean areAllResultsInserted(Integer id) {
+    public Boolean areAllScoresInserted(Integer id) {
         List<Start> starts = startService.getAllByRoundId(id);
 
         for (Start start : starts) {
-            if (start.getResult() == null) return false;
+            if (start.getScore() == null) return false;
         }
         return true;
     }

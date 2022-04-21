@@ -1,4 +1,4 @@
-package com.teleclimb.dto.model.start_result;
+package com.teleclimb.dto.model.score;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.time.LocalTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResultSpeed {
+public class ScoreSpeed {
     private LocalTime time;
     private Boolean fellOff;
     private Boolean disqualifyingFalseStart;
