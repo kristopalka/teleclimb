@@ -2,6 +2,7 @@ package com.teleclimb.config.database;
 
 import com.google.gson.Gson;
 import com.teleclimb.dto.enums.Discipline;
+import com.teleclimb.dto.enums.ResultCalculatingFunction;
 import com.teleclimb.dto.enums.StartsGenerationMethod;
 import com.teleclimb.dto.model.Category;
 import com.teleclimb.dto.model.Formula;
@@ -42,7 +43,7 @@ public class Initializer {
         rounds.add(Round.builder()
                 .name("Eliminacyje")
                 .sequenceNumber(0)
-                .resultCalculatingFunction("?")
+                .resultCalculatingFunction(ResultCalculatingFunction.TWO_ROUTES_LEAD_ELIMINATIONS)
                 .numberOfRoutes(2)
                 .maxParticipants(Integer.MAX_VALUE)
                 .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_ELIMINATIONS)
@@ -51,7 +52,7 @@ public class Initializer {
         rounds.add(Round.builder()
                 .name("Finał")
                 .sequenceNumber(1)
-                .resultCalculatingFunction("?")
+                .resultCalculatingFunction(ResultCalculatingFunction.ONE_ROUTE_LEAD_FINAL)
                 .numberOfRoutes(1)
                 .maxParticipants(8)
                 .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_FINAL)

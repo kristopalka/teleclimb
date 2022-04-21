@@ -1,5 +1,6 @@
 package com.teleclimb.entitie;
 
+import com.teleclimb.dto.enums.ResultCalculatingFunction;
 import com.teleclimb.dto.enums.RoundState;
 import com.teleclimb.dto.enums.StartsGenerationMethod;
 import lombok.Getter;
@@ -31,7 +32,8 @@ public class RoundEntity {
     @Enumerated(value = EnumType.STRING)
     private StartsGenerationMethod startsGenerationMethod;
 
-    private String resultCalculatingFunction;
+    @Enumerated(value = EnumType.STRING)
+    private ResultCalculatingFunction resultCalculatingFunction;
 
     @Enumerated(value = EnumType.STRING)
     private RoundState state;

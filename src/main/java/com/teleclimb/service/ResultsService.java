@@ -1,6 +1,5 @@
 package com.teleclimb.service;
 
-import com.teleclimb.controller.responses.error.exception.NotImplementedException;
 import com.teleclimb.dto.enums.RoundState;
 import com.teleclimb.dto.model.Participant;
 import com.teleclimb.dto.model.Round;
@@ -18,6 +17,7 @@ import java.util.List;
 @Service
 public record ResultsService(CompetitionService competitionService, ParticipantService participantService,
                              StartService startService, RoundService roundService) {
+
     public CompetitionResults getResults(Integer competitionId) {
         CompetitionResults results = new CompetitionResults();
         results.setCompetition(competitionService.get(competitionId));
@@ -36,7 +36,7 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
             participantsData = sortAndAddData(participantsData, round);
         }
 
-        throw new NotImplementedException("");
+        return participantsData;
     }
 
     private List<Round> getSortedRounds(Integer competitionId) {
@@ -65,6 +65,9 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
     }
 
     private List<ParticipantData> sortAndAddData(List<ParticipantData> participantsData, Round round) {
-        throw new NotImplementedException("DUPAAAA");
+        switch (round.getResultCalculatingFunction()) {
+            case TWO_ROUTES_LEAD_ELIMINATIONS:
+        }
+        return null;
     }
 }
