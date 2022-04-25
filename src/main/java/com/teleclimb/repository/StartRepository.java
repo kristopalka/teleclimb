@@ -10,4 +10,7 @@ public interface StartRepository extends JpaRepository<StartEntity, Integer> {
 
     List<StartEntity> findByRefereePositionId(Integer refereePositionId);
 
+    List<StartEntity> findByRefereePositionIdAndParticipantId(Integer refereePositionId, Integer participantId);
+
+
 }

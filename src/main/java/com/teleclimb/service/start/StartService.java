@@ -27,6 +27,10 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return mapper.map(startEntity, Start.class);
     }
 
+    public Start getByRefereePositionIdAndParticipantId(Integer positionId, Integer participantId) {
+        return mapper.map(startRepo.findByRefereePositionIdAndParticipantId(positionId, participantId).get(0), Start.class);
+    }
+
     public List<Start> getAll() {
         return startRepo.findAll().stream().map(entity -> mapper.map(entity, Start.class)).toList();
     }
@@ -97,5 +101,6 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));
         return mapper.map(startEntity, Start.class);
     }
+
 
 }
