@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/results")
 @Api(tags = "result example")
 public class ResultsController {
-    ResultsService resultsService;
+    private final ResultsService resultsService;
 
     @ApiOperation(value = "Get participant list with results", notes = "contain competition data, participants place, max round number and personal data")
     @GetMapping("/competition/{competitionId}}")
