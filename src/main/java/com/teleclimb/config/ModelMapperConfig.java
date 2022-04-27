@@ -18,7 +18,9 @@ public class ModelMapperConfig {
         mapper.addMappings(new PropertyMap<CompetitionEntity, Competition>() {
             @Override
             protected void configure() {
+                map(source.getCategory().getName()).setCategoryName(null);
                 map(source.getFormula().getDiscipline()).setDiscipline(null);
+                map(source.getFormula().getNumberOfRounds()).setNumberOfRounds(null);
             }
         });
 

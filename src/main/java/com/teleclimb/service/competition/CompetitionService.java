@@ -3,8 +3,11 @@ package com.teleclimb.service.competition;
 import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.controller.responses.error.exception.NotFoundException;
 import com.teleclimb.dto.model.Competition;
+import com.teleclimb.dto.model.CompetitionPost;
 import com.teleclimb.entitie.CompetitionEntity;
 import com.teleclimb.repository.CompetitionRepository;
+import com.teleclimb.service.CategoryService;
+import com.teleclimb.service.FormulaService;
 import com.teleclimb.service.ParticipantService;
 import com.teleclimb.service.round.RoundService;
 import org.modelmapper.ModelMapper;
@@ -14,13 +17,16 @@ import java.util.List;
 
 @Service
 public record CompetitionService(ModelMapper mapper, CompetitionRepository competitionRepo,
-                                 ParticipantService participantService, RoundService roundService) {
+                                 ParticipantService participantService, RoundService roundService,
+                                 FormulaService formulaService,
+                                 CategoryService categoryService) {
 
     // --------------------------------- GET ---------------------------------
 
     public Competition get(Integer id) {
         CompetitionEntity competitionEntity = competitionRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found competition with: " + id));
+
 
         return mapper.map(competitionEntity, Competition.class);
     }
@@ -32,19 +38,19 @@ public record CompetitionService(ModelMapper mapper, CompetitionRepository compe
 
     // --------------------------------- ADD ---------------------------------
 
-    public Competition add(Competition competition) {
+    public CompetitionPost add(CompetitionPost competition) {
         competition.setId(null);
         validateCompetition(competition);
 
         CompetitionEntity competitionEntity = competitionRepo.save(mapper.map(competition, CompetitionEntity.class));
-        return mapper.map(competitionEntity, Competition.class);
+        return mapper.map(competitionEntity, CompetitionPost.class);
     }
 
-    private void validateCompetition(Competition competition) {
+    private void validateCompetition(CompetitionPost competition) {
         if (competition.getName() == null) throw new BadRequestException("Name cannot be null");
-        if (competition.getFormula().getId() == null) throw new BadRequestException("Formula id cannot be null");
+        if (competition.getFormulaId() == null) throw new BadRequestException("Formula id cannot be null");
         if (competition.getGender() == null) throw new BadRequestException("Gender cannot be null");
-        if (competition.getCategory().getId() == null) throw new BadRequestException("Category id cannot be null");
+        if (competition.getCategoryId() == null) throw new BadRequestException("Category id cannot be null");
     }
 
 

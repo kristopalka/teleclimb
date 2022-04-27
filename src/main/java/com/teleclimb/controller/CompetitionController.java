@@ -1,6 +1,7 @@
 package com.teleclimb.controller;
 
 import com.teleclimb.dto.model.Competition;
+import com.teleclimb.dto.model.CompetitionPost;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.service.competition.CompetitionService;
 import com.teleclimb.service.round.RoundsGeneratingService;
@@ -33,7 +34,7 @@ public class CompetitionController {
 
     @ApiOperation(value = "Add new competition", notes = "Do not insert id field, it will be generated automatically anyway. All other fields are mandatory. Return added competition")
     @PostMapping("")
-    public Competition add(@RequestBody Competition competition) {
+    public CompetitionPost add(@RequestBody CompetitionPost competition) {
         return service.add(competition);
     }
 
