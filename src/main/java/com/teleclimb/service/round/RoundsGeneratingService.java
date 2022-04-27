@@ -6,8 +6,8 @@ import com.teleclimb.controller.responses.error.exception.InternalServerError;
 import com.teleclimb.dto.enums.RoundState;
 import com.teleclimb.dto.model.Competition;
 import com.teleclimb.dto.model.Round;
+import com.teleclimb.service.CompetitionService;
 import com.teleclimb.service.FormulaService;
-import com.teleclimb.service.competition.CompetitionService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;

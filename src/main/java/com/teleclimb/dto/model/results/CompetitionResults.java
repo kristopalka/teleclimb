@@ -13,5 +13,5 @@ public class CompetitionResults {
 
     private List<Round> rounds;
 
-    private List<ParticipantData> participantsData;
+    private List<ParticipantResults> participantsData;
 }

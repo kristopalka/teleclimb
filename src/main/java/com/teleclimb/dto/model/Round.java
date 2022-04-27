@@ -17,7 +17,7 @@ public class Round {
 
     private Integer competitionId;
 
-    private Integer sequenceNumber;
+    private Integer sequenceNumber; //first equals 0
 
     private String name;
 

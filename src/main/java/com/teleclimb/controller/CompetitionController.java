@@ -3,7 +3,7 @@ package com.teleclimb.controller;
 import com.teleclimb.dto.model.Competition;
 import com.teleclimb.dto.model.CompetitionPost;
 import com.teleclimb.dto.model.Round;
-import com.teleclimb.service.competition.CompetitionService;
+import com.teleclimb.service.CompetitionService;
 import com.teleclimb.service.round.RoundsGeneratingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
