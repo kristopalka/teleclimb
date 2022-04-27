@@ -2,6 +2,7 @@ package com.teleclimb.service.round;
 
 import com.google.gson.Gson;
 import com.teleclimb.config.GsonConfig;
+import com.teleclimb.controller.responses.error.exception.InternalServerError;
 import com.teleclimb.dto.enums.RoundState;
 import com.teleclimb.dto.model.Competition;
 import com.teleclimb.dto.model.Round;
@@ -18,11 +19,11 @@ public record RoundsGeneratingService(RoundService roundService, CompetitionServ
     private static final Gson gson = GsonConfig.gson();
 
     public List<Round> generateRounds(Integer competitionId) {
-//        try {
-        return tryToGenerateRounds(competitionId);
-//        } catch (Exception e) {
-//            throw new InternalServerError("Something went wrong while generating rounds: '" + e.getMessage() + "'");
-//        }
+        try {
+            return tryToGenerateRounds(competitionId);
+        } catch (Exception e) {
+            throw new InternalServerError("Something went wrong while generating rounds: '" + e.getMessage() + "'");
+        }
     }
 
     private List<Round> tryToGenerateRounds(Integer competitionId) {
