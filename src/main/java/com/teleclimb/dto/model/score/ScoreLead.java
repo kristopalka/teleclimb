@@ -27,4 +27,9 @@ public class ScoreLead {
         if (compare(o2) != 0) return compare(o2);
         return o2.getTime().compareTo(this.getTime());
     }
+
+    @Override
+    public String toString() {
+        return value.toString() + (plus ? "+" : "");
+    }
 }

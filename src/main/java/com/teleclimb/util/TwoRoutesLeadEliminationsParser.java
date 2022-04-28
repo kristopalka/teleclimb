@@ -99,7 +99,7 @@ public class TwoRoutesLeadEliminationsParser {
         for (int i = 0; i < participantsData.size(); i++) {
             if (isNextDifferentOrEndB(i)) {
                 for (int j = lastSetIndex + 1; j <= i; j++) {
-                    participantsData.get(j).setPlaceA((lastSetIndex + 2.0 + i + 1.0) / 2); // place calculating formula
+                    participantsData.get(j).setPlaceB((lastSetIndex + 2.0 + i + 1.0) / 2); // place calculating formula
                 }
                 lastSetIndex = i;
             }
@@ -123,7 +123,7 @@ public class TwoRoutesLeadEliminationsParser {
 
 
     private List<ParticipantResults> processToParticipantsResult() {
-        List<ParticipantResults> participantsResult = new ArrayList<>();
+        List<ParticipantResults> participantsResults = new ArrayList<>();
 
         int place = 1;
         for (ParticipantData data : participantsData) {
@@ -140,9 +140,11 @@ public class TwoRoutesLeadEliminationsParser {
             results.add(data.result.toString());
             participantResults.setResults(results);
 
+            participantsResults.add(participantResults);
+
             place++;
         }
-        return participantsResult;
+        return participantsResults;
     }
 
     @Data

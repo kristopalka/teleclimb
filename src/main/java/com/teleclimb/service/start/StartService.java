@@ -95,7 +95,10 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
 
         start.setScore(score);
 
+
         StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));
+
+
         return mapper.map(startEntity, Start.class);
     }
 

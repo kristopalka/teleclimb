@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/results")
-@Api(tags = "result example")
+@Api(tags = "results")
 public class ResultsController {
     private final ResultsService resultsService;
 

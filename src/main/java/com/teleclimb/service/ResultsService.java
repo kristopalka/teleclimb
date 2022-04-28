@@ -56,10 +56,7 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
 
     private List<Round> getSortedRounds(Integer competitionId) {
         List<Round> rounds = roundService.getAllByCompetitionId(competitionId);
-
-        rounds.sort(Comparator.comparing(Round::getSequenceNumber));
-
-        return rounds;
+        return rounds.stream().sorted(Comparator.comparing(Round::getSequenceNumber)).toList();
     }
 
 
