@@ -18,7 +18,7 @@ public class ResultsController {
     private final ResultsService resultsService;
 
     @ApiOperation(value = "Get participant list with results", notes = "contain competition data, participants place, max round number and personal data")
-    @GetMapping("/competition/{competitionId}}")
+    @GetMapping("/competition/{competitionId}")
     public CompetitionResults getResults(@PathVariable Integer competitionId) {
         return resultsService.getResults(competitionId);
     }
