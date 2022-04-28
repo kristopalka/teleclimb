@@ -19,6 +19,8 @@ public class ControllerExceptionHandler {
 
         Response response = new Response(exception.getMessage(), exception.getStatus(), exception.getStatus().value(), new Date());
 
+        System.out.println("EXCEPTION HANDLER: " + exception.getMessage() + ", " + exception.getLocalizedMessage());
+
         return new ResponseEntity<>(response, exception.getStatus());
     }
 }
