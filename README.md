@@ -11,7 +11,7 @@ Celem projektu jest ukończenie oraz rozwój systemu do sędziowania zawodów ws
 System na poziomie fizycznych urządzeń składa się z komputera oraz kilku urządzeń mobilnych. Na komputerze uruchomione będą dwie aplikacje: backend oraz aplikacja webowa, na urządzeniach mobilnych natomiast, aplikacje mobilne. Łączność pomiędzy komponentami w podstawowym scenariuszu powinna być zapewniona przez lokalną sieć bezprzewodową. 
 
 ### Schemat fizyczny systemu zestawiony z jego komponentami
-![Schemat fizyczny systemu zestawiony z jego komponentami](https://lh5.googleusercontent.com/QMGq5Gy2UtMunCDRY2sW-yhqJUWFOccCsJfw3uO25O15ZmQLlMJv1VHhKmDWFauI1DDgR2ZLyie3Ww=w1470-h973)
+![Schemat fizyczny systemu zestawiony z jego komponentami](https://lh3.google.com/u/0/d/1o891r_39cnk6Bq7LQSAXudWc9IaHW705=w1919-h1004-iv1)
 
 
 
