@@ -14,6 +14,8 @@ public class RefereePositionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Integer hash;
+
     @ManyToOne
     @JoinColumn(name = "route_id")
     private RouteEntity route;

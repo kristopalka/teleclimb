@@ -29,16 +29,11 @@ public class StartController {
         return service.getAll();
     }
 
-    @ApiOperation(value = "Get all starts by participant id")
-    @GetMapping("/all/by/{participantId}")
-    public List<Start> getByParticipantId(@PathVariable Integer participantId) {
-        return service.getAllByParticipantId(participantId);
-    }
 
-    @ApiOperation(value = "Get starts in round by route id")
-    @GetMapping("/all/by/{roundId}/and/{routeId}")
-    public List<Start> getByRouteIdAndRoundId(@PathVariable Integer roundId, @PathVariable Integer routeId) {
-        return service.getByRoundIdAndRouteId(roundId, routeId);
+    @ApiOperation(value = "Get starts by referee position hash")
+    @GetMapping("/all/by/referee-position-hash/{hash}")
+    public List<Start> getByRefereePositionHash(@PathVariable Integer hash) {
+        return service.getByRefereePositionHash(hash);
     }
 
     @ApiOperation(value = "Get start specific by id")

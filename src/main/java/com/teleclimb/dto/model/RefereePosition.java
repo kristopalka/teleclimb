@@ -6,6 +6,8 @@ import lombok.Data;
 public class RefereePosition {
     private Integer id;
 
+    private Integer hash;
+
     private Integer routeId;
 
     private Integer roundId;

@@ -11,4 +11,6 @@ public interface RefereePositionRepository extends JpaRepository<RefereePosition
     List<RefereePositionEntity> findByRoundIdAndRouteId(Integer roundId, Integer routeId);
 
     List<RefereePositionEntity> findByRouteId(Integer routeId);
+
+    List<RefereePositionEntity> findByHash(Integer hash);
 }

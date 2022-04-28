@@ -53,12 +53,12 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return startRepo.findByParticipantId(participantId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
     }
 
-    public List<Start> getByRoundIdAndRouteId(Integer roundId, Integer routeId) {
+    public List<Start> getByRefereePositionHash(Integer hash) {
         try {
-            Integer positionId = positionService.getByRoundIdAndRouteId(roundId, routeId).getId();
+            Integer positionId = positionService.getByHash(hash).getId();
             return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
         } catch (RuntimeException e) {
-            throw new BadRequestException("Route " + routeId + " is not added to round " + roundId);
+            throw new BadRequestException("No referee position with hash \"" + hash + "\"");
         }
     }
 
