@@ -2,6 +2,7 @@ package com.teleclimb.entitie;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "participant")
 public class ParticipantEntity {
     @Id

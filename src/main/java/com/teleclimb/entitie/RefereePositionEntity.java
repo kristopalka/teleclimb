@@ -2,12 +2,14 @@ package com.teleclimb.entitie;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "referee_position")
 public class RefereePositionEntity {
     @Id

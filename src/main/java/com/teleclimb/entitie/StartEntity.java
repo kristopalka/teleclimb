@@ -2,12 +2,14 @@ package com.teleclimb.entitie;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "start")
 public class StartEntity {
     @Id
@@ -24,6 +26,6 @@ public class StartEntity {
     @JoinColumn(name = "participant_id")
     private ParticipantEntity participant;
 
-    private String result;
+    private String score;
 
 }

@@ -5,12 +5,14 @@ import com.teleclimb.dto.enums.RoundState;
 import com.teleclimb.dto.enums.StartsGenerationMethod;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "round")
 public class RoundEntity {
     @Id

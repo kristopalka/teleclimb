@@ -1,6 +1,8 @@
 package com.teleclimb.service.start;
 
+import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.controller.responses.error.exception.InternalServerError;
+import com.teleclimb.controller.responses.error.exception.TeleclimbException;
 import com.teleclimb.dto.model.Participant;
 import com.teleclimb.dto.model.RefereePosition;
 import com.teleclimb.dto.model.Round;
@@ -20,7 +22,7 @@ public record StartsGeneratingService(RoundService roundService, ParticipantServ
     public void generateStarts(Integer roundId) {
         try {
             tryToGenerateStarts(roundId);
-        } catch (Exception e) {
+        } catch (TeleclimbException e) {
             throw new InternalServerError("Something went wrong while generating starts: '" + e.getMessage() + "'");
         }
     }
@@ -31,9 +33,9 @@ public record StartsGeneratingService(RoundService roundService, ParticipantServ
         List<Participant> participants = participantService.getParticipantsByRoundId(roundId);
 
         if (ifAnyOfPositionsHasStarts(positions))
-            throw new RuntimeException("there are already starts for this round, probably generations was done before");
+            throw new BadRequestException("there are already starts for this round, probably generations was done before");
         if (positions.size() != round.getNumberOfRoutes())
-            throw new RuntimeException("number of routes in this round is not match expected number: is: " + positions.size() + " expected: " + round.getNumberOfRoutes());
+            throw new BadRequestException("number of routes in this round is not match expected number: is: " + positions.size() + " expected: " + round.getNumberOfRoutes());
 
 
         StartsGenerator generator = new StartsGenerator(round, participants, positions);

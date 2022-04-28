@@ -76,8 +76,8 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
 
     // --------------------------------- UPDATE ---------------------------------
 
-    public Start updateSequenceNumber(Integer id, Integer sequenceNumber) {
-        Start start = get(id);
+    public Start updateSequenceNumber(Integer startId, Integer sequenceNumber) {
+        Start start = get(startId);
 
         start.setPositionSequenceNumber(sequenceNumber);
 
@@ -85,18 +85,15 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return mapper.map(startEntity, Start.class);
     }
 
-    public Start updateScore(Integer id, String score) {
-        Start start = get(id);
+    public Start updateScore(Integer startId, String score) {
+        Start start = get(startId);
+
         if (start.getRoundState() != RoundState.IN_PROGRESS)
             throw new BadRequestException("Round is not in progress. Can not update score");
+        ScoreChecker.check(score, start.getDiscipline());
 
-        try {
-            ScoreChecker.check(score, start.getDiscipline());
-        } catch (RuntimeException e) {
-            throw new BadRequestException("Given score is wrong: " + e.getMessage());
-        }
+
         start.setScore(score);
-
 
         StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));
         return mapper.map(startEntity, Start.class);
