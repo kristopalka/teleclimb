@@ -74,12 +74,12 @@ public class TestController {
 
 
     private void addParticipants(Integer competitionId) {
-        participantService.add(new Participant(null, competitionId, null, "Krzysztof", "Pałka", 1, "0001", "Oblak", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competitionId, null, "Kinga", "Pałka", 6, "0002", "Oblak", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competitionId, null, "Andrzej", "Krzywda", 3, "0003", "Korona", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competitionId, null, "Mikołaj", "Cheretyk", 234, "0004", "Tarnovia", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competitionId, null, "Aleksandra", "Kotwas", null, "0005", "Skarpa Bytom", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competitionId, null, "Kinga", "Ociepka", null, "0006", "Korona", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competitionId, null, null, "Krzysztof", "Pałka", 1, "0001", "Oblak", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competitionId, null, null, "Kinga", "Pałka", 6, "0002", "Oblak", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competitionId, null, null, "Andrzej", "Krzywda", 3, "0003", "Korona", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competitionId, null, null, "Mikołaj", "Cheretyk", 234, "0004", "Tarnovia", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competitionId, null, null, "Aleksandra", "Kotwas", null, "0005", "Skarpa Bytom", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competitionId, null, null, "Kinga", "Ociepka", null, "0006", "Korona", LocalDate.of(2000, 8, 26)));
     }
 
     private List<Round> generateRoundsAndAddRoutes(Integer competitionId) {

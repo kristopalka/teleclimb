@@ -53,12 +53,12 @@ class GeneratingStartsIntegrationTests {
 
         competition = competitionService.add(new CompetitionPost(0, 4, 1, Gender.MALE, "Puchar Polski"));
 
-        participantService.add(new Participant(null, competition.getId(), null, "Krzysztof", "Pałka", 1, "0001", "Oblak", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competition.getId(), null, "Kinga", "Pałka", 6, "0002", "Oblak", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competition.getId(), null, "Andrzej", "Krzywda", 3, "0003", "Korona", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competition.getId(), null, "Mikołaj", "Cheretyk", 234, "0004", "Tarnovia", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competition.getId(), null, "Aleksandra", "Kotwas", null, "0005", "Skarpa Bytom", LocalDate.of(2000, 8, 26)));
-        participantService.add(new Participant(null, competition.getId(), null, "Kinga", "Ociepka", null, "0006", "Korona", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competition.getId(), null, null, "Krzysztof", "Pałka", 1, "0001", "Oblak", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competition.getId(), null, null, "Kinga", "Pałka", 6, "0002", "Oblak", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competition.getId(), null, null, "Andrzej", "Krzywda", 3, "0003", "Korona", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competition.getId(), null, null, "Mikołaj", "Cheretyk", 234, "0004", "Tarnovia", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competition.getId(), null, null, "Aleksandra", "Kotwas", null, "0005", "Skarpa Bytom", LocalDate.of(2000, 8, 26)));
+        participantService.add(new Participant(null, competition.getId(), null, null, "Kinga", "Ociepka", null, "0006", "Korona", LocalDate.of(2000, 8, 26)));
 
 
         // generate rounds
