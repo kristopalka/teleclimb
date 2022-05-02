@@ -1,4 +1,4 @@
-package com.teleclimb.util;
+package com.teleclimb.util.results_parsers;
 
 import com.google.gson.Gson;
 import com.teleclimb.config.GsonConfig;

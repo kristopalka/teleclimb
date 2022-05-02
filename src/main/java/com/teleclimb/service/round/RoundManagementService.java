@@ -15,7 +15,7 @@ public record RoundManagementService(RoundService roundService, StartsGenerating
             throw new BadRequestException("Can not start round, it was started before");
         if (!isPreviousRoundFinished(round))
             throw new BadRequestException("Can not start round, previous did not finished");
-        startsGeneratingService.generateStarts(roundId);
+        startsGeneratingService.tryToGenerateStarts(roundId);
 
         roundService.setState(roundId, RoundState.IN_PROGRESS);
     }

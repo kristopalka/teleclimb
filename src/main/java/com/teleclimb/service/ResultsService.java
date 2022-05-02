@@ -8,7 +8,7 @@ import com.teleclimb.dto.model.results.CompetitionResults;
 import com.teleclimb.dto.model.results.ParticipantResults;
 import com.teleclimb.service.round.RoundService;
 import com.teleclimb.service.start.StartService;
-import com.teleclimb.util.TwoRoutesLeadEliminationsParser;
+import com.teleclimb.util.results_parsers.TwoRoutesLeadEliminationsParser;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
