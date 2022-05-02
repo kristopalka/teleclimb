@@ -2,16 +2,14 @@ package com.teleclimb.service;
 
 import com.teleclimb.controller.responses.error.exception.NotImplementedException;
 import com.teleclimb.dto.enums.RoundState;
-import com.teleclimb.dto.model.Participant;
+import com.teleclimb.dto.model.ParticipantWithMeta;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.dto.model.results.CompetitionResults;
-import com.teleclimb.dto.model.results.ParticipantResults;
 import com.teleclimb.service.round.RoundService;
 import com.teleclimb.service.start.StartService;
 import com.teleclimb.util.results_parsers.TwoRoutesLeadEliminationsParser;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -24,35 +22,26 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
         CompetitionResults results = new CompetitionResults();
         results.setCompetition(competitionService.get(competitionId));
         results.setRounds(roundService.getAllByCompetitionId(competitionId));
-        results.setParticipantsData(getParticipantsData(competitionId));
+        results.setParticipantsData(participantService.getAllParticipantsWithMetaByCompetitionId(competitionId)
+                .stream()
+                .sorted(Comparator.comparing(ParticipantWithMeta::getPreviousRoundPlace))
+                .toList());
 
         return results;
     }
 
-    private List<ParticipantResults> getParticipantsData(Integer competitionId) {
+    public void calculateResultsAndUpdate(Integer competitionId) {
         List<Round> rounds = getSortedRounds(competitionId);
-        List<ParticipantResults> participantsResults = generateList(competitionId);
+        List<ParticipantWithMeta> participantsResults = participantService.getAllParticipantsWithMetaByCompetitionId(competitionId);
 
         for (Round round : rounds) {
             if (round.getState() == RoundState.NOT_STARTED) break;
             participantsResults = generateResultsForRound(participantsResults, round);
         }
 
-        return participantsResults;
+        participantService.updateDataAndMetaForAll(participantsResults);
     }
 
-    private List<ParticipantResults> generateList(Integer competitionId) {
-        List<Participant> participants = participantService.getAllByCompetitionId(competitionId);
-        List<ParticipantResults> participantsResults = new ArrayList<>();
-
-        for (Participant participant : participants) {
-            ParticipantResults participantResults = new ParticipantResults();
-            participantResults.setParticipant(participant);
-
-            participantsResults.add(participantResults);
-        }
-        return participantsResults;
-    }
 
     private List<Round> getSortedRounds(Integer competitionId) {
         List<Round> rounds = roundService.getAllByCompetitionId(competitionId);
@@ -60,7 +49,7 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
     }
 
 
-    private List<ParticipantResults> generateResultsForRound(List<ParticipantResults> participantResults, Round round) {
+    private List<ParticipantWithMeta> generateResultsForRound(List<ParticipantWithMeta> participantResults, Round round) {
         switch (round.getResultCalculatingFunction()) {
             case TWO_ROUTES_LEAD_ELIMINATIONS: {
                 TwoRoutesLeadEliminationsParser parser = new TwoRoutesLeadEliminationsParser(participantResults, round, positionService, startService);

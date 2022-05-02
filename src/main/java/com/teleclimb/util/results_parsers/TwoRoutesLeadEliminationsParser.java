@@ -2,11 +2,7 @@ package com.teleclimb.util.results_parsers;
 
 import com.google.gson.Gson;
 import com.teleclimb.config.GsonConfig;
-import com.teleclimb.dto.model.Participant;
-import com.teleclimb.dto.model.RefereePosition;
-import com.teleclimb.dto.model.Round;
-import com.teleclimb.dto.model.Start;
-import com.teleclimb.dto.model.results.ParticipantResults;
+import com.teleclimb.dto.model.*;
 import com.teleclimb.dto.model.score.ScoreLead;
 import com.teleclimb.service.RefereePositionService;
 import com.teleclimb.service.start.StartService;
@@ -15,6 +11,7 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
 
 public class TwoRoutesLeadEliminationsParser {
     private final Gson gson = GsonConfig.gson();
@@ -27,7 +24,7 @@ public class TwoRoutesLeadEliminationsParser {
     private List<ParticipantData> participantsData;
 
 
-    public TwoRoutesLeadEliminationsParser(List<ParticipantResults> participantResults, Round round, RefereePositionService positionService, StartService startService) {
+    public TwoRoutesLeadEliminationsParser(List<ParticipantWithMeta> participantResults, Round round, RefereePositionService positionService, StartService startService) {
         this.positionService = positionService;
         this.startService = startService;
 
@@ -36,7 +33,7 @@ public class TwoRoutesLeadEliminationsParser {
         this.participantsData = prepareDataObjects(participantResults);
     }
 
-    public List<ParticipantResults> process() {
+    public List<ParticipantWithMeta> process() {
 
         calculatePlaceA();
         calculatePlaceB();
@@ -46,7 +43,7 @@ public class TwoRoutesLeadEliminationsParser {
     }
 
 
-    private List<ParticipantData> prepareDataObjects(List<ParticipantResults> participantsResults) {
+    private List<ParticipantData> prepareDataObjects(List<ParticipantWithMeta> participantsResults) {
         List<ParticipantData> participantsData = new ArrayList<>();
 
         List<RefereePosition> positions = positionService.getAllByRoundId(round.getId());
@@ -54,14 +51,15 @@ public class TwoRoutesLeadEliminationsParser {
         RefereePosition positionA = positions.get(0);
         RefereePosition positionB = positions.get(1);
 
-        for (ParticipantResults participantResults : participantsResults) {
-            Start startA = startService.getByRefereePositionIdAndParticipantId(positionA.getId(), participantResults.getParticipant().getId());
-            Start startB = startService.getByRefereePositionIdAndParticipantId(positionB.getId(), participantResults.getParticipant().getId());
+        for (ParticipantWithMeta participant : participantsResults) {
+            Start startA = startService.getByRefereePositionIdAndParticipantId(positionA.getId(), participant.getId());
+            Start startB = startService.getByRefereePositionIdAndParticipantId(positionB.getId(), participant.getId());
 
             ScoreLead scoreA = gson.fromJson(startA.getScore(), ScoreLead.class);
             ScoreLead scoreB = gson.fromJson(startB.getScore(), ScoreLead.class);
 
             ParticipantData participantData = new ParticipantData();
+            participantData.setParticipant(participant);
             participantData.setScoreA(scoreA);
             participantData.setScoreB(scoreB);
 
@@ -122,34 +120,33 @@ public class TwoRoutesLeadEliminationsParser {
     }
 
 
-    private List<ParticipantResults> processToParticipantsResult() {
-        List<ParticipantResults> participantsResults = new ArrayList<>();
+    private List<ParticipantWithMeta> processToParticipantsResult() {
+        List<ParticipantWithMeta> participantsWithMeta = new ArrayList<>();
 
         int place = 1;
         for (ParticipantData data : participantsData) {
-            ParticipantResults participantResults = new ParticipantResults();
-            participantResults.setParticipant(data.getParticipant());
-            participantResults.setTopRoundNumber(round.getSequenceNumber());
-            participantResults.setPlace(place);
+            ParticipantWithMeta participant = data.getParticipant();
+            participant.setTopRoundNumber(round.getSequenceNumber());
+            participant.setPreviousRoundPlace(place);
 
-            List<String> results = new ArrayList<>();
-            results.add(data.scoreA.toString());
-            results.add(data.placeA.toString());
-            results.add(data.scoreB.toString());
-            results.add(data.placeB.toString());
-            results.add(data.result.toString());
-            participantResults.setResults(results);
+            List<Meta> results = new ArrayList<>();
+            results.add(new Meta("1_eliminations_1_score_A", data.scoreA.toString()));
+            results.add(new Meta("1_eliminations_2_place_A", data.placeA.toString()));
+            results.add(new Meta("1_eliminations_3_score_B", data.scoreB.toString()));
+            results.add(new Meta("1_eliminations_4_place_B", data.placeB.toString()));
+            results.add(new Meta("1_eliminations_5_result", data.result.toString()));
+            participant.setMeta(results);
 
-            participantsResults.add(participantResults);
+            participantsWithMeta.add(participant);
 
             place++;
         }
-        return participantsResults;
+        return participantsWithMeta;
     }
 
     @Data
     private class ParticipantData {
-        Participant participant;
+        ParticipantWithMeta participant;
         ScoreLead scoreA, scoreB;
         Double placeA, placeB;
         Double result;

@@ -2,6 +2,7 @@ package com.teleclimb.dto.model.results;
 
 
 import com.teleclimb.dto.model.Competition;
+import com.teleclimb.dto.model.ParticipantWithMeta;
 import com.teleclimb.dto.model.Round;
 import lombok.Data;
 
@@ -13,5 +14,5 @@ public class CompetitionResults {
 
     private List<Round> rounds;
 
-    private List<ParticipantResults> participantsData;
+    private List<ParticipantWithMeta> participantsData;
 }

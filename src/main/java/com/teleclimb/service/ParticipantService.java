@@ -2,7 +2,9 @@ package com.teleclimb.service;
 
 import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.controller.responses.error.exception.NotFoundException;
+import com.teleclimb.dto.model.Meta;
 import com.teleclimb.dto.model.Participant;
+import com.teleclimb.dto.model.ParticipantWithMeta;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.entitie.ParticipantEntity;
 import com.teleclimb.repository.ParticipantRepository;
@@ -13,7 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo, RoundService roundService) {
+public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo, RoundService roundService,
+                                 ParticipantMetaService metaService) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -30,6 +33,16 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     public List<Participant> getAllByCompetitionId(Integer competitionId) {
         return participantRepo.findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, Participant.class)).toList();
+    }
+
+    public List<ParticipantWithMeta> getAllParticipantsWithMetaByCompetitionId(Integer competitionId) {
+        List<ParticipantWithMeta> participants = participantRepo.
+                findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, ParticipantWithMeta.class)).toList();
+
+        for (ParticipantWithMeta participant : participants) {
+            participant.setMeta(metaService.getAllByParticipantId(participant.getId()));
+        }
+        return participants;
     }
 
     public List<Participant> getParticipantsByRoundId(Integer roundId) {
@@ -71,6 +84,16 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
         ParticipantEntity participantEntity = participantRepo.save(mapper.map(dto, ParticipantEntity.class));
         return mapper.map(participantEntity, Participant.class);
+    }
+
+    public void updateDataAndMetaForAll(List<ParticipantWithMeta> participants) {
+        for (ParticipantWithMeta participant : participants) {
+            participantRepo.save(mapper.map(participant, ParticipantEntity.class));
+
+            for (Meta meta : participant.getMeta()) {
+                metaService.addOrUpdate(participant.getId(), meta.getKey(), meta.getValue());
+            }
+        }
     }
 
 

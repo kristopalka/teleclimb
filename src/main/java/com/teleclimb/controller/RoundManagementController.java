@@ -5,6 +5,7 @@ import com.teleclimb.service.round.RoundService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,21 +20,23 @@ public class RoundManagementController {
     private final RoundManagementService service;
     private final RoundService roundService;
 
-    @ApiOperation(value = "Start round", notes = "Round will be in progress")
-    @PostMapping("/{id}/start")
-    public void startRound(@PathVariable Integer id) {
-        service.startRound(id);
+    @ApiOperation(value = "Start round", notes = "Round will be in_progress")
+    @PostMapping("/{roundId}/start")
+    public ResponseEntity<String> startRound(@PathVariable Integer roundId) {
+        service.startRound(roundId);
+        return ResponseEntity.ok("started");
     }
 
     @ApiOperation(value = "Finish round", notes = "Round will be finished")
-    @PostMapping("/{id}/finish")
-    public void finishRound(@PathVariable Integer id) {
-        service.finishRound(id);
+    @PostMapping("/{roundId}/finish")
+    public ResponseEntity<String> finishRound(@PathVariable Integer roundId) {
+        service.finishRound(roundId);
+        return ResponseEntity.ok("finished");
     }
 
-    @ApiOperation(value = "Finish round", notes = "Round will be finished")
-    @GetMapping("/{id}/are-all-scores-inserted")
-    public void areAllScores(@PathVariable Integer id) {
-        roundService.areAllScoresInserted(id);
+    @ApiOperation(value = "Check if all scores are inserted")
+    @GetMapping("/{roundId}/are-all-scores-inserted")
+    public ResponseEntity<String> areAllScores(@PathVariable Integer roundId) {
+        return ResponseEntity.ok(roundService.areAllScoresInserted(roundId).toString());
     }
 }
