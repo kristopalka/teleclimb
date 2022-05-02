@@ -34,7 +34,6 @@ public class TwoRoutesLeadEliminationsParser {
     }
 
     public List<ParticipantWithMeta> process() {
-
         calculatePlaceA();
         calculatePlaceB();
         calculateResultAndSort();
@@ -69,7 +68,12 @@ public class TwoRoutesLeadEliminationsParser {
     }
 
     private void calculatePlaceA() {
-        participantsData.sort((o1, o2) -> o1.scoreA.compare(o2.scoreA));
+        participantsData.sort((o1, o2) -> {
+            if (o1.scoreA == null && o2.scoreA == null) return 0;
+            if (o1.scoreA == null) return -1;
+            if (o2.scoreA == null) return 1;
+            return o1.scoreA.compare(o2.scoreA);
+        });
 
         int lastSetIndex = -1; //this is important!
         for (int i = 0; i < participantsData.size(); i++) {
@@ -87,11 +91,19 @@ public class TwoRoutesLeadEliminationsParser {
 
         ScoreLead scoreThis = participantsData.get(i).getScoreA();
         ScoreLead scoreNext = participantsData.get(i + 1).getScoreA();
+        if (scoreThis == null && scoreNext == null) return true;
+        if (scoreNext == null) return false;
         return scoreThis.compare(scoreNext) != 0;
     }
 
     private void calculatePlaceB() {
-        participantsData.sort((o1, o2) -> o1.scoreB.compare(o2.scoreB));
+        participantsData.sort((o1, o2) -> {
+            if (o1.scoreB == null && o2.scoreB == null) return 0;
+            if (o1.scoreB == null) return -1;
+            if (o2.scoreB == null) return 1;
+
+            return o1.scoreB.compare(o2.scoreB);
+        });
 
         int lastSetIndex = -1; //this is important!
         for (int i = 0; i < participantsData.size(); i++) {
@@ -109,6 +121,8 @@ public class TwoRoutesLeadEliminationsParser {
 
         ScoreLead scoreThis = participantsData.get(i).getScoreB();
         ScoreLead scoreNext = participantsData.get(i + 1).getScoreB();
+        if (scoreThis == null && scoreNext == null) return true;
+        if (scoreNext == null) return false;
         return scoreThis.compare(scoreNext) != 0;
     }
 
@@ -130,11 +144,11 @@ public class TwoRoutesLeadEliminationsParser {
             participant.setPreviousRoundPlace(place);
 
             List<Meta> results = new ArrayList<>();
-            results.add(new Meta("1_eliminations_1_score_A", data.scoreA.toString()));
-            results.add(new Meta("1_eliminations_2_place_A", data.placeA.toString()));
-            results.add(new Meta("1_eliminations_3_score_B", data.scoreB.toString()));
-            results.add(new Meta("1_eliminations_4_place_B", data.placeB.toString()));
-            results.add(new Meta("1_eliminations_5_result", data.result.toString()));
+            results.add(new Meta("1_eliminations_1_score_A", data.scoreA == null ? "" : data.scoreA.toString()));
+            results.add(new Meta("1_eliminations_2_place_A", data.placeA == null ? "" : data.placeA.toString()));
+            results.add(new Meta("1_eliminations_3_score_B", data.scoreB == null ? "" : data.scoreB.toString()));
+            results.add(new Meta("1_eliminations_4_place_B", data.placeB == null ? "" : data.placeB.toString()));
+            results.add(new Meta("1_eliminations_5_result", data.result == null ? "" : data.result.toString()));
             participant.setMeta(results);
 
             participantsWithMeta.add(participant);
@@ -146,9 +160,9 @@ public class TwoRoutesLeadEliminationsParser {
 
     @Data
     private class ParticipantData {
-        ParticipantWithMeta participant;
-        ScoreLead scoreA, scoreB;
-        Double placeA, placeB;
-        Double result;
+        private ParticipantWithMeta participant;
+        private ScoreLead scoreA, scoreB;
+        private Double placeA, placeB;
+        private Double result;
     }
 }

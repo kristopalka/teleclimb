@@ -34,7 +34,7 @@ public record RoundManagementService(RoundService roundService, StartsGenerating
         if (round.getState() != RoundState.IN_PROGRESS)
             throw new BadRequestException("Can not finish round, which is not in progress");
 
-        resultsService.calculateResultsAndUpdate(round.getCompetitionId());
+        resultsService.calculateResultsAndUpdate(round.getId());
 
         roundService.setState(roundId, RoundState.FINISHED);
     }
