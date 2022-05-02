@@ -67,6 +67,6 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
                 return parser.process();
             }
         }
-        throw new NotImplementedException("This type of result calculating function is not supported");
+        throw new NotImplementedException("This result calculating function is not supported");
     }
 }
