@@ -16,6 +16,8 @@ public class Start {
 
     private Integer refereePositionId;
 
+    private Integer refereePositionHash;
+
     private RoundState roundState;
 
     private Integer roundSequenceNumber;

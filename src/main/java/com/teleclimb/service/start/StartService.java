@@ -53,7 +53,7 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return startRepo.findByParticipantId(participantId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
     }
 
-    public List<Start> getByRefereePositionHash(Integer hash) {
+    public List<Start> getByRefereePositionHash(String hash) {
         try {
             Integer positionId = positionService.getByHash(hash).getId();
             return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
@@ -85,8 +85,9 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return mapper.map(startEntity, Start.class);
     }
 
-    public Start updateScore(Integer startId, String score) {
+    public Start updateScoreMobileApp(Integer startId, String score) {
         Start start = get(startId);
+
 
         if (start.getRoundState() != RoundState.IN_PROGRESS)
             throw new BadRequestException("Round is not in progress. Can not update score");

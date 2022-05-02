@@ -67,7 +67,7 @@ public class TestController {
 
             for (Start start : starts) {
                 String score = gson.toJson(generateRandomScore());
-                startService.updateScore(start.getId(), score);
+                startService.updateScoreMobileApp(start.getId(), score);
             }
         }
     }

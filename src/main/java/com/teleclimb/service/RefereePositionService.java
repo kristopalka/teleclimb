@@ -19,7 +19,7 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
         return mapper.map(positionRepo.findByRoundIdAndRouteId(roundId, routeId).get(0), RefereePosition.class);
     }
 
-    public RefereePosition getByHash(Integer hash) {
+    public RefereePosition getByHash(String hash) {
         return mapper.map(positionRepo.findByHash(hash).get(0), RefereePosition.class);
     }
 
@@ -54,23 +54,34 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
     }
 
 
-    private Integer generateUniqueHash() {
-        int minHash = 1000, maxHash = 9999, newHash;
+    private String generateUniqueHash() {
+        String newHash;
+        int hashLength = 4;
         int counter = 0;
         do {
-            Random random = new Random();
-            newHash = random.nextInt(maxHash - minHash) + minHash;
+            newHash = generateNew(hashLength);
 
             counter++;
             if (counter > 100) {
-                maxHash = maxHash * 10;
+                hashLength++;
                 counter = 0;
             }
         } while (isHashTaken(newHash));
         return newHash;
     }
 
-    private Boolean isHashTaken(Integer hash) {
+    private String generateNew(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder hash = new StringBuilder();
+        Random rand = new Random();
+        while (hash.length() < length) {
+            int index = (int) (rand.nextFloat() * chars.length());
+            hash.append(chars.charAt(index));
+        }
+        return hash.toString();
+    }
+
+    private Boolean isHashTaken(String hash) {
         if (positionRepo.findByHash(hash).size() == 0) return false;
         return true;
     }

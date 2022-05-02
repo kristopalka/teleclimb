@@ -6,7 +6,7 @@ import lombok.Data;
 public class RefereePosition {
     private Integer id;
 
-    private Integer hash;
+    private String hash;
 
     private Integer routeId;
 
