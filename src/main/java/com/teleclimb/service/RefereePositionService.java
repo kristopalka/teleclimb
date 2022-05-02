@@ -20,7 +20,13 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
     }
 
     public RefereePosition getByHash(String hash) {
-        return mapper.map(positionRepo.findByHash(hash).get(0), RefereePosition.class);
+        List<RefereePositionEntity> refereePositions = positionRepo.findByHash(hash);
+        if (refereePositions.size() < 1)
+            throw new BadRequestException("No referee position with hash \"" + hash + "\"");
+        if (refereePositions.size() > 1)
+            throw new BadRequestException("There is too much referee positions with hash \"" + hash + "\":" + refereePositions.size());
+
+        return mapper.map(refereePositions.get(0), RefereePosition.class);
     }
 
     public List<RefereePosition> getAllByRoundId(Integer roundId) {

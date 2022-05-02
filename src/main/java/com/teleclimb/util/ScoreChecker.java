@@ -14,7 +14,7 @@ public class ScoreChecker {
     public static void check(String scoreJson, Discipline discipline) {
         try {
             chooseDiscipline(scoreJson, discipline);
-        } catch (BadRequestException e) {
+        } catch (Exception e) {
             throw new BadRequestException("Given score is wrong: " + e.getMessage());
         }
     }

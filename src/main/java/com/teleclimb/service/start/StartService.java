@@ -54,12 +54,9 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     }
 
     public List<Start> getByRefereePositionHash(String hash) {
-        try {
-            Integer positionId = positionService.getByHash(hash).getId();
-            return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
-        } catch (RuntimeException e) {
-            throw new BadRequestException("No referee position with hash \"" + hash + "\"");
-        }
+        hash = hash.toUpperCase();
+        Integer positionId = positionService.getByHash(hash).getId();
+        return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
     }
 
 
@@ -85,21 +82,24 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return mapper.map(startEntity, Start.class);
     }
 
-    public Start updateScoreMobileApp(Integer startId, String score) {
+    public Start updateScoreMobileApp(Integer startId, String score, String hash) {
         Start start = get(startId);
 
+        if (!hash.equals(start.getRefereePositionHash()))
+            throw new BadRequestException("Bad hash code, you can not update this score");
+        return updateScore(startId, score);
+    }
+
+    public Start updateScore(Integer startId, String score) {
+        Start start = get(startId);
 
         if (start.getRoundState() != RoundState.IN_PROGRESS)
             throw new BadRequestException("Round is not in progress. Can not update score");
         ScoreChecker.check(score, start.getDiscipline());
 
-
         start.setScore(score);
 
-
         StartEntity startEntity = startRepo.save(mapper.map(start, StartEntity.class));
-
-
         return mapper.map(startEntity, Start.class);
     }
 

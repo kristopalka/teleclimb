@@ -30,12 +30,6 @@ public class StartController {
     }
 
 
-    @ApiOperation(value = "Get starts by referee position hash")
-    @GetMapping("/all/by/referee-position-hash/{hash}")
-    public List<Start> getByRefereePositionHash(@PathVariable String hash) {
-        return service.getByRefereePositionHash(hash);
-    }
-
     @ApiOperation(value = "Get start specific by id")
     @GetMapping("/{id}")
     public Start get(@PathVariable Integer id) {
@@ -51,7 +45,7 @@ public class StartController {
     @ApiOperation(value = "Update score", notes = "Put score as json. Examples and correctness of result in 'result examples'")
     @PutMapping("/{id}/score")
     public Start updateResult(@PathVariable Integer id, @RequestBody String score) {
-        return service.updateScoreMobileApp(id, score);
+        return service.updateScore(id, score);
     }
 
 
