@@ -18,7 +18,7 @@ public class Participant {
 
     private Integer topRoundNumber;
 
-    private Integer previousRoundPlace;
+    private Integer place;
 
     // participant data
     private String name;

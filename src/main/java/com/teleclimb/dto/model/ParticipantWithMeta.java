@@ -19,7 +19,7 @@ public class ParticipantWithMeta {
 
     private Integer topRoundNumber;
 
-    private Integer previousRoundPlace;
+    private Integer place;
 
     private List<Meta> meta;
 

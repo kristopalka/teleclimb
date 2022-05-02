@@ -141,7 +141,7 @@ public class TwoRoutesLeadEliminationsParser {
         for (ParticipantData data : participantsData) {
             ParticipantWithMeta participant = data.getParticipant();
             participant.setTopRoundNumber(round.getSequenceNumber());
-            participant.setPreviousRoundPlace(place);
+            participant.setPlace(place);
 
             List<Meta> results = new ArrayList<>();
             results.add(new Meta("1_eliminations_1_score_A", data.scoreA == null ? "" : data.scoreA.toString()));

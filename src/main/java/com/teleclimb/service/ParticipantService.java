@@ -56,7 +56,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     public Participant add(Participant newParticipant) {
         newParticipant.setTopRoundNumber(0);
-        newParticipant.setPreviousRoundPlace(null);
+        newParticipant.setPlace(null);
         if (newParticipant.getRankingPosition() == null) newParticipant.setRankingPosition(Integer.MAX_VALUE);
 
         validateParticipant(newParticipant);
