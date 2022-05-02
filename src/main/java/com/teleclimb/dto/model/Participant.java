@@ -18,6 +18,8 @@ public class Participant {
 
     private Integer topRoundNumber;
 
+    private Integer previousRoundPlace;
+
     // participant data
     private String name;
 

@@ -23,6 +23,8 @@ public class ParticipantEntity {
 
     private Integer topRoundNumber;  // the highest round number, participant reach
 
+    private Integer previousRoundPlace;
+
     // participant data
     private String name;
 

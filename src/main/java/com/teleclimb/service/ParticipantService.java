@@ -41,13 +41,14 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     // --------------------------------- ADD ---------------------------------
 
-    public Participant add(Participant participant) {
-        participant.setTopRoundNumber(0);
-        if (participant.getRankingPosition() == null) participant.setRankingPosition(Integer.MAX_VALUE);
+    public Participant add(Participant newParticipant) {
+        newParticipant.setTopRoundNumber(0);
+        newParticipant.setPreviousRoundPlace(null);
+        if (newParticipant.getRankingPosition() == null) newParticipant.setRankingPosition(Integer.MAX_VALUE);
 
-        validateParticipant(participant);
+        validateParticipant(newParticipant);
 
-        ParticipantEntity participantEntity = participantRepo.save(mapper.map(participant, ParticipantEntity.class));
+        ParticipantEntity participantEntity = participantRepo.save(mapper.map(newParticipant, ParticipantEntity.class));
         return mapper.map(participantEntity, Participant.class);
     }
 
