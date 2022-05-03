@@ -28,7 +28,12 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
     }
 
     public Start getByRefereePositionIdAndParticipantId(Integer positionId, Integer participantId) {
-        return mapper.map(startRepo.findByRefereePositionIdAndParticipantId(positionId, participantId).get(0), Start.class);
+        List<StartEntity> startEntities = startRepo.findByRefereePositionIdAndParticipantId(positionId, participantId);
+        if (startEntities.size() < 1)
+            throw new RuntimeException("There is no start of participant with id: " + participantId + ", on referee position with id: " + positionId);
+        if (startEntities.size() > 1)
+            throw new RuntimeException("There is too much starts of participant with id: " + participantId + ", on referee position with id: " + positionId + ", id's: [" + startEntities.stream().map(StartEntity::getId).toString() + "]");
+        return mapper.map(startEntities.get(0), Start.class);
     }
 
     public List<Start> getAll() {
