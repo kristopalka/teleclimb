@@ -44,7 +44,7 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
     }
 
 
-    public void calculateResultsAndUpdate(Integer roundId) {
+    public void calculateAndSaveResult(Integer roundId) {
         Round currentRound = roundService.get(roundId);
         List<ParticipantWithMeta> participantsResults = getAllParticipantData(currentRound.getCompetitionId());
         //todo czy tutaj trzeba rzekazywać wszystkich zawodników? czy tylko z rundy? powinno działać, ale do sprawdzenia
