@@ -7,6 +7,7 @@ import com.teleclimb.dto.model.Round;
 import com.teleclimb.dto.model.results.CompetitionResults;
 import com.teleclimb.service.round.RoundService;
 import com.teleclimb.service.start.StartService;
+import com.teleclimb.util.results_parsers.OneRouteLeadFinalsParser;
 import com.teleclimb.util.results_parsers.TwoRoutesLeadEliminationsParser;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
     public void calculateAndSaveResult(Integer roundId) {
         Round currentRound = roundService.get(roundId);
         List<ParticipantWithMeta> participantsResults = getAllParticipantData(currentRound.getCompetitionId());
-        //todo czy tutaj trzeba rzekazywać wszystkich zawodników? czy tylko z rundy? powinno działać, ale do sprawdzenia
+        //todo czy tutaj trzeba przekazywać wszystkich zawodników? czy tylko z rundy? powinno działać, ale do sprawdzenia
 
         participantsResults = generateResultsForRound(participantsResults, currentRound);
 
@@ -59,6 +60,10 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
         switch (round.getResultCalculatingFunction()) {
             case TWO_ROUTES_LEAD_ELIMINATIONS: {
                 TwoRoutesLeadEliminationsParser parser = new TwoRoutesLeadEliminationsParser(participantResults, round, positionService, startService);
+                return parser.process();
+            }
+            case ONE_ROUTE_LEAD_FINAL: {
+                OneRouteLeadFinalsParser parser = new OneRouteLeadFinalsParser(participantResults, round, positionService, startService);
                 return parser.process();
             }
         }
