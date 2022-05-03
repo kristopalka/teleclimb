@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+import static com.teleclimb.dto.enums.RoundState.IN_PROGRESS;
+
 @Service
 public record RoundService(ModelMapper mapper, RoundRepository roundRepo, RefereePositionService positionService,
                            StartService startService) {
@@ -35,6 +37,14 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
                 .orElseThrow(() -> new NotFoundException("Not found round with sequence number: " + sequenceNumber + " for competition with id: " + competitionId));
     }
 
+    public Round getByCompetitionIdRoundInProgress(Integer competitionId) {
+        List<Round> rounds = getAllByCompetitionId(competitionId);
+        return rounds.stream()
+                .filter(r -> (Objects.equals(r.getState(), IN_PROGRESS)))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Not found round in progress"));
+    }
+
     public List<Round> getAll() {
         return roundRepo.findAll().stream().map(entity -> mapper.map(entity, Round.class)).toList();
     }
@@ -45,6 +55,8 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
 
     public Boolean areAllScoresInserted(Integer id) {
         List<Start> starts = startService.getAllByRoundId(id);
+
+        if (starts.size() == 0) return false;
 
         for (Start start : starts) {
             if (start.getScore() == null) return false;

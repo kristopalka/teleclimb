@@ -5,6 +5,7 @@ import com.teleclimb.config.GsonConfig;
 import com.teleclimb.dto.enums.Discipline;
 import com.teleclimb.dto.enums.Gender;
 import com.teleclimb.dto.model.*;
+import com.teleclimb.dto.model.results.CompetitionResults;
 import com.teleclimb.dto.model.score.ScoreLead;
 import com.teleclimb.service.*;
 import com.teleclimb.service.round.RoundManagementService;
@@ -38,20 +39,22 @@ public class TestController {
     private final RoundService roundService;
     private final CompetitionService competitionService;
     private final FormulaService formulaService;
+    private static List<Round> rounds;
     private final RouteService routeService;
     private final RefereePositionService positionService;
     private final ParticipantService participantService;
     private final StartService startService;
     private final RoundsGeneratingService roundsGeneratingService;
     private final RoundManagementService roundManagementService;
-
+    private static Integer competitionId;
+    private final ResultsService resultsService;
 
     @PutMapping("/1-competition-participants-rounds-starts")
     public List<String> generate() {
-        Integer competitionId = competitionService.add(new CompetitionPost(null, 4, 1, Gender.MALE, "Puchar Polski")).getId();
+        competitionId = competitionService.add(new CompetitionPost(null, 4, 1, Gender.MALE, "Puchar Polski")).getId();
 
         addParticipants(competitionId);
-        List<Round> rounds = generateRoundsAndAddRoutes(competitionId);
+        rounds = generateRoundsAndAddRoutes(competitionId);
         roundManagementService.startRound(1);
 
         return rounds.stream().map(r -> "{" + r.getName() + ": " + r.getId().toString() + "} ").collect(Collectors.toList());
@@ -70,6 +73,15 @@ public class TestController {
                 startService.updateScore(start.getId(), score);
             }
         }
+    }
+
+    @PutMapping("/3-end-round-get-results-and-start-next")
+    public CompetitionResults nextRound() {
+        roundManagementService.finishRound(rounds.get(0).getId());
+        CompetitionResults results = resultsService.getResults(competitionId);
+        roundManagementService.startRound(rounds.get(1).getId());
+
+        return results;
     }
 
 

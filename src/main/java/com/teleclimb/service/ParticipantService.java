@@ -2,7 +2,9 @@ package com.teleclimb.service;
 
 import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.controller.responses.error.exception.NotFoundException;
+import com.teleclimb.dto.model.Meta;
 import com.teleclimb.dto.model.Participant;
+import com.teleclimb.dto.model.ParticipantWithMeta;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.entitie.ParticipantEntity;
 import com.teleclimb.repository.ParticipantRepository;
@@ -13,7 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo, RoundService roundService) {
+public record ParticipantService(ModelMapper mapper, ParticipantRepository participantRepo, RoundService roundService,
+                                 ParticipantMetaService metaService) {
 
     // --------------------------------- GET ---------------------------------
 
@@ -32,6 +35,16 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         return participantRepo.findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, Participant.class)).toList();
     }
 
+    public List<ParticipantWithMeta> getAllParticipantsWithMetaByCompetitionId(Integer competitionId) {
+        List<ParticipantWithMeta> participants = participantRepo.
+                findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, ParticipantWithMeta.class)).toList();
+
+        for (ParticipantWithMeta participant : participants) {
+            participant.setMeta(metaService.getAllByParticipantId(participant.getId()));
+        }
+        return participants;
+    }
+
     public List<Participant> getParticipantsByRoundId(Integer roundId) {
         Round round = roundService.get(roundId);
         List<ParticipantEntity> participantEntities = participantRepo.findByCompetitionIdAndTopRoundNumber(round.getCompetitionId(), round.getSequenceNumber());
@@ -43,7 +56,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     public Participant add(Participant newParticipant) {
         newParticipant.setTopRoundNumber(0);
-        newParticipant.setPreviousRoundPlace(null);
+        newParticipant.setPlace(null);
         if (newParticipant.getRankingPosition() == null) newParticipant.setRankingPosition(Integer.MAX_VALUE);
 
         validateParticipant(newParticipant);
@@ -59,8 +72,8 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     // --------------------------------- UPDATE ---------------------------------
 
-    public Participant update(Integer id, Participant newParticipant) {
-        Participant dto = get(id);
+    public Participant update(Integer participantId, Participant newParticipant) {
+        Participant dto = get(participantId);
 
         if (newParticipant.getName() != null) dto.setName(newParticipant.getName());
         if (newParticipant.getLastName() != null) dto.setLastName(newParticipant.getLastName());
@@ -71,6 +84,22 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
         ParticipantEntity participantEntity = participantRepo.save(mapper.map(dto, ParticipantEntity.class));
         return mapper.map(participantEntity, Participant.class);
+    }
+
+    public void incrementTopRoundSequenceNumber(Integer participantId) {
+        Participant participant = get(participantId);
+        participant.setTopRoundNumber(participant.getTopRoundNumber() + 1);
+        participantRepo.save(mapper.map(participant, ParticipantEntity.class));
+    }
+
+    public void updateDataAndMetaForAll(List<ParticipantWithMeta> participants) {
+        for (ParticipantWithMeta participant : participants) {
+            participantRepo.save(mapper.map(participant, ParticipantEntity.class));
+
+            for (Meta meta : participant.getMeta()) {
+                metaService.addOrUpdate(participant.getId(), meta.getKey(), meta.getValue());
+            }
+        }
     }
 
 

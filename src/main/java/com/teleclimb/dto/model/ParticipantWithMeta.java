@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Participant {
+public class ParticipantWithMeta {
     private Integer id;
 
     private Integer competitionId;
@@ -19,6 +20,8 @@ public class Participant {
     private Integer topRoundNumber;
 
     private Integer place;
+
+    private List<Meta> meta;
 
     // participant data
     private String name;

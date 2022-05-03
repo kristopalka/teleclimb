@@ -32,4 +32,18 @@ public class ScoreLead {
     public String toString() {
         return value.toString() + (plus ? "+" : "");
     }
+
+    public static int compareNullSafe(ScoreLead s1, ScoreLead s2) {
+        if (s1 == null && s2 == null) return 0;
+        if (s1 == null) return 1;
+        if (s2 == null) return -1;
+        return s1.compare(s2);
+    }
+
+    public static int compareNullSafeWithTime(ScoreLead s1, ScoreLead s2) {
+        if (s1 == null && s2 == null) return 0;
+        if (s1 == null) return 1;
+        if (s2 == null) return -1;
+        return s1.compareWithTime(s2);
+    }
 }
