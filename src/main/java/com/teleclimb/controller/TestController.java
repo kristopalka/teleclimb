@@ -66,9 +66,9 @@ public class TestController {
 
 
         for (RefereePosition position : positions) {
-            List<Start> starts = startService.getByRefereePositionHash(position.getHash());
+            List<StartWithParticipant> starts = startService.getByRefereePositionHash(position.getHash());
 
-            for (Start start : starts) {
+            for (StartWithParticipant start : starts) {
                 String score = gson.toJson(generateRandomScore());
                 startService.updateScore(start.getId(), score);
             }

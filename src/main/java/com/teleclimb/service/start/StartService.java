@@ -5,6 +5,7 @@ import com.teleclimb.controller.responses.error.exception.NotFoundException;
 import com.teleclimb.dto.enums.RoundState;
 import com.teleclimb.dto.model.RefereePosition;
 import com.teleclimb.dto.model.Start;
+import com.teleclimb.dto.model.StartWithParticipant;
 import com.teleclimb.entitie.StartEntity;
 import com.teleclimb.repository.StartRepository;
 import com.teleclimb.service.RefereePositionService;
@@ -58,10 +59,10 @@ public record StartService(ModelMapper mapper, StartRepository startRepo, Refere
         return startRepo.findByParticipantId(participantId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
     }
 
-    public List<Start> getByRefereePositionHash(String hash) {
+    public List<StartWithParticipant> getByRefereePositionHash(String hash) {
         hash = hash.toUpperCase();
         Integer positionId = positionService.getByHash(hash).getId();
-        return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, Start.class)).toList();
+        return startRepo.findByRefereePositionId(positionId).stream().map(entity -> mapper.map(entity, StartWithParticipant.class)).toList();
     }
 
 

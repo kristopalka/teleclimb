@@ -1,6 +1,7 @@
 package com.teleclimb.controller;
 
 import com.teleclimb.dto.model.Start;
+import com.teleclimb.dto.model.StartWithParticipant;
 import com.teleclimb.service.start.StartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +19,7 @@ public class MobileAppController {
 
     @ApiOperation(value = "Get starts by referee position hash")
     @GetMapping("/starts-by-referee-position-hash/{hash}")
-    public List<Start> getByRefereePositionHash(@PathVariable String hash) {
+    public List<StartWithParticipant> getByRefereePositionHash(@PathVariable String hash) {
         return startService.getByRefereePositionHash(hash);
     }
 
