@@ -99,7 +99,7 @@ public class OneRouteLeadFinalsParser {
 
     private List<Meta> getMetas(ParticipantData data) {
         List<Meta> results = new ArrayList<>();
-        results.add(new Meta(round.getName() + " " + position.getRoute().getName(), data.score == null ? "" : data.score.toString()));
+        results.add(new Meta(round.getName() + ": " + position.getRoute().getName() + ": wynik", data.score == null ? "" : data.score.toString()));
         return results;
     }
 
