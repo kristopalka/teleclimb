@@ -1,6 +1,6 @@
 package com.teleclimb.controller;
 
-import com.teleclimb.dto.model.RefereePosition;
+import com.teleclimb.dto.model.RefereePositionWithRoute;
 import com.teleclimb.service.RefereePositionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +21,7 @@ public class RefereePositionController {
 
     @ApiOperation(value = "Get all referee positions by round id")
     @GetMapping("/all/by/{roundId}")
-    public List<RefereePosition> getAllByRoundId(@PathVariable Integer roundId) {
+    public List<RefereePositionWithRoute> getAllByRoundId(@PathVariable Integer roundId) {
         return refereePositionService.getAllWithRouteByRoundId(roundId);
     }
 }
