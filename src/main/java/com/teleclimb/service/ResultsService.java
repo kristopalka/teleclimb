@@ -27,32 +27,27 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
         return results;
     }
 
+    public void calculateAndSaveResult(Integer roundId) {
+        Round currentRound = roundService.get(roundId);
+        List<ParticipantWithMeta> participantsResults = getAllParticipantData(currentRound.getCompetitionId());
+
+        participantsResults = generateResultsForRound(participantsResults, currentRound);
+
+        participantService.updateDataAndMetaForAll(participantsResults);
+    }
+
+
     private List<ParticipantWithMeta> getAllParticipantData(Integer competitionId) {
         List<ParticipantWithMeta> participants = participantService.getAllParticipantsWithMetaByCompetitionId(competitionId);
 
         try {
             Round currentRound = roundService.getByCompetitionIdRoundInProgress(competitionId);
-            participants = addCurrentRoundData(participants, currentRound);
+            participants = generateResultsForRound(participants, currentRound);
+            ;
             return participants;
         } catch (NotFoundException e) {
             return participants;
         }
-    }
-
-    private List<ParticipantWithMeta> addCurrentRoundData(List<ParticipantWithMeta> participants, Round currentRound) {
-        participants = generateResultsForRound(participants, currentRound);
-        return participants;
-    }
-
-
-    public void calculateAndSaveResult(Integer roundId) {
-        Round currentRound = roundService.get(roundId);
-        List<ParticipantWithMeta> participantsResults = getAllParticipantData(currentRound.getCompetitionId());
-        //todo czy tutaj trzeba przekazywać wszystkich zawodników? czy tylko z rundy? powinno działać, ale do sprawdzenia
-
-        participantsResults = generateResultsForRound(participantsResults, currentRound);
-
-        participantService.updateDataAndMetaForAll(participantsResults);
     }
 
 

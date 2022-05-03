@@ -55,6 +55,7 @@ public class OneRouteLeadFinalsParser {
     public List<ParticipantWithMeta> process() {
         participantsData.sort((o1, o2) -> ScoreLead.compareNullSafe(o1.score, o2.score));
 
+        //todo sortuj po poprzednij rundzie jeżeli takie samo
 
         return processDataToMeta();
     }
