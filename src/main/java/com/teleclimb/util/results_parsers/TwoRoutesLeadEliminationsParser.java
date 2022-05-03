@@ -38,7 +38,7 @@ public class TwoRoutesLeadEliminationsParser {
         calculatePlaceB();
         calculateResultAndSort();
 
-        return processToParticipantsResult();
+        return processDataToMeta();
     }
 
 
@@ -68,12 +68,7 @@ public class TwoRoutesLeadEliminationsParser {
     }
 
     private void calculatePlaceA() {
-        participantsData.sort((o1, o2) -> {
-            if (o1.scoreA == null && o2.scoreA == null) return 0;
-            if (o1.scoreA == null) return -1;
-            if (o2.scoreA == null) return 1;
-            return o1.scoreA.compare(o2.scoreA);
-        });
+        participantsData.sort((o1, o2) -> ScoreLead.compareNullSafe(o1.scoreA, o2.scoreA));
 
         int lastSetIndex = -1; //this is important!
         for (int i = 0; i < participantsData.size(); i++) {
@@ -96,13 +91,7 @@ public class TwoRoutesLeadEliminationsParser {
     }
 
     private void calculatePlaceB() {
-        participantsData.sort((o1, o2) -> {
-            if (o1.scoreB == null && o2.scoreB == null) return 0;
-            if (o1.scoreB == null) return -1;
-            if (o2.scoreB == null) return 1;
-
-            return o1.scoreB.compare(o2.scoreB);
-        });
+        participantsData.sort((o1, o2) -> ScoreLead.compareNullSafe(o1.scoreB, o2.scoreB));
 
         int lastSetIndex = -1; //this is important!
         for (int i = 0; i < participantsData.size(); i++) {
@@ -132,13 +121,12 @@ public class TwoRoutesLeadEliminationsParser {
     }
 
 
-    private List<ParticipantWithMeta> processToParticipantsResult() {
+    private List<ParticipantWithMeta> processDataToMeta() {
         List<ParticipantWithMeta> participantsWithMeta = new ArrayList<>();
 
         int place = 1;
         for (ParticipantData data : participantsData) {
             ParticipantWithMeta participant = data.getParticipant();
-            participant.setTopRoundNumber(round.getSequenceNumber());
             participant.setPlace(place);
 
             List<Meta> results = new ArrayList<>();
