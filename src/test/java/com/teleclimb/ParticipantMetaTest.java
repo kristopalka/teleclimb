@@ -1,7 +1,7 @@
 package com.teleclimb;
 
 import com.teleclimb.dto.enums.Gender;
-import com.teleclimb.dto.model.CompetitionPost;
+import com.teleclimb.dto.model.Competition;
 import com.teleclimb.dto.model.Participant;
 import com.teleclimb.service.CompetitionService;
 import com.teleclimb.service.ParticipantMetaService;
@@ -28,7 +28,7 @@ class ParticipantMetaTest {
 
     @Test
     public void generatingStarts() {
-        CompetitionPost competition = competitionService.add(new CompetitionPost(0, 4, 1, Gender.MALE, "Puchar Polski"));
+        Competition competition = competitionService.add(new Competition(0, 4, 1, Gender.MALE, "Puchar Polski"));
 
         Participant participant = participantService.add(new Participant(null, competition.getId(), null, null, "Kinga", "Ociepka", null, "0006", "Korona", LocalDate.of(2000, 8, 26)));
 

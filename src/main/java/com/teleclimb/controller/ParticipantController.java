@@ -35,7 +35,7 @@ public class ParticipantController {
         return service.get(id);
     }
 
-    @ApiOperation(value = "Add new participant", notes = "Do not insert id field, it will be generated automatically anyway. Competition id field is mandatory - participant is assigned to competition. Return added participant")
+    @ApiOperation(value = "Add new participant", notes = "Do not insert id field, it will be generated automatically anyway. CompetitionWithAll id field is mandatory - participant is assigned to competition. Return added participant")
     @PostMapping("")
     public Participant add(@RequestBody Participant participant) {
         return service.add(participant);

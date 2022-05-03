@@ -14,19 +14,22 @@ import java.util.List;
 public class OneRouteLeadFinalsParser {
     private final Gson gson = GsonConfig.gson();
 
-    private final RefereePositionService positionService;
     private final StartService startService;
 
     private final Round round;
+    private final RefereePositionWithRoute position;
 
-    private List<ParticipantData> participantsData;
+    private final List<ParticipantData> participantsData;
 
 
     public OneRouteLeadFinalsParser(List<ParticipantWithMeta> participantResults, Round round, RefereePositionService positionService, StartService startService) {
-        this.positionService = positionService;
         this.startService = startService;
 
         this.round = round;
+
+        List<RefereePositionWithRoute> positions = positionService.getAllWithRouteByRoundId(round.getId());
+        if (positions.size() != 1) throw new RuntimeException("Number of referee positions should be 1");
+        position = positions.get(0);
 
         this.participantsData = prepareParticipantsDataObjects(participantResults);
     }
@@ -34,9 +37,6 @@ public class OneRouteLeadFinalsParser {
     private List<ParticipantData> prepareParticipantsDataObjects(List<ParticipantWithMeta> participantsResults) {
         List<ParticipantData> participantsData = new ArrayList<>();
 
-        List<RefereePosition> positions = positionService.getAllByRoundId(round.getId());
-        if (positions.size() != 1) throw new RuntimeException("Number of referee positions should be 1");
-        RefereePosition position = positions.get(0);
 
 
         for (ParticipantWithMeta participant : participantsResults) {
@@ -99,7 +99,7 @@ public class OneRouteLeadFinalsParser {
 
     private List<Meta> getMetas(ParticipantData data) {
         List<Meta> results = new ArrayList<>();
-        results.add(new Meta("3_final_score", data.score == null ? "" : data.score.toString()));
+        results.add(new Meta(round.getName() + " " + position.getRoute().getName(), data.score == null ? "" : data.score.toString()));
         return results;
     }
 

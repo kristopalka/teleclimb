@@ -53,11 +53,11 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
 
     private List<ParticipantWithMeta> generateResultsForRound(List<ParticipantWithMeta> participants, Round round) {
         switch (round.getResultCalculatingFunction()) {
-            case TWO_ROUTES_LEAD_ELIMINATIONS: {
+            case TWO_ROUTES_LEAD_ELIMINATIONS -> {
                 TwoRoutesLeadEliminationsParser parser = new TwoRoutesLeadEliminationsParser(participants, round, positionService, startService);
                 return parser.process();
             }
-            case ONE_ROUTE_LEAD_FINAL: {
+            case ONE_ROUTE_LEAD_FINAL -> {
                 OneRouteLeadFinalsParser parser = new OneRouteLeadFinalsParser(participants, round, positionService, startService);
                 return parser.process();
             }

@@ -2,6 +2,7 @@ package com.teleclimb.service;
 
 import com.teleclimb.controller.responses.error.exception.BadRequestException;
 import com.teleclimb.dto.model.RefereePosition;
+import com.teleclimb.dto.model.RefereePositionWithRoute;
 import com.teleclimb.entitie.RefereePositionEntity;
 import com.teleclimb.repository.RefereePositionRepository;
 import org.modelmapper.ModelMapper;
@@ -19,14 +20,20 @@ public record RefereePositionService(ModelMapper mapper, RefereePositionReposito
         return mapper.map(positionRepo.findByRoundIdAndRouteId(roundId, routeId).get(0), RefereePosition.class);
     }
 
-    public RefereePosition getByHash(String hash) {
+    public RefereePositionWithRoute getByHash(String hash) {
         List<RefereePositionEntity> refereePositions = positionRepo.findByHash(hash);
         if (refereePositions.size() < 1)
             throw new BadRequestException("No referee position with hash \"" + hash + "\"");
         if (refereePositions.size() > 1)
             throw new BadRequestException("There is too much referee positions with hash \"" + hash + "\":" + refereePositions.size());
 
-        return mapper.map(refereePositions.get(0), RefereePosition.class);
+        return mapper.map(refereePositions.get(0), RefereePositionWithRoute.class);
+    }
+
+    public List<RefereePositionWithRoute> getAllWithRouteByRoundId(Integer roundId) {
+        return positionRepo.findByRoundId(roundId).stream()
+                .map(entity -> mapper.map(entity, RefereePositionWithRoute.class))
+                .toList();
     }
 
     public List<RefereePosition> getAllByRoundId(Integer roundId) {

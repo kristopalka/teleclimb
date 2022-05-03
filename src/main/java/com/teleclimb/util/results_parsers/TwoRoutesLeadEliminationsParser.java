@@ -18,19 +18,23 @@ import static java.lang.Double.compare;
 public class TwoRoutesLeadEliminationsParser {
     private final Gson gson = GsonConfig.gson();
 
-    private final RefereePositionService positionService;
     private final StartService startService;
 
     private final Round round;
-
-    private List<ParticipantData> participantsData;
+    private final List<ParticipantData> participantsData;
+    RefereePositionWithRoute positionA;
+    RefereePositionWithRoute positionB;
 
 
     public TwoRoutesLeadEliminationsParser(List<ParticipantWithMeta> participantsResults, Round round, RefereePositionService positionService, StartService startService) {
-        this.positionService = positionService;
         this.startService = startService;
 
         this.round = round;
+
+        List<RefereePositionWithRoute> positions = positionService.getAllWithRouteByRoundId(round.getId());
+        if (positions.size() != 2) throw new RuntimeException("Number of referee positions should be 2");
+        positionA = positions.get(0);
+        positionB = positions.get(1);
 
         this.participantsData = prepareParticipantsDataObjects(participantsResults);
     }
@@ -46,11 +50,6 @@ public class TwoRoutesLeadEliminationsParser {
 
     private List<ParticipantData> prepareParticipantsDataObjects(List<ParticipantWithMeta> participantsResults) {
         List<ParticipantData> participantsData = new ArrayList<>();
-
-        List<RefereePosition> positions = positionService.getAllByRoundId(round.getId());
-        if (positions.size() != 2) throw new RuntimeException("Number of referee positions should be 2");
-        RefereePosition positionA = positions.get(0);
-        RefereePosition positionB = positions.get(1);
 
         for (ParticipantWithMeta participant : participantsResults) {
             Start startA = startService.getByRefereePositionIdAndParticipantId(positionA.getId(), participant.getId());
@@ -152,11 +151,11 @@ public class TwoRoutesLeadEliminationsParser {
 
     private List<Meta> getMetas(ParticipantData data) {
         List<Meta> results = new ArrayList<>();
-        results.add(new Meta("1_eliminations_1_score_A", data.scoreA == null ? "" : data.scoreA.toString()));
-        results.add(new Meta("1_eliminations_2_place_A", data.placeA == null ? "" : data.placeA.toString()));
-        results.add(new Meta("1_eliminations_3_score_B", data.scoreB == null ? "" : data.scoreB.toString()));
-        results.add(new Meta("1_eliminations_4_place_B", data.placeB == null ? "" : data.placeB.toString()));
-        results.add(new Meta("1_eliminations_5_result", data.result == null ? "" : data.result.toString()));
+        results.add(new Meta(round.getName() + ": " + positionA.getRoute().getName() + ": wynik", data.scoreA == null ? "" : data.scoreA.toString()));
+        results.add(new Meta(round.getName() + ": " + positionA.getRoute().getName() + ": miejsce", data.placeA == null ? "" : data.placeA.toString()));
+        results.add(new Meta(round.getName() + ": " + positionB.getRoute().getName() + ": wynik", data.scoreB == null ? "" : data.scoreB.toString()));
+        results.add(new Meta(round.getName() + ": " + positionB.getRoute().getName() + ": miejsce", data.placeB == null ? "" : data.placeB.toString()));
+        results.add(new Meta(round.getName() + ": wynik", data.result == null ? "" : data.result.toString()));
         return results;
     }
 

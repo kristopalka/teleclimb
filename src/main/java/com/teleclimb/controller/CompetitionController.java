@@ -1,7 +1,7 @@
 package com.teleclimb.controller;
 
 import com.teleclimb.dto.model.Competition;
-import com.teleclimb.dto.model.CompetitionPost;
+import com.teleclimb.dto.model.CompetitionWithAll;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.service.CompetitionService;
 import com.teleclimb.service.round.RoundsGeneratingService;
@@ -22,25 +22,25 @@ public class CompetitionController {
 
     @ApiOperation(value = "Get all competitions")
     @GetMapping("/all")
-    public List<Competition> getAll() {
+    public List<CompetitionWithAll> getAll() {
         return service.getAll();
     }
 
     @ApiOperation(value = "Get competition specific by id")
     @GetMapping("/{id}")
-    public Competition get(@PathVariable Integer id) {
+    public CompetitionWithAll get(@PathVariable Integer id) {
         return service.get(id);
     }
 
     @ApiOperation(value = "Add new competition", notes = "Do not insert id field, it will be generated automatically anyway. All other fields are mandatory. Return added competition")
     @PostMapping("")
-    public CompetitionPost add(@RequestBody CompetitionPost competition) {
+    public Competition add(@RequestBody Competition competition) {
         return service.add(competition);
     }
 
     @ApiOperation(value = "Update competition", notes = "Only field name can by updated after creation. Return updated competition")
     @PutMapping("/{id}")
-    public Competition update(@RequestBody Competition competition, @PathVariable Integer id) {
+    public CompetitionWithAll update(@RequestBody CompetitionWithAll competition, @PathVariable Integer id) {
         return service.update(id, competition);
     }
 

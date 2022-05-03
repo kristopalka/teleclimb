@@ -1,11 +1,9 @@
 package com.teleclimb.config;
 
-import com.teleclimb.dto.model.Competition;
-import com.teleclimb.dto.model.Meta;
-import com.teleclimb.dto.model.Start;
-import com.teleclimb.dto.model.StartWithParticipant;
+import com.teleclimb.dto.model.*;
 import com.teleclimb.entitie.CompetitionEntity;
 import com.teleclimb.entitie.ParticipantMetaEntity;
+import com.teleclimb.entitie.RefereePositionEntity;
 import com.teleclimb.entitie.StartEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -18,7 +16,7 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper mapper = new ModelMapper();
 
-        mapper.addMappings(new PropertyMap<CompetitionEntity, Competition>() {
+        mapper.addMappings(new PropertyMap<CompetitionEntity, CompetitionWithAll>() {
             @Override
             protected void configure() {
                 map(source.getCategory().getName()).setCategoryName(null);
@@ -54,6 +52,13 @@ public class ModelMapperConfig {
             protected void configure() {
                 map(source.getKey()).setKey(null);
                 map(source.getValue()).setValue(null);
+            }
+        });
+
+        mapper.addMappings(new PropertyMap<RefereePositionEntity, RefereePositionWithRoute>() {
+            @Override
+            protected void configure() {
+                map(source.getRoute()).setRoute(null);
             }
         });
 
