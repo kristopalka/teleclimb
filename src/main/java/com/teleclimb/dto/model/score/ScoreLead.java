@@ -18,9 +18,9 @@ public class ScoreLead {
     public int compare(ScoreLead o2) {
         if (Objects.equals(this.getValue(), o2.getValue())) {
             if (this.getPlus() == o2.getPlus()) return 0;
-            else if (this.getPlus()) return 1;
-            else return -1;
-        } else return this.getValue() - o2.getValue();
+            else if (this.getPlus()) return -1;
+            else return 1;
+        } else return o2.getValue() - this.getValue();
     }
 
     public int compareWithTime(ScoreLead o2) {
