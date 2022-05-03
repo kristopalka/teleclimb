@@ -56,6 +56,8 @@ public record RoundService(ModelMapper mapper, RoundRepository roundRepo, Refere
     public Boolean areAllScoresInserted(Integer id) {
         List<Start> starts = startService.getAllByRoundId(id);
 
+        if (starts.size() == 0) return false;
+
         for (Start start : starts) {
             if (start.getScore() == null) return false;
         }
