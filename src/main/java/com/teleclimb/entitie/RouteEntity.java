@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -24,5 +25,5 @@ public class RouteEntity {
     @Enumerated(EnumType.STRING)
     private Discipline discipline;
 
-    private Integer timeLimitSeconds;
+    private LocalTime timeLimit;
 }

@@ -57,7 +57,7 @@ public record RouteService(ModelMapper mapper, RouteRepository routeRepo, Refere
 
         if (newRoute.getName() != null) route.setName(newRoute.getName());
         if (newRoute.getDescription() != null) route.setDescription(newRoute.getDescription());
-        if (newRoute.getTimeLimitSeconds() != null) route.setName(newRoute.getName());
+        if (newRoute.getTimeLimit() != null) route.setName(newRoute.getName());
 
         return mapper.map(routeRepo.save(mapper.map(route, RouteEntity.class)), Route.class);
     }
