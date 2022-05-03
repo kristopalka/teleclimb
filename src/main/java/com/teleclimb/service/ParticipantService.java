@@ -69,7 +69,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     private void validateParticipant(Participant participant) {
         if (participant.getCompetitionId() == null)
-            throw new BadRequestException("CompetitionWithAll id cannot be null");
+            throw new BadRequestException("Competition id cannot be null");
     }
 
 
@@ -122,7 +122,7 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 //
 //    public void updateRoundSequenceNumber(Integer participantId, Integer newRoundSequenceNumber) {
 //        Participant participant = get(participantId);
-//        CompetitionWithAll competition = competitionService.get(participant.getCompetitionId());
+//        Competition competition = competitionService.get(participant.getCompetitionId());
 //        Formula formula = formulaService.get(competition.getFormulaId());
 //
 //        if (newRoundSequenceNumber < 0 || newRoundSequenceNumber >= formula.getNumberOfRounds())

@@ -3,7 +3,7 @@ package com.teleclimb;
 import com.teleclimb.dto.enums.Discipline;
 import com.teleclimb.dto.enums.Gender;
 import com.teleclimb.dto.model.Competition;
-import com.teleclimb.dto.model.CompetitionWithAll;
+import com.teleclimb.dto.model.CompetitionPost;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.dto.model.Route;
 import com.teleclimb.service.*;
@@ -23,7 +23,7 @@ import java.util.List;
 @SpringBootTest
 class RoundIntegrationTest {
     Route routeA, routeB, routeF;
-    CompetitionWithAll competition;
+    Competition competition;
 
     @Autowired
     private RoundService roundService;
@@ -52,7 +52,7 @@ class RoundIntegrationTest {
         routeF = routeService.add(new Route(null, "Męska finał", "finałowa", Discipline.LEAD, null));
 
 
-        Competition competition = competitionService.add(new Competition(0, 4, 1, Gender.MALE, "Puchar Polski"));
+        CompetitionPost competition = competitionService.add(new CompetitionPost(0, 4, 1, Gender.MALE, "Puchar Polski"));
 
         // generate rounds
         roundsGeneratingService.generateRounds(competition.getId());

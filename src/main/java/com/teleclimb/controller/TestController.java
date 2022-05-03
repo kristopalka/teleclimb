@@ -51,7 +51,7 @@ public class TestController {
 
     @PutMapping("/1-competition-participants-rounds-starts")
     public List<String> generate() {
-        competitionId = competitionService.add(new Competition(null, 4, 1, Gender.MALE, "Puchar Polski")).getId();
+        competitionId = competitionService.add(new CompetitionPost(null, 4, 1, Gender.MALE, "Puchar Polski")).getId();
 
         addParticipants(competitionId);
         rounds = generateRoundsAndAddRoutes(competitionId);

@@ -22,7 +22,7 @@ import java.util.List;
 @SpringBootTest
 class GeneratingStartsIntegrationTests {
     Route routeA, routeB, routeF;
-    Competition competition;
+    CompetitionPost competition;
 
     @Autowired
     private RoundService roundService;
@@ -51,7 +51,7 @@ class GeneratingStartsIntegrationTests {
         routeF = routeService.add(new Route(null, "Męska finał", "finałowa", Discipline.LEAD, null));
 
 
-        competition = competitionService.add(new Competition(0, 4, 1, Gender.MALE, "Puchar Polski"));
+        competition = competitionService.add(new CompetitionPost(0, 4, 1, Gender.MALE, "Puchar Polski"));
 
         participantService.add(new Participant(null, competition.getId(), null, null, "Krzysztof", "Pałka", 1, "0001", "Oblak", LocalDate.of(2000, 8, 26)));
         participantService.add(new Participant(null, competition.getId(), null, null, "Kinga", "Pałka", 6, "0002", "Oblak", LocalDate.of(2000, 8, 26)));

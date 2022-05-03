@@ -22,6 +22,6 @@ public class RefereePositionController {
     @ApiOperation(value = "Get all referee positions by round id")
     @GetMapping("/all/by/{roundId}")
     public List<RefereePosition> getAllByRoundId(@PathVariable Integer roundId) {
-        return refereePositionService.getAllByRoundId(roundId);
+        return refereePositionService.getAllWithRouteByRoundId(roundId);
     }
 }

@@ -16,7 +16,7 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper mapper = new ModelMapper();
 
-        mapper.addMappings(new PropertyMap<CompetitionEntity, CompetitionWithAll>() {
+        mapper.addMappings(new PropertyMap<CompetitionEntity, Competition>() {
             @Override
             protected void configure() {
                 map(source.getCategory().getName()).setCategoryName(null);

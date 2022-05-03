@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.teleclimb.config.GsonConfig;
 import com.teleclimb.controller.responses.error.exception.InternalServerError;
 import com.teleclimb.dto.enums.RoundState;
-import com.teleclimb.dto.model.CompetitionWithAll;
+import com.teleclimb.dto.model.Competition;
 import com.teleclimb.dto.model.Round;
 import com.teleclimb.service.CompetitionService;
 import com.teleclimb.service.FormulaService;
@@ -27,7 +27,7 @@ public record RoundsGeneratingService(RoundService roundService, CompetitionServ
     }
 
     private List<Round> tryToGenerateRounds(Integer competitionId) {
-        CompetitionWithAll competition = competitionService.get(competitionId);
+        Competition competition = competitionService.get(competitionId);
 
         if (roundService.getAllByCompetitionId(competitionId).size() != 0)
             throw new RuntimeException("there are already rounds for this competition. Probably generations was done before.");
@@ -39,7 +39,7 @@ public record RoundsGeneratingService(RoundService roundService, CompetitionServ
         return roundService.getAllByCompetitionId(competitionId);
     }
 
-    public List<Round> extractFromConfig(CompetitionWithAll competition) {
+    public List<Round> extractFromConfig(Competition competition) {
         String jsonConfiguration = formulaService.get(competition.getFormulaId()).getJsonConfiguration();
 
         List<Round> rounds = Arrays.stream(gson.fromJson(jsonConfiguration, Round[].class)).toList();
