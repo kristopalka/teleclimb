@@ -40,8 +40,14 @@ public class OneRouteLeadFinalsParser {
 
 
         for (ParticipantWithMeta participant : participantsResults) {
-            Start start = startService.getByRefereePositionIdAndParticipantId(position.getId(), participant.getId());
-            ScoreLead score = gson.fromJson(start.getScore(), ScoreLead.class);
+            ScoreLead score;
+
+            try {
+                Start start = startService.getByRefereePositionIdAndParticipantId(position.getId(), participant.getId());
+                score = gson.fromJson(start.getScore(), ScoreLead.class);
+            } catch (RuntimeException e) {
+                score = null;
+            }
 
             ParticipantData participantData = new ParticipantData();
             participantData.setParticipant(participant);
@@ -53,9 +59,11 @@ public class OneRouteLeadFinalsParser {
     }
 
     public List<ParticipantWithMeta> process() {
-        participantsData.sort((o1, o2) -> ScoreLead.compareNullSafe(o1.score, o2.score));
-
-        //todo sortuj po poprzednij rundzie jeżeli takie samo
+        participantsData.sort((o1, o2) -> {
+            if (ScoreLead.compareNullSafe(o1.score, o2.score) == 0)
+                return o1.participant.getPlace() - o2.participant.getPlace();
+            return ScoreLead.compareNullSafe(o1.score, o2.score);
+        });
 
         return processDataToMeta();
     }
@@ -64,19 +72,31 @@ public class OneRouteLeadFinalsParser {
         List<ParticipantWithMeta> participantsWithMeta = new ArrayList<>();
 
         int place = 1;
-        for (ParticipantData data : participantsData) {
-            ParticipantWithMeta participant = data.getParticipant();
-            participant.setPlace(place);
+        for (int i = 0; i < participantsData.size(); i++) {
+            ParticipantWithMeta participant = participantsData.get(i).getParticipant();
+            participant.setMeta(getMetas(participantsData.get(i)));
 
-            List<Meta> results = new ArrayList<>();
-            results.add(new Meta("3_final_score", data.score == null ? "" : data.score.toString()));
-            participant.setMeta(results);
+            participant.setPlace(place);
+            if (isNextDifferentOrEndScore(i)) place++;
 
             participantsWithMeta.add(participant);
-
-            place++;
         }
         return participantsWithMeta;
+    }
+
+    private boolean isNextDifferentOrEndScore(int i) {
+        if (i == participantsData.size() - 1) return true;
+
+        ScoreLead resultThis = participantsData.get(i).getScore();
+        ScoreLead resultNext = participantsData.get(i + 1).getScore();
+
+        return ScoreLead.compareNullSafe(resultThis, resultNext) != 0;
+    }
+
+    private List<Meta> getMetas(ParticipantData data) {
+        List<Meta> results = new ArrayList<>();
+        results.add(new Meta("3_final_score", data.score == null ? "" : data.score.toString()));
+        return results;
     }
 
     @Data

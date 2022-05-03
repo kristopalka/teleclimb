@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.lang.Double.compare;
+
 
 public class TwoRoutesLeadEliminationsParser {
     private final Gson gson = GsonConfig.gson();
@@ -125,23 +127,37 @@ public class TwoRoutesLeadEliminationsParser {
         List<ParticipantWithMeta> participantsWithMeta = new ArrayList<>();
 
         int place = 1;
-        for (ParticipantData data : participantsData) {
-            ParticipantWithMeta participant = data.getParticipant();
-            participant.setPlace(place);
+        for (int i = 0; i < participantsData.size(); i++) {
+            ParticipantWithMeta participant = participantsData.get(i).getParticipant();
+            participant.setMeta(getMetas(participantsData.get(i)));
 
-            List<Meta> results = new ArrayList<>();
-            results.add(new Meta("1_eliminations_1_score_A", data.scoreA == null ? "" : data.scoreA.toString()));
-            results.add(new Meta("1_eliminations_2_place_A", data.placeA == null ? "" : data.placeA.toString()));
-            results.add(new Meta("1_eliminations_3_score_B", data.scoreB == null ? "" : data.scoreB.toString()));
-            results.add(new Meta("1_eliminations_4_place_B", data.placeB == null ? "" : data.placeB.toString()));
-            results.add(new Meta("1_eliminations_5_result", data.result == null ? "" : data.result.toString()));
-            participant.setMeta(results);
+            participant.setPlace(place);
+            if (isNextDifferentOrEndResult(i)) place++;
 
             participantsWithMeta.add(participant);
-
-            place++;
         }
         return participantsWithMeta;
+    }
+
+    private boolean isNextDifferentOrEndResult(int i) {
+        if (i == participantsData.size() - 1) return true;
+
+        Double resultThis = participantsData.get(i).getResult();
+        Double resultNext = participantsData.get(i + 1).getResult();
+
+        if (resultThis == null) return false;
+        else if (resultNext == null) return true;
+        return compare(resultThis, resultNext) != 0;
+    }
+
+    private List<Meta> getMetas(ParticipantData data) {
+        List<Meta> results = new ArrayList<>();
+        results.add(new Meta("1_eliminations_1_score_A", data.scoreA == null ? "" : data.scoreA.toString()));
+        results.add(new Meta("1_eliminations_2_place_A", data.placeA == null ? "" : data.placeA.toString()));
+        results.add(new Meta("1_eliminations_3_score_B", data.scoreB == null ? "" : data.scoreB.toString()));
+        results.add(new Meta("1_eliminations_4_place_B", data.placeB == null ? "" : data.placeB.toString()));
+        results.add(new Meta("1_eliminations_5_result", data.result == null ? "" : data.result.toString()));
+        return results;
     }
 
     @Data
