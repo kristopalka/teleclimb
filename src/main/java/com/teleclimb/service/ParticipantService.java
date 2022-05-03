@@ -72,8 +72,8 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
     // --------------------------------- UPDATE ---------------------------------
 
-    public Participant update(Integer id, Participant newParticipant) {
-        Participant dto = get(id);
+    public Participant update(Integer participantId, Participant newParticipant) {
+        Participant dto = get(participantId);
 
         if (newParticipant.getName() != null) dto.setName(newParticipant.getName());
         if (newParticipant.getLastName() != null) dto.setLastName(newParticipant.getLastName());
@@ -84,6 +84,12 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
 
         ParticipantEntity participantEntity = participantRepo.save(mapper.map(dto, ParticipantEntity.class));
         return mapper.map(participantEntity, Participant.class);
+    }
+
+    public void incrementTopRoundSequenceNumber(Integer participantId) {
+        Participant participant = get(participantId);
+        participant.setTopRoundNumber(participant.getTopRoundNumber() + 1);
+        participantRepo.save(mapper.map(participant, ParticipantEntity.class));
     }
 
     public void updateDataAndMetaForAll(List<ParticipantWithMeta> participants) {
