@@ -12,6 +12,7 @@ import com.teleclimb.service.round.RoundService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,7 +41,8 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
                 findByCompetitionId(competitionId).stream().map(entity -> mapper.map(entity, ParticipantWithMeta.class)).toList();
 
         for (ParticipantWithMeta participant : participants) {
-            participant.setMeta(metaService.getAllByParticipantId(participant.getId()));
+            List<Meta> immutableMeta = metaService.getAllByParticipantId(participant.getId());
+            participant.setMeta(new ArrayList<>(immutableMeta));
         }
         return participants;
     }

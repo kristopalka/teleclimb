@@ -43,7 +43,7 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
         try {
             Round currentRound = roundService.getByCompetitionIdRoundInProgress(competitionId);
             participants = generateResultsForRound(participants, currentRound);
-            ;
+
             return participants;
         } catch (NotFoundException e) {
             return participants;
@@ -51,14 +51,14 @@ public record ResultsService(CompetitionService competitionService, ParticipantS
     }
 
 
-    private List<ParticipantWithMeta> generateResultsForRound(List<ParticipantWithMeta> participantResults, Round round) {
+    private List<ParticipantWithMeta> generateResultsForRound(List<ParticipantWithMeta> participants, Round round) {
         switch (round.getResultCalculatingFunction()) {
             case TWO_ROUTES_LEAD_ELIMINATIONS: {
-                TwoRoutesLeadEliminationsParser parser = new TwoRoutesLeadEliminationsParser(participantResults, round, positionService, startService);
+                TwoRoutesLeadEliminationsParser parser = new TwoRoutesLeadEliminationsParser(participants, round, positionService, startService);
                 return parser.process();
             }
             case ONE_ROUTE_LEAD_FINAL: {
-                OneRouteLeadFinalsParser parser = new OneRouteLeadFinalsParser(participantResults, round, positionService, startService);
+                OneRouteLeadFinalsParser parser = new OneRouteLeadFinalsParser(participants, round, positionService, startService);
                 return parser.process();
             }
         }

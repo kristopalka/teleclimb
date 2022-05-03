@@ -41,17 +41,20 @@ public class OneRouteLeadFinalsParser {
 
         for (ParticipantWithMeta participant : participantsResults) {
             ScoreLead score;
-
+            boolean startsThisRound;
             try {
                 Start start = startService.getByRefereePositionIdAndParticipantId(position.getId(), participant.getId());
                 score = gson.fromJson(start.getScore(), ScoreLead.class);
+                startsThisRound = true;
             } catch (RuntimeException e) {
                 score = null;
+                startsThisRound = false;
             }
 
             ParticipantData participantData = new ParticipantData();
             participantData.setParticipant(participant);
             participantData.setScore(score);
+            participantData.setStartsThisRound(startsThisRound);
 
             participantsData.add(participantData);
         }
@@ -74,7 +77,8 @@ public class OneRouteLeadFinalsParser {
         int place = 1;
         for (int i = 0; i < participantsData.size(); i++) {
             ParticipantWithMeta participant = participantsData.get(i).getParticipant();
-            participant.setMeta(getMetas(participantsData.get(i)));
+            if (participantsData.get(i).startsThisRound)
+                participant.getMeta().addAll(getMetas(participantsData.get(i)));
 
             participant.setPlace(place);
             if (isNextDifferentOrEndScore(i)) place++;
@@ -102,6 +106,7 @@ public class OneRouteLeadFinalsParser {
     @Data
     private class ParticipantData {
         private ParticipantWithMeta participant;
+        private Boolean startsThisRound;
         private ScoreLead score;
         private Double place;
     }

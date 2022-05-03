@@ -54,7 +54,7 @@ public class Initializer {
                 .sequenceNumber(1)
                 .resultCalculatingFunction(ResultCalculatingFunction.ONE_ROUTE_LEAD_FINAL)
                 .numberOfRoutes(1)
-                .maxParticipants(8)
+                .maxParticipants(3) //todo zmienić na 8
                 .startsGenerationMethod(StartsGenerationMethod.LEAD_CLASSIC_FINAL)
                 .build());
 

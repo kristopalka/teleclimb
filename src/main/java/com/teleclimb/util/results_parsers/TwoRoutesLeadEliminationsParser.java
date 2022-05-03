@@ -129,7 +129,7 @@ public class TwoRoutesLeadEliminationsParser {
         int place = 1;
         for (int i = 0; i < participantsData.size(); i++) {
             ParticipantWithMeta participant = participantsData.get(i).getParticipant();
-            participant.setMeta(getMetas(participantsData.get(i)));
+            participant.getMeta().addAll(getMetas(participantsData.get(i)));
 
             participant.setPlace(place);
             if (isNextDifferentOrEndResult(i)) place++;
