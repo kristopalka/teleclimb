@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public record RoundsGeneratingService(RoundService roundService, CompetitionService competitionService,
                                       FormulaService formulaService) {
-    private static final Gson gson = GsonConfig.gson();
+    private static final Gson gson = GsonConfig.get();
 
     public List<Round> generateRounds(Integer competitionId) {
         try {

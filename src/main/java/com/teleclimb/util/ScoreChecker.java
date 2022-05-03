@@ -9,7 +9,7 @@ import com.teleclimb.dto.model.score.ScoreLead;
 import com.teleclimb.dto.model.score.ScoreSpeed;
 
 public class ScoreChecker {
-    private static final Gson gson = GsonConfig.gson();
+    private static final Gson gson = GsonConfig.get();
 
     public static void check(String scoreJson, Discipline discipline) {
         try {

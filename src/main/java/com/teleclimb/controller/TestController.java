@@ -35,7 +35,7 @@ public class TestController {
     }
 
 
-    private final Gson gson = GsonConfig.gson();
+    private final Gson gson = GsonConfig.get();
     private final RoundService roundService;
     private final CompetitionService competitionService;
     private final FormulaService formulaService;

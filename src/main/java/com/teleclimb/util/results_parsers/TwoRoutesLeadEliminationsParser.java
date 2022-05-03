@@ -16,7 +16,7 @@ import static java.lang.Double.compare;
 
 
 public class TwoRoutesLeadEliminationsParser {
-    private final Gson gson = GsonConfig.gson();
+    private final Gson gson = GsonConfig.get();
 
     private final StartService startService;
 

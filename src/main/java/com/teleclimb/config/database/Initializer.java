@@ -19,7 +19,7 @@ import java.util.List;
 
 @Configuration
 public class Initializer {
-    private final Gson gson = GsonConfig.gson();
+    private final Gson gson = GsonConfig.get();
 
     @Bean
     public CommandLineRunner loadData(CategoryService categoryService, FormulaService formulaService) {

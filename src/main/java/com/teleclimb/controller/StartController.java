@@ -21,7 +21,7 @@ import java.util.List;
 @Api(tags = "start")
 public class StartController {
     private final StartService service;
-    private final Gson gson = GsonConfig.gson();
+    private final Gson gson = GsonConfig.get();
 
     @ApiOperation(value = "Get all starts")
     @GetMapping("/all")

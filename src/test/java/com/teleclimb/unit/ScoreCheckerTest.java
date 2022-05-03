@@ -14,7 +14,7 @@ import java.time.LocalTime;
 import static org.junit.Assert.assertThrows;
 
 public class ScoreCheckerTest {
-    private final Gson gson = GsonConfig.gson();
+    private final Gson gson = GsonConfig.get();
 
     @Test
     public void lead() {

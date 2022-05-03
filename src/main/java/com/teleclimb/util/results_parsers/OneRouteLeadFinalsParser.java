@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OneRouteLeadFinalsParser {
-    private final Gson gson = GsonConfig.gson();
+    private final Gson gson = GsonConfig.get();
 
     private final StartService startService;
 

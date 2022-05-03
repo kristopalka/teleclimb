@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 public class GsonConfig {
     @Bean
-    public static Gson gson() {
+    public static Gson get() {
         String pattern = "HH:mm:ss.SSS";
 
         return new GsonBuilder()
