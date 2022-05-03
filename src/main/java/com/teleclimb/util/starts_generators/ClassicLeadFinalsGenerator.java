@@ -8,7 +8,6 @@ import com.teleclimb.dto.model.Start;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 public class ClassicLeadFinalsGenerator implements Generator {
 
@@ -19,10 +18,8 @@ public class ClassicLeadFinalsGenerator implements Generator {
 
         RefereePosition position = positions.get(0);
 
-        participants = participants.stream()
-                .filter(p -> Objects.equals(p.getTopRoundNumber(), round.getSequenceNumber()))
-                .sorted(Comparator.comparing(Participant::getPlace).reversed())
-                .toList();
+        participants.sort(Comparator.comparing(Participant::getPlace).reversed());
+
 
         int iterator = 0;
         for (Participant participant : participants) {
