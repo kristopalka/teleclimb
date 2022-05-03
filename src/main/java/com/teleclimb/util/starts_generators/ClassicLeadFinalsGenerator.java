@@ -18,11 +18,12 @@ public class ClassicLeadFinalsGenerator implements Generator {
 
         RefereePosition position = positions.get(0);
 
-        participants.sort(Comparator.comparing(Participant::getPlace).reversed());
+        List<Participant> sortedParticipants = participants.stream()
+                .sorted(Comparator.comparing(Participant::getPlace).reversed()).toList();
 
 
         int iterator = 0;
-        for (Participant participant : participants) {
+        for (Participant participant : sortedParticipants) {
             Start start = Start.builder()
                     .refereePositionId(position.getId())
                     .participantId(participant.getId())
