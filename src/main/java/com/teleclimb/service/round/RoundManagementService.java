@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -44,22 +45,27 @@ public record RoundManagementService(RoundService roundService, StartsGenerating
 
         resultsService.calculateAndSaveResult(round.getId());
 
-        updateParticipantTopRoundNumber(roundId);
+        moveBestParticipantsToNextRound(roundId);
 
         roundService.setState(roundId, RoundState.FINISHED);
     }
 
-    private void updateParticipantTopRoundNumber(Integer roundId) {
+    private void moveBestParticipantsToNextRound(Integer roundId) {
         Round currentRound = roundService.get(roundId);
         try {
             Round nextRound = roundService.getByCompetitionIdAndSequenceNumber(currentRound.getCompetitionId(), 1 + currentRound.getSequenceNumber());
             List<Participant> participants = participantService.getParticipantsByRoundId(roundId).stream()
                     .sorted(Comparator.comparing(Participant::getPlace)).toList();
 
+            int nextRoundNumber = nextRound.getMaxParticipants();
 
-            for (int i = 0; i < nextRound.getMaxParticipants(); i++) {
+            for (int i = 0; i < nextRoundNumber; i++) {
                 Integer participantId = participants.get(i).getId();
                 participantService.incrementTopRoundSequenceNumber(participantId);
+            }
+            while (Objects.equals(participants.get(nextRoundNumber - 1).getPlace(), participants.get(nextRoundNumber).getPlace())) {
+                participantService.incrementTopRoundSequenceNumber(participants.get(nextRoundNumber).getId());
+                nextRoundNumber++;
             }
         } catch (NotFoundException ignored) {
         }
