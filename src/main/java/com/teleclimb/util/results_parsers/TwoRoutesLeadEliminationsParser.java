@@ -24,13 +24,13 @@ public class TwoRoutesLeadEliminationsParser {
     private List<ParticipantData> participantsData;
 
 
-    public TwoRoutesLeadEliminationsParser(List<ParticipantWithMeta> participantResults, Round round, RefereePositionService positionService, StartService startService) {
+    public TwoRoutesLeadEliminationsParser(List<ParticipantWithMeta> participantsResults, Round round, RefereePositionService positionService, StartService startService) {
         this.positionService = positionService;
         this.startService = startService;
 
         this.round = round;
 
-        this.participantsData = prepareDataObjects(participantResults);
+        this.participantsData = prepareParticipantsDataObjects(participantsResults);
     }
 
     public List<ParticipantWithMeta> process() {
@@ -42,7 +42,7 @@ public class TwoRoutesLeadEliminationsParser {
     }
 
 
-    private List<ParticipantData> prepareDataObjects(List<ParticipantWithMeta> participantsResults) {
+    private List<ParticipantData> prepareParticipantsDataObjects(List<ParticipantWithMeta> participantsResults) {
         List<ParticipantData> participantsData = new ArrayList<>();
 
         List<RefereePosition> positions = positionService.getAllByRoundId(round.getId());
@@ -91,9 +91,8 @@ public class TwoRoutesLeadEliminationsParser {
 
         ScoreLead scoreThis = participantsData.get(i).getScoreA();
         ScoreLead scoreNext = participantsData.get(i + 1).getScoreA();
-        if (scoreThis == null && scoreNext == null) return true;
-        if (scoreNext == null) return false;
-        return scoreThis.compare(scoreNext) != 0;
+
+        return ScoreLead.compareNullSafe(scoreThis, scoreNext) != 0;
     }
 
     private void calculatePlaceB() {
@@ -121,9 +120,8 @@ public class TwoRoutesLeadEliminationsParser {
 
         ScoreLead scoreThis = participantsData.get(i).getScoreB();
         ScoreLead scoreNext = participantsData.get(i + 1).getScoreB();
-        if (scoreThis == null && scoreNext == null) return true;
-        if (scoreNext == null) return false;
-        return scoreThis.compare(scoreNext) != 0;
+
+        return ScoreLead.compareNullSafe(scoreThis, scoreNext) != 0;
     }
 
     private void calculateResultAndSort() {
