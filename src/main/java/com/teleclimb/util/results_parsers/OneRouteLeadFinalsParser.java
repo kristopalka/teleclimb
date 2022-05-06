@@ -11,6 +11,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.teleclimb.util.results_parsers.MetaBuilder.resultStr;
+
 public class OneRouteLeadFinalsParser {
     private final Gson gson = GsonConfig.get();
 
@@ -99,7 +101,7 @@ public class OneRouteLeadFinalsParser {
 
     private List<Meta> getMetas(ParticipantData data) {
         List<Meta> results = new ArrayList<>();
-        results.add(new Meta(round.getName() + ": " + position.getRoute().getName() + ": wynik", data.score == null ? "" : data.score.toString()));
+        results.add(MetaBuilder.build(round.getName(), position.getRoute().getName(), resultStr, data.score));
         return results;
     }
 

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.teleclimb.util.results_parsers.MetaBuilder.*;
 import static java.lang.Double.compare;
 
 
@@ -149,13 +150,16 @@ public class TwoRoutesLeadEliminationsParser {
         return compare(resultThis, resultNext) != 0;
     }
 
+
     private List<Meta> getMetas(ParticipantData data) {
         List<Meta> results = new ArrayList<>();
-        results.add(new Meta(round.getName() + ": " + positionA.getRoute().getName() + ": wynik", data.scoreA == null ? "" : data.scoreA.toString()));
-        results.add(new Meta(round.getName() + ": " + positionA.getRoute().getName() + ": miejsce", data.placeA == null ? "" : data.placeA.toString()));
-        results.add(new Meta(round.getName() + ": " + positionB.getRoute().getName() + ": wynik", data.scoreB == null ? "" : data.scoreB.toString()));
-        results.add(new Meta(round.getName() + ": " + positionB.getRoute().getName() + ": miejsce", data.placeB == null ? "" : data.placeB.toString()));
-        results.add(new Meta(round.getName() + ": wynik", data.result == null ? "" : data.result.toString()));
+
+        results.add(MetaBuilder.build(round.getName(), positionA.getRoute().getName(), resultStr, data.scoreA));
+        results.add(MetaBuilder.build(round.getName(), positionA.getRoute().getName(), placeStr, data.placeA));
+        results.add(MetaBuilder.build(round.getName(), positionB.getRoute().getName(), resultStr, data.scoreB));
+        results.add(MetaBuilder.build(round.getName(), positionB.getRoute().getName(), placeStr, data.placeB));
+        results.add(MetaBuilder.build(round.getName(), empty, resultStr, data.result));
+
         return results;
     }
 
