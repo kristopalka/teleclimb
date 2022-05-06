@@ -63,11 +63,16 @@ public record RoundManagementService(RoundService roundService, StartsGenerating
                 Integer participantId = participants.get(i).getId();
                 participantService.incrementTopRoundSequenceNumber(participantId);
             }
-            while (Objects.equals(participants.get(nextRoundNumber - 1).getPlace(), participants.get(nextRoundNumber).getPlace())) {
+            while (isNextTheSameOrEnd(participants, nextRoundNumber)) {
                 participantService.incrementTopRoundSequenceNumber(participants.get(nextRoundNumber).getId());
                 nextRoundNumber++;
             }
         } catch (NotFoundException ignored) {
         }
+    }
+
+    private boolean isNextTheSameOrEnd(List<Participant> participants, int nextRoundNumber) {
+        if (nextRoundNumber >= participants.size()) return false;
+        return Objects.equals(participants.get(nextRoundNumber - 1).getPlace(), participants.get(nextRoundNumber).getPlace());
     }
 }
