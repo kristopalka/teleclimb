@@ -117,17 +117,3 @@ public record ParticipantService(ModelMapper mapper, ParticipantRepository parti
         getAllByCompetitionId(competitionId).forEach(p -> delete(p.getId()));
     }
 }
-
-//todo gdzie przenieść tą metodę? (tu nie może być bo nie można podpiąć competitionService)
-//
-//    public void updateRoundSequenceNumber(Integer participantId, Integer newRoundSequenceNumber) {
-//        Participant participant = get(participantId);
-//        Competition competition = competitionService.get(participant.getCompetitionId());
-//        Formula formula = formulaService.get(competition.getFormulaId());
-//
-//        if (newRoundSequenceNumber < 0 || newRoundSequenceNumber >= formula.getNumberOfRounds())
-//            throw new RuntimeException("New round sequence number is out of range possible values");
-//
-//        participant.setRoundSequenceNumber(newRoundSequenceNumber);
-//        participantRepo.save(toEntity(participant));
-//    }
