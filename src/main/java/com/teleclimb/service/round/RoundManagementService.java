@@ -59,7 +59,7 @@ public record RoundManagementService(RoundService roundService, StartsGenerating
 
             int nextRoundNumber = nextRound.getMaxParticipants();
 
-            for (int i = 0; i < nextRoundNumber; i++) {
+            for (int i = 0; i < Math.min(nextRoundNumber, participants.size()); i++) {
                 Integer participantId = participants.get(i).getId();
                 participantService.incrementTopRoundSequenceNumber(participantId);
             }
