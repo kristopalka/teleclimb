@@ -1,11 +1,4 @@
 
-# TeleClimb-App
-This repository holds code of application backend developed in Java for head judge in climbing competitions.
-
-- Web app repository: https://github.com/AndrzejKrzywda00/TeleClimb-Web
-- Mobile app repository: https://github.com/AndrzejKrzywda00/TeleClimb-Mobile
-
-
 ## Description:
 The aim of the project is to build a system used for judging climbing competitions. Its main focus is automation of delivering and processing data. The project is designed to be a valuable asset in the market/an answer to the demand of the market – currently, there does not exist a system which operates in the described manner.
 As far as physical layer is concerned, it is composed of a computer and a few mobile devices. Connection between all the components in the basic scenario should be provided through a local wireless network.
