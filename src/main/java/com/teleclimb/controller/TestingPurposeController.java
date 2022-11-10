@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/testing/")
 @Api(tags = "test purpose")
 public class TestingPurposeController {
     private final Gson gson = GsonConfig.get();
@@ -40,18 +42,17 @@ public class TestingPurposeController {
     private final RoundManagementService roundManagementService;
     private final ResultsService resultsService;
 
-    @PutMapping("/1-competition-participants-rounds-starts")
+    @PutMapping("/generate")
     public List<String> generate() {
         Integer competitionId = competitionService.add(new CompetitionPost(null, 4, 1, Gender.MALE, "Puchar Polski")).getId();
 
         addParticipants(competitionId);
         List<Round> rounds = generateRoundsAndAddRoutes(competitionId);
-        roundManagementService.startRound(1);
 
         return rounds.stream().map(r -> "{" + r.getName() + ": " + r.getId().toString() + "} ").collect(Collectors.toList());
     }
 
-    @PutMapping("/2-fill-scores-randomly/{roundId}")
+    @PutMapping("/fill/{roundId}")
     public void results(@PathVariable Integer roundId) {
         List<RefereePosition> positions = positionService.getAllByRoundId(roundId);
 
@@ -100,7 +101,7 @@ public class TestingPurposeController {
         Random random = new Random();
 
         ScoreLead score = new ScoreLead();
-        score.setValue(random.nextInt(5));
+        score.setValue(random.nextInt(5, 20));
         score.setPlus(random.nextBoolean());
         score.setTime(LocalTime.of(0, 0, 0, random.nextInt(120000)));
 
