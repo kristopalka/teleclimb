@@ -1,0 +1,34 @@
+.side-menu {
+  background: #151616;
+  color: white;
+  margin-bottom: -20px;
+  margin-top: -20px;
+  margin-right: -20px;
+  padding: 10px;
+  align-self: flex-start;
+  height: 1700px;
+}
+
+.side-menu h3 {
+  text-align: left;
+  color: white;
+}
+
+.side-menu-element {
+  padding: 5px;
+  border-radius: 20%;
+}
+
+.side-menu-element:hover {
+  background: rgb(138, 129, 129);
+  cursor: pointer;
+}
+
+.current-competition {
+  background: rgb(138, 129, 129);
+}
+
+.all-competitions-list {
+  overflow-y: auto;
+  max-height: 900px;
+}

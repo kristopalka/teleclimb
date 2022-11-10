@@ -1,0 +1,11 @@
+.wrapper {
+  color: white;
+  text-shadow: 2px 2px 2px black;
+  padding: 5px;
+  margin-top: 11%;
+}
+
+.wrapper img {
+  width: 30px;
+  height: 30px;
+}

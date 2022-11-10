@@ -1,0 +1,49 @@
+.ranking-tables {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+}
+
+.ranking-tables h2 {
+  margin-left: 22px;
+  margin-bottom: -10px;
+}
+
+.ranking-table {
+  border-collapse: collapse;
+  background: whitesmoke;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 15px;
+  justify-content: center;
+  width: 400px;
+}
+
+.ranking-table thead {
+  background: #c04d0d;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.tables-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.single-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+}
+
+.single-component h4 {
+  background: darkslategrey;
+  text-align: center;
+  padding: 5px;
+  color: white;
+  font-size: 20px;
+}

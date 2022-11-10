@@ -1,0 +1,31 @@
+.table-container {
+  padding: 10px;
+  overflow-y: scroll;
+  max-height: 200px;
+}
+
+.no-routes-div {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 110px;
+}
+
+.no-routes-div h1 {
+  color: #262325;
+}
+
+.no-routes-div img {
+  width: 25%;
+  height: 25%;
+  margin-left: 170px;
+}
+
+.route-table-wrapper h2 {
+  margin-left: 1%;
+}
+
+.route-table-wrapper p {
+  margin-left: 1%;
+}

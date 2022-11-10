@@ -1,0 +1,18 @@
+#age-submit {
+  background: #071e42;
+}
+
+#age-submit:hover {
+  background: #011936;
+}
+
+.age-category-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.age-table {
+  width: 700px;
+  margin: 20px 20px 20px 50px;
+}

@@ -1,0 +1,26 @@
+.state-updater {
+  border-radius: 5%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.round-not-started {
+  background-color: aqua;
+}
+
+.round-started {
+  background-color: rgb(236, 192, 111);
+}
+
+.round-finished {
+  background-color: rgb(212, 203, 203);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.route-details {
+  background-color: brown;
+  color: white;
+  font-size: 100%;
+  cursor: pointer;
+}

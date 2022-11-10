@@ -1,0 +1,16 @@
+#time-span {
+  font-size: 20px;
+  margin-top: 20px;
+  color: #011936;
+  text-underline: #011936;
+  text-decoration: underline;
+}
+
+.form button {
+  margin-left: 31%;
+}
+
+.basic-competition-creator {
+  margin-left: 34%;
+  margin-bottom: 40px;
+}

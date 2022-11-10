@@ -1,0 +1,36 @@
+.universal-table {
+  border-collapse: collapse;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  border: 1px solid grey;
+  padding: 5px;
+  justify-content: center;
+  width: 900px;
+  max-height: 500px;
+}
+
+.universal-table thead {
+  background-color: white;
+  padding: 5px;
+  border-bottom: 1px solid black;
+}
+
+.universal-table th {
+  padding: 5px;
+}
+
+.universal-table tr {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border-bottom: 1px solid dimgrey;
+}
+
+tr,
+td {
+  padding: 5px;
+  text-align: center;
+}
+
+.hover-tr:nth-child(even) {
+  background-color: gainsboro;
+}

@@ -1,0 +1,9 @@
+.problems-tables {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.table-wrapper {
+  margin-top: 20px;
+}

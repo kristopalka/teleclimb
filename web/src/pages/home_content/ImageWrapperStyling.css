@@ -1,0 +1,30 @@
+.image_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.single-image {
+  height: 200px;
+  width: 1350px;
+  display: flex;
+}
+
+#div1 {
+  background: url("./krakowImg.png");
+  background-size: cover;
+}
+
+#div2 {
+  background: url("./wroclawImg.png");
+  background-position-x: right;
+}
+
+#div3 {
+  background: url("./warszawaImg.png");
+}
+
+#div4 {
+  background: url("./skalaImage.png");
+  background-size: cover;
+}

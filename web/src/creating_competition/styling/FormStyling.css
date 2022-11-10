@@ -1,0 +1,58 @@
+.form {
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.form input {
+  height: 30px;
+  background: ghostwhite;
+  font-size: 15px;
+  border: 1px solid grey;
+  padding-left: 5px;
+}
+
+.form span {
+  margin-bottom: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.form button {
+  background: #ed254e;
+  font-weight: bold;
+  color: white;
+  padding: 10px;
+  width: 200px;
+  margin-top: 40px;
+  font-size: 15px;
+  border: transparent;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background: #ff1242;
+}
+
+.error-span {
+  font-size: 13px;
+  color: red;
+}
+
+.form select {
+  height: 30px;
+  background: ghostwhite;
+  font-size: 15px;
+  border: 1px solid grey;
+}
+
+.title-span {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline: #011936;
+  color: #011936;
+  margin-bottom: 5px;
+}

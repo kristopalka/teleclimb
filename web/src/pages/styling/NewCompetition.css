@@ -1,0 +1,13 @@
+.new-competition-wrapper {
+  align-items: center;
+}
+
+.new-competition-wrapper h1 {
+  color: #282c34;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.competition-configurator-wrapper {
+  padding: 20px;
+}

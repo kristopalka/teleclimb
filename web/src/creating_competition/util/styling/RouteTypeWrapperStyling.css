@@ -1,0 +1,25 @@
+#bouldering {
+  background: linear-gradient(limegreen, #63aa20);
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+#lead {
+  background: linear-gradient(#ff1242, #891756);
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+}
+
+#speed {
+  background: linear-gradient(deepskyblue, #2071aa);
+  font-weight: bold;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+}

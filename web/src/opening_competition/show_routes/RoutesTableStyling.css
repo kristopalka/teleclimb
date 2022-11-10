@@ -1,0 +1,11 @@
+.hash {
+  font-weight: bold;
+}
+
+.start-details {
+  margin-top: 3px;
+  background-color: brown;
+  color: white;
+  font-size: 100%;
+  cursor: pointer;
+}

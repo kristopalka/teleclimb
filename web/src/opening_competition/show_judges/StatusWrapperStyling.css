@@ -1,0 +1,15 @@
+.connected0 {
+  font-weight: bold;
+  color: black;
+}
+
+.connected0 img {
+  height: 25px;
+  width: 25px;
+  margin: -5px -5px -5px 2px;
+}
+
+.connected1 {
+  font-weight: bold;
+  color: red;
+}

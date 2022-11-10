@@ -1,0 +1,27 @@
+.starts-wrapper {
+  margin: 20px;
+}
+
+.starts-tr-qualified:nth-child(even) {
+  background: #076b1d;
+  color: white;
+}
+
+.starts-tr-qualified:nth-child(odd) {
+  background: #2da000;
+  color: white;
+}
+
+.starts-tr:hover {
+  background: black;
+}
+
+.starts-tr-disqualified:nth-child(odd) {
+  background: darkred;
+  color: white;
+}
+
+.starts-tr-disqualified:nth-child(even) {
+  background: #c01e4f;
+  color: white;
+}
